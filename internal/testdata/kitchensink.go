@@ -13,9 +13,9 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/conductor-sdk/conductor-go/sdk/model"
-	"github.com/conductor-sdk/conductor-go/sdk/workflow"
-	"github.com/conductor-sdk/conductor-go/sdk/workflow/executor"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/workflow"
+	"github.com/swift-conductor/conductor-client-golang/sdk/workflow/executor"
 )
 
 func NewKitchenSinkWorkflow(executor *executor.WorkflowExecutor) *workflow.ConductorWorkflow {

@@ -13,7 +13,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/conductor-sdk/conductor-go/sdk/settings"
+	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/prometheus/client_golang/prometheus"

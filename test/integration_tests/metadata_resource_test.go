@@ -13,8 +13,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/conductor-sdk/conductor-go/internal/testdata"
-	"github.com/conductor-sdk/conductor-go/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/internal/testdata"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 	"github.com/stretchr/testify/assert"
 )
 

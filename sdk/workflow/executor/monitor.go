@@ -16,9 +16,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/conductor-sdk/conductor-go/sdk/client"
-	"github.com/conductor-sdk/conductor-go/sdk/concurrency"
-	"github.com/conductor-sdk/conductor-go/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/client"
+	"github.com/swift-conductor/conductor-client-golang/sdk/concurrency"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 
 	log "github.com/sirupsen/logrus"
 )

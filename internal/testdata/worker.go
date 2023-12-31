@@ -15,7 +15,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/conductor-sdk/conductor-go/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 	log "github.com/sirupsen/logrus"
 )
 

@@ -27,8 +27,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/conductor-sdk/conductor-go/sdk/model"
-	"github.com/conductor-sdk/conductor-go/sdk/settings"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
 	log "github.com/sirupsen/logrus"
 )
 

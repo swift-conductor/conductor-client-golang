@@ -10,10 +10,10 @@
 package unit_tests
 
 import (
-	"github.com/conductor-sdk/conductor-go/sdk/client"
-	"github.com/conductor-sdk/conductor-go/sdk/model"
-	"github.com/conductor-sdk/conductor-go/sdk/settings"
-	"github.com/conductor-sdk/conductor-go/sdk/worker"
+	"github.com/swift-conductor/conductor-client-golang/sdk/client"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
+	"github.com/swift-conductor/conductor-client-golang/sdk/worker"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"

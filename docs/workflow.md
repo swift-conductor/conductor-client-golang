@@ -3,7 +3,7 @@
 # workflow
 
 ```go
-import "github.com/conductor-sdk/conductor-go/sdk/workflow"
+import "github.com/swift-conductor/conductor-client-golang/sdk/workflow"
 ```
 
 ## Index
@@ -171,7 +171,7 @@ const (
 )
 ```
 
-## type [ConductorWorkflow](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L26-L41>)
+## type [ConductorWorkflow](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L26-L41>)
 
 ```go
 type ConductorWorkflow struct {
@@ -179,25 +179,25 @@ type ConductorWorkflow struct {
 }
 ```
 
-### func [NewConductorWorkflow](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L43>)
+### func [NewConductorWorkflow](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L43>)
 
 ```go
 func NewConductorWorkflow(executor *executor.WorkflowExecutor) *ConductorWorkflow
 ```
 
-### func \(\*ConductorWorkflow\) [Add](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L131>)
+### func \(\*ConductorWorkflow\) [Add](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L131>)
 
 ```go
 func (workflow *ConductorWorkflow) Add(task TaskInterface) *ConductorWorkflow
 ```
 
-### func \(\*ConductorWorkflow\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L61>)
+### func \(\*ConductorWorkflow\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L61>)
 
 ```go
 func (workflow *ConductorWorkflow) Description(description string) *ConductorWorkflow
 ```
 
-### func \(\*ConductorWorkflow\) [FailureWorkflow](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L79>)
+### func \(\*ConductorWorkflow\) [FailureWorkflow](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L79>)
 
 ```go
 func (workflow *ConductorWorkflow) FailureWorkflow(failureWorkflow string) *ConductorWorkflow
@@ -205,19 +205,19 @@ func (workflow *ConductorWorkflow) FailureWorkflow(failureWorkflow string) *Cond
 
 FailureWorkflow name of the workflow to execute when this workflow fails\. Failure workflows can be used for handling compensation logic
 
-### func \(\*ConductorWorkflow\) [GetName](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L123>)
+### func \(\*ConductorWorkflow\) [GetName](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L123>)
 
 ```go
 func (workflow *ConductorWorkflow) GetName() (name string)
 ```
 
-### func \(\*ConductorWorkflow\) [GetVersion](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L127>)
+### func \(\*ConductorWorkflow\) [GetVersion](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L127>)
 
 ```go
 func (workflow *ConductorWorkflow) GetVersion() (version int32)
 ```
 
-### func \(\*ConductorWorkflow\) [InputParameters](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L113>)
+### func \(\*ConductorWorkflow\) [InputParameters](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L113>)
 
 ```go
 func (workflow *ConductorWorkflow) InputParameters(inputParameters ...string) *ConductorWorkflow
@@ -225,7 +225,7 @@ func (workflow *ConductorWorkflow) InputParameters(inputParameters ...string) *C
 
 InputParameters List of the input parameters to the workflow\.  Used ONLY for the documentation purpose\.
 
-### func \(\*ConductorWorkflow\) [InputTemplate](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L100>)
+### func \(\*ConductorWorkflow\) [InputTemplate](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L100>)
 
 ```go
 func (workflow *ConductorWorkflow) InputTemplate(inputTemplate interface{}) *ConductorWorkflow
@@ -233,13 +233,13 @@ func (workflow *ConductorWorkflow) InputTemplate(inputTemplate interface{}) *Con
 
 InputTemplate template input to the workflow\.  Can have combination of variables \(e\.g\. $\{workflow\.input\.abc\}\) and static values
 
-### func \(\*ConductorWorkflow\) [Name](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L51>)
+### func \(\*ConductorWorkflow\) [Name](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L51>)
 
 ```go
 func (workflow *ConductorWorkflow) Name(name string) *ConductorWorkflow
 ```
 
-### func \(\*ConductorWorkflow\) [OutputParameters](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L93>)
+### func \(\*ConductorWorkflow\) [OutputParameters](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L93>)
 
 ```go
 func (workflow *ConductorWorkflow) OutputParameters(outputParameters interface{}) *ConductorWorkflow
@@ -247,13 +247,13 @@ func (workflow *ConductorWorkflow) OutputParameters(outputParameters interface{}
 
 OutputParameters Workflow outputs\. Workflow output follows similar structure as task inputs See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for more details
 
-### func \(\*ConductorWorkflow\) [OwnerEmail](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L118>)
+### func \(\*ConductorWorkflow\) [OwnerEmail](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L118>)
 
 ```go
 func (workflow *ConductorWorkflow) OwnerEmail(ownerEmail string) *ConductorWorkflow
 ```
 
-### func \(\*ConductorWorkflow\) [Register](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L138>)
+### func \(\*ConductorWorkflow\) [Register](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L138>)
 
 ```go
 func (workflow *ConductorWorkflow) Register(overwrite bool) error
@@ -261,7 +261,7 @@ func (workflow *ConductorWorkflow) Register(overwrite bool) error
 
 Register the workflow definition with the server\. If overwrite is set\, the definition on the server will be overwritten\. When not set\, the call fails if there is any change in the workflow definition between the server and what is being registered\.
 
-### func \(\*ConductorWorkflow\) [Restartable](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L86>)
+### func \(\*ConductorWorkflow\) [Restartable](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L86>)
 
 ```go
 func (workflow *ConductorWorkflow) Restartable(restartable bool) *ConductorWorkflow
@@ -269,7 +269,7 @@ func (workflow *ConductorWorkflow) Restartable(restartable bool) *ConductorWorkf
 
 Restartable if the workflow can be restarted after it has reached terminal state\. Set this to false if restarting workflow can have side effects
 
-### func \(\*ConductorWorkflow\) [StartWorkflow](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L158>)
+### func \(\*ConductorWorkflow\) [StartWorkflow](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L158>)
 
 ```go
 func (workflow *ConductorWorkflow) StartWorkflow(startWorkflowRequest *model.StartWorkflowRequest) (workflowId string, err error)
@@ -277,7 +277,7 @@ func (workflow *ConductorWorkflow) StartWorkflow(startWorkflowRequest *model.Sta
 
 StartWorkflow starts the workflow execution with startWorkflowRequest that allows you to specify more details like task domains\, correlationId etc\. Returns the ID of the newly created workflow
 
-### func \(\*ConductorWorkflow\) [StartWorkflowWithInput](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L144>)
+### func \(\*ConductorWorkflow\) [StartWorkflowWithInput](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L144>)
 
 ```go
 func (workflow *ConductorWorkflow) StartWorkflowWithInput(input interface{}) (workflowId string, err error)
@@ -285,7 +285,7 @@ func (workflow *ConductorWorkflow) StartWorkflowWithInput(input interface{}) (wo
 
 StartWorkflowWithInput ExecuteWorkflowWithInput Execute the workflow with specific input\.  The input struct MUST be serializable to JSON Returns the workflow Id that can be used to monitor and get the status of the workflow execution
 
-### func \(\*ConductorWorkflow\) [StartWorkflowsAndMonitorExecution](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L165>)
+### func \(\*ConductorWorkflow\) [StartWorkflowsAndMonitorExecution](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L165>)
 
 ```go
 func (workflow *ConductorWorkflow) StartWorkflowsAndMonitorExecution(startWorkflowRequest *model.StartWorkflowRequest) (executionChannel executor.WorkflowExecutionChannel, err error)
@@ -293,19 +293,19 @@ func (workflow *ConductorWorkflow) StartWorkflowsAndMonitorExecution(startWorkfl
 
 StartWorkflowsAndMonitorExecution Starts the workflow execution and returns a channel that can be used to monitor the workflow execution This method is useful for short duration workflows that are expected to complete in few seconds\.  For long\-running workflows use GetStatus APIs to periodically check the status
 
-### func \(\*ConductorWorkflow\) [TimeoutPolicy](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L66>)
+### func \(\*ConductorWorkflow\) [TimeoutPolicy](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L66>)
 
 ```go
 func (workflow *ConductorWorkflow) TimeoutPolicy(timeoutPolicy TimeoutPolicy, timeoutSeconds int64) *ConductorWorkflow
 ```
 
-### func \(\*ConductorWorkflow\) [TimeoutSeconds](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L72>)
+### func \(\*ConductorWorkflow\) [TimeoutSeconds](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L72>)
 
 ```go
 func (workflow *ConductorWorkflow) TimeoutSeconds(timeoutSeconds int64) *ConductorWorkflow
 ```
 
-### func \(\*ConductorWorkflow\) [ToWorkflowDef](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L195>)
+### func \(\*ConductorWorkflow\) [ToWorkflowDef](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L195>)
 
 ```go
 func (workflow *ConductorWorkflow) ToWorkflowDef() *model.WorkflowDef
@@ -313,7 +313,7 @@ func (workflow *ConductorWorkflow) ToWorkflowDef() *model.WorkflowDef
 
 ToWorkflowDef converts the workflow to the JSON serializable format
 
-### func \(\*ConductorWorkflow\) [Variables](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L107>)
+### func \(\*ConductorWorkflow\) [Variables](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L107>)
 
 ```go
 func (workflow *ConductorWorkflow) Variables(variables interface{}) *ConductorWorkflow
@@ -321,13 +321,13 @@ func (workflow *ConductorWorkflow) Variables(variables interface{}) *ConductorWo
 
 Variables Workflow variables are set using SET\_VARIABLE task\.  Excellent way to maintain business state e\.g\. Variables can maintain business/user specific states which can be queried and inspected to find out the state of the workflow
 
-### func \(\*ConductorWorkflow\) [Version](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L56>)
+### func \(\*ConductorWorkflow\) [Version](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L56>)
 
 ```go
 func (workflow *ConductorWorkflow) Version(version int32) *ConductorWorkflow
 ```
 
-## type [DoWhileTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/do_while.go#L22-L26>)
+## type [DoWhileTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/do_while.go#L22-L26>)
 
 DoWhileTask Do\.\.\.While task
 
@@ -338,7 +338,7 @@ type DoWhileTask struct {
 }
 ```
 
-### func [NewDoWhileTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/do_while.go#L30>)
+### func [NewDoWhileTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/do_while.go#L30>)
 
 ```go
 func NewDoWhileTask(taskRefName string, terminationCondition string, tasks ...TaskInterface) *DoWhileTask
@@ -346,7 +346,7 @@ func NewDoWhileTask(taskRefName string, terminationCondition string, tasks ...Ta
 
 NewDoWhileTask DoWhileTask Crate a new DoWhile task\. terminationCondition is a Javascript expression that evaluates to True or False
 
-### func [NewLoopTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/do_while.go#L44>)
+### func [NewLoopTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/do_while.go#L44>)
 
 ```go
 func NewLoopTask(taskRefName string, iterations int32, tasks ...TaskInterface) *DoWhileTask
@@ -354,7 +354,7 @@ func NewLoopTask(taskRefName string, iterations int32, tasks ...TaskInterface) *
 
 NewLoopTask Loop over N times when N is specified as iterations
 
-### func \(\*DoWhileTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/do_while.go#L99>)
+### func \(\*DoWhileTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/do_while.go#L99>)
 
 ```go
 func (task *DoWhileTask) Description(description string) *DoWhileTask
@@ -362,7 +362,7 @@ func (task *DoWhileTask) Description(description string) *DoWhileTask
 
 Description of the task
 
-### func \(\*DoWhileTask\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/do_while.go#L85>)
+### func \(\*DoWhileTask\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/do_while.go#L85>)
 
 ```go
 func (task *DoWhileTask) Input(key string, value interface{}) *DoWhileTask
@@ -370,7 +370,7 @@ func (task *DoWhileTask) Input(key string, value interface{}) *DoWhileTask
 
 Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*DoWhileTask\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/do_while.go#L91>)
+### func \(\*DoWhileTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/do_while.go#L91>)
 
 ```go
 func (task *DoWhileTask) InputMap(inputMap map[string]interface{}) *DoWhileTask
@@ -378,7 +378,7 @@ func (task *DoWhileTask) InputMap(inputMap map[string]interface{}) *DoWhileTask
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*DoWhileTask\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/do_while.go#L79>)
+### func \(\*DoWhileTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/do_while.go#L79>)
 
 ```go
 func (task *DoWhileTask) Optional(optional bool) *DoWhileTask
@@ -386,7 +386,7 @@ func (task *DoWhileTask) Optional(optional bool) *DoWhileTask
 
 Optional if set to true\, the task will not fail the workflow if the task fails
 
-## type [DynamicForkInput](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/dynamic_fork_input.go#L24-L27>)
+## type [DynamicForkInput](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/dynamic_fork_input.go#L24-L27>)
 
 ### DynamicForkInput struct that represents the output of the dynamic fork preparatory task
 
@@ -401,7 +401,7 @@ type DynamicForkInput struct {
 }
 ```
 
-## type [DynamicForkTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/fork_join_dynamic.go#L16-L20>)
+## type [DynamicForkTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/fork_join_dynamic.go#L16-L20>)
 
 ```go
 type DynamicForkTask struct {
@@ -410,19 +410,19 @@ type DynamicForkTask struct {
 }
 ```
 
-### func [NewDynamicForkTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/fork_join_dynamic.go#L27>)
+### func [NewDynamicForkTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/fork_join_dynamic.go#L27>)
 
 ```go
 func NewDynamicForkTask(taskRefName string, forkPrepareTask TaskInterface) *DynamicForkTask
 ```
 
-### func [NewDynamicForkWithJoinTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/fork_join_dynamic.go#L41>)
+### func [NewDynamicForkWithJoinTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/fork_join_dynamic.go#L41>)
 
 ```go
 func NewDynamicForkWithJoinTask(taskRefName string, forkPrepareTask TaskInterface, join JoinTask) *DynamicForkTask
 ```
 
-### func \(\*DynamicForkTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/fork_join_dynamic.go#L94>)
+### func \(\*DynamicForkTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/fork_join_dynamic.go#L94>)
 
 ```go
 func (task *DynamicForkTask) Description(description string) *DynamicForkTask
@@ -430,7 +430,7 @@ func (task *DynamicForkTask) Description(description string) *DynamicForkTask
 
 Description of the task
 
-### func \(\*DynamicForkTask\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/fork_join_dynamic.go#L74>)
+### func \(\*DynamicForkTask\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/fork_join_dynamic.go#L74>)
 
 ```go
 func (task *DynamicForkTask) Input(key string, value interface{}) *DynamicForkTask
@@ -438,7 +438,7 @@ func (task *DynamicForkTask) Input(key string, value interface{}) *DynamicForkTa
 
 Input to the task
 
-### func \(\*DynamicForkTask\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/fork_join_dynamic.go#L80>)
+### func \(\*DynamicForkTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/fork_join_dynamic.go#L80>)
 
 ```go
 func (task *DynamicForkTask) InputMap(inputMap map[string]interface{}) *DynamicForkTask
@@ -446,7 +446,7 @@ func (task *DynamicForkTask) InputMap(inputMap map[string]interface{}) *DynamicF
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*DynamicForkTask\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/fork_join_dynamic.go#L88>)
+### func \(\*DynamicForkTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/fork_join_dynamic.go#L88>)
 
 ```go
 func (task *DynamicForkTask) Optional(optional bool) *DynamicForkTask
@@ -454,7 +454,7 @@ func (task *DynamicForkTask) Optional(optional bool) *DynamicForkTask
 
 Optional if set to true\, the task will not fail the workflow if the task fails
 
-## type [DynamicTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/dynamic.go#L16-L18>)
+## type [DynamicTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/dynamic.go#L16-L18>)
 
 ```go
 type DynamicTask struct {
@@ -462,7 +462,7 @@ type DynamicTask struct {
 }
 ```
 
-### func [NewDynamicTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/dynamic.go#L25>)
+### func [NewDynamicTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/dynamic.go#L25>)
 
 ```go
 func NewDynamicTask(taskRefName string, taskNameParameter string) *DynamicTask
@@ -470,7 +470,7 @@ func NewDynamicTask(taskRefName string, taskNameParameter string) *DynamicTask
 
 NewDynamicTask \- taskRefName Reference name for the task\.  MUST be unique within the workflow \- taskNameParameter Parameter that contains the expression for the dynamic task name\.  e\.g\. $\{workflow\.input\.dynamicTask\}
 
-### func \(\*DynamicTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/dynamic.go#L67>)
+### func \(\*DynamicTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/dynamic.go#L67>)
 
 ```go
 func (task *DynamicTask) Description(description string) *DynamicTask
@@ -478,7 +478,7 @@ func (task *DynamicTask) Description(description string) *DynamicTask
 
 Description of the task
 
-### func \(\*DynamicTask\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/dynamic.go#L47>)
+### func \(\*DynamicTask\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/dynamic.go#L47>)
 
 ```go
 func (task *DynamicTask) Input(key string, value interface{}) *DynamicTask
@@ -486,7 +486,7 @@ func (task *DynamicTask) Input(key string, value interface{}) *DynamicTask
 
 Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*DynamicTask\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/dynamic.go#L53>)
+### func \(\*DynamicTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/dynamic.go#L53>)
 
 ```go
 func (task *DynamicTask) InputMap(inputMap map[string]interface{}) *DynamicTask
@@ -494,7 +494,7 @@ func (task *DynamicTask) InputMap(inputMap map[string]interface{}) *DynamicTask
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*DynamicTask\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/dynamic.go#L61>)
+### func \(\*DynamicTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/dynamic.go#L61>)
 
 ```go
 func (task *DynamicTask) Optional(optional bool) *DynamicTask
@@ -502,7 +502,7 @@ func (task *DynamicTask) Optional(optional bool) *DynamicTask
 
 Optional if set to true\, the task will not fail the workflow if the task fails
 
-## type [EventTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/event.go#L22-L25>)
+## type [EventTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/event.go#L22-L25>)
 
 EventTask Task to publish Events to external queuing systems like SQS\, NATS\, AMQP etc\.
 
@@ -513,19 +513,19 @@ type EventTask struct {
 }
 ```
 
-### func [NewConductorEventTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/event.go#L35>)
+### func [NewConductorEventTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/event.go#L35>)
 
 ```go
 func NewConductorEventTask(taskRefName string, eventName string) *EventTask
 ```
 
-### func [NewSqsEventTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/event.go#L27>)
+### func [NewSqsEventTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/event.go#L27>)
 
 ```go
 func NewSqsEventTask(taskRefName string, queueName string) *EventTask
 ```
 
-### func \(\*EventTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/event.go#L81>)
+### func \(\*EventTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/event.go#L81>)
 
 ```go
 func (task *EventTask) Description(description string) *EventTask
@@ -533,7 +533,7 @@ func (task *EventTask) Description(description string) *EventTask
 
 Description of the task
 
-### func \(\*EventTask\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/event.go#L61>)
+### func \(\*EventTask\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/event.go#L61>)
 
 ```go
 func (task *EventTask) Input(key string, value interface{}) *EventTask
@@ -541,7 +541,7 @@ func (task *EventTask) Input(key string, value interface{}) *EventTask
 
 Input to the task
 
-### func \(\*EventTask\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/event.go#L67>)
+### func \(\*EventTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/event.go#L67>)
 
 ```go
 func (task *EventTask) InputMap(inputMap map[string]interface{}) *EventTask
@@ -549,7 +549,7 @@ func (task *EventTask) InputMap(inputMap map[string]interface{}) *EventTask
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*EventTask\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/event.go#L75>)
+### func \(\*EventTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/event.go#L75>)
 
 ```go
 func (task *EventTask) Optional(optional bool) *EventTask
@@ -557,7 +557,7 @@ func (task *EventTask) Optional(optional bool) *EventTask
 
 Optional if set to true\, the task will not fail the workflow if the task fails
 
-## type [ForkTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/fork_join.go#L16-L19>)
+## type [ForkTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/fork_join.go#L16-L19>)
 
 ```go
 type ForkTask struct {
@@ -566,7 +566,7 @@ type ForkTask struct {
 }
 ```
 
-### func [NewForkTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/fork_join.go#L46>)
+### func [NewForkTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/fork_join.go#L46>)
 
 ```go
 func NewForkTask(taskRefName string, forkedTask ...[]TaskInterface) *ForkTask
@@ -595,7 +595,7 @@ e.g. [[task1, task2],[task3, task4],[task5]] are executed as:
  (e.g. task2, task4 and task5 in the above example) to be completed.
 
 </pre>
-### func \(\*ForkTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/fork_join.go#L101>)
+### func \(\*ForkTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/fork_join.go#L101>)
 
 ```go
 func (task *ForkTask) Description(description string) *ForkTask
@@ -603,7 +603,7 @@ func (task *ForkTask) Description(description string) *ForkTask
 
 Description of the task
 
-### func \(\*ForkTask\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/fork_join.go#L81>)
+### func \(\*ForkTask\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/fork_join.go#L81>)
 
 ```go
 func (task *ForkTask) Input(key string, value interface{}) *ForkTask
@@ -611,7 +611,7 @@ func (task *ForkTask) Input(key string, value interface{}) *ForkTask
 
 Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*ForkTask\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/fork_join.go#L87>)
+### func \(\*ForkTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/fork_join.go#L87>)
 
 ```go
 func (task *ForkTask) InputMap(inputMap map[string]interface{}) *ForkTask
@@ -619,7 +619,7 @@ func (task *ForkTask) InputMap(inputMap map[string]interface{}) *ForkTask
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*ForkTask\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/fork_join.go#L95>)
+### func \(\*ForkTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/fork_join.go#L95>)
 
 ```go
 func (task *ForkTask) Optional(optional bool) *ForkTask
@@ -627,7 +627,7 @@ func (task *ForkTask) Optional(optional bool) *ForkTask
 
 Optional if set to true\, the task will not fail the workflow if one of the loop task fails
 
-## type [HttpInput](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/http.go#L47-L56>)
+## type [HttpInput](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/http.go#L47-L56>)
 
 HttpInput Input to the HTTP task
 
@@ -644,7 +644,7 @@ type HttpInput struct {
 }
 ```
 
-## type [HttpMethod](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/http.go#L16>)
+## type [HttpMethod](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/http.go#L16>)
 
 ```go
 type HttpMethod string
@@ -661,7 +661,7 @@ const (
 )
 ```
 
-## type [HttpTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/http.go#L12-L14>)
+## type [HttpTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/http.go#L12-L14>)
 
 ```go
 type HttpTask struct {
@@ -669,7 +669,7 @@ type HttpTask struct {
 }
 ```
 
-### func [NewHttpTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/http.go#L28>)
+### func [NewHttpTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/http.go#L28>)
 
 ```go
 func NewHttpTask(taskRefName string, input *HttpInput) *HttpTask
@@ -677,7 +677,7 @@ func NewHttpTask(taskRefName string, input *HttpInput) *HttpTask
 
 NewHttpTask Create a new HTTP Task
 
-### func \(\*HttpTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/http.go#L79>)
+### func \(\*HttpTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/http.go#L79>)
 
 ```go
 func (task *HttpTask) Description(description string) *HttpTask
@@ -685,7 +685,7 @@ func (task *HttpTask) Description(description string) *HttpTask
 
 Description of the task
 
-### func \(\*HttpTask\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/http.go#L59>)
+### func \(\*HttpTask\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/http.go#L59>)
 
 ```go
 func (task *HttpTask) Input(key string, value interface{}) *HttpTask
@@ -693,7 +693,7 @@ func (task *HttpTask) Input(key string, value interface{}) *HttpTask
 
 Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*HttpTask\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/http.go#L65>)
+### func \(\*HttpTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/http.go#L65>)
 
 ```go
 func (task *HttpTask) InputMap(inputMap map[string]interface{}) *HttpTask
@@ -701,7 +701,7 @@ func (task *HttpTask) InputMap(inputMap map[string]interface{}) *HttpTask
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*HttpTask\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/http.go#L73>)
+### func \(\*HttpTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/http.go#L73>)
 
 ```go
 func (task *HttpTask) Optional(optional bool) *HttpTask
@@ -709,7 +709,7 @@ func (task *HttpTask) Optional(optional bool) *HttpTask
 
 Optional if set to true\, the task will not fail the workflow if the task fails
 
-## type [HumanTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/human.go#L12-L14>)
+## type [HumanTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/human.go#L12-L14>)
 
 ```go
 type HumanTask struct {
@@ -717,13 +717,13 @@ type HumanTask struct {
 }
 ```
 
-### func [NewHumanTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/human.go#L16>)
+### func [NewHumanTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/human.go#L16>)
 
 ```go
 func NewHumanTask(taskRefName string) *HumanTask
 ```
 
-### func \(\*HumanTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/human.go#L48>)
+### func \(\*HumanTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/human.go#L48>)
 
 ```go
 func (task *HumanTask) Description(description string) *HumanTask
@@ -731,7 +731,7 @@ func (task *HumanTask) Description(description string) *HumanTask
 
 Description of the task
 
-### func \(\*HumanTask\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/human.go#L28>)
+### func \(\*HumanTask\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/human.go#L28>)
 
 ```go
 func (task *HumanTask) Input(key string, value interface{}) *HumanTask
@@ -739,7 +739,7 @@ func (task *HumanTask) Input(key string, value interface{}) *HumanTask
 
 Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*HumanTask\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/human.go#L34>)
+### func \(\*HumanTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/human.go#L34>)
 
 ```go
 func (task *HumanTask) InputMap(inputMap map[string]interface{}) *HumanTask
@@ -747,7 +747,7 @@ func (task *HumanTask) InputMap(inputMap map[string]interface{}) *HumanTask
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*HumanTask\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/human.go#L42>)
+### func \(\*HumanTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/human.go#L42>)
 
 ```go
 func (task *HumanTask) Optional(optional bool) *HumanTask
@@ -755,7 +755,7 @@ func (task *HumanTask) Optional(optional bool) *HumanTask
 
 Optional if set to true\, the task will not fail the workflow if the task fails
 
-## type [InlineTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/inline.go#L12-L14>)
+## type [InlineTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/inline.go#L12-L14>)
 
 ```go
 type InlineTask struct {
@@ -763,13 +763,13 @@ type InlineTask struct {
 }
 ```
 
-### func [NewInlineTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/inline.go#L20>)
+### func [NewInlineTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/inline.go#L20>)
 
 ```go
 func NewInlineTask(name string, script string) *InlineTask
 ```
 
-### func \(\*InlineTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/inline.go#L55>)
+### func \(\*InlineTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/inline.go#L55>)
 
 ```go
 func (task *InlineTask) Description(description string) *InlineTask
@@ -777,7 +777,7 @@ func (task *InlineTask) Description(description string) *InlineTask
 
 Description of the task
 
-### func \(\*InlineTask\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/inline.go#L35>)
+### func \(\*InlineTask\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/inline.go#L35>)
 
 ```go
 func (task *InlineTask) Input(key string, value interface{}) *InlineTask
@@ -785,7 +785,7 @@ func (task *InlineTask) Input(key string, value interface{}) *InlineTask
 
 Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*InlineTask\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/inline.go#L41>)
+### func \(\*InlineTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/inline.go#L41>)
 
 ```go
 func (task *InlineTask) InputMap(inputMap map[string]interface{}) *InlineTask
@@ -793,7 +793,7 @@ func (task *InlineTask) InputMap(inputMap map[string]interface{}) *InlineTask
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*InlineTask\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/inline.go#L49>)
+### func \(\*InlineTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/inline.go#L49>)
 
 ```go
 func (task *InlineTask) Optional(optional bool) *InlineTask
@@ -801,7 +801,7 @@ func (task *InlineTask) Optional(optional bool) *InlineTask
 
 Optional if set to true\, the task will not fail the workflow if the task fails
 
-## type [JQTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/json_jq.go#L12-L14>)
+## type [JQTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/json_jq.go#L12-L14>)
 
 ```go
 type JQTask struct {
@@ -809,13 +809,13 @@ type JQTask struct {
 }
 ```
 
-### func [NewJQTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/json_jq.go#L16>)
+### func [NewJQTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/json_jq.go#L16>)
 
 ```go
 func NewJQTask(name string, script string) *JQTask
 ```
 
-### func \(\*JQTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/json_jq.go#L50>)
+### func \(\*JQTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/json_jq.go#L50>)
 
 ```go
 func (task *JQTask) Description(description string) *JQTask
@@ -823,7 +823,7 @@ func (task *JQTask) Description(description string) *JQTask
 
 Description of the task
 
-### func \(\*JQTask\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/json_jq.go#L30>)
+### func \(\*JQTask\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/json_jq.go#L30>)
 
 ```go
 func (task *JQTask) Input(key string, value interface{}) *JQTask
@@ -831,7 +831,7 @@ func (task *JQTask) Input(key string, value interface{}) *JQTask
 
 Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*JQTask\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/json_jq.go#L36>)
+### func \(\*JQTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/json_jq.go#L36>)
 
 ```go
 func (task *JQTask) InputMap(inputMap map[string]interface{}) *JQTask
@@ -839,7 +839,7 @@ func (task *JQTask) InputMap(inputMap map[string]interface{}) *JQTask
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*JQTask\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/json_jq.go#L44>)
+### func \(\*JQTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/json_jq.go#L44>)
 
 ```go
 func (task *JQTask) Optional(optional bool) *JQTask
@@ -847,7 +847,7 @@ func (task *JQTask) Optional(optional bool) *JQTask
 
 Optional if set to true\, the task will not fail the workflow if the task fails
 
-## type [JoinTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/join.go#L16-L19>)
+## type [JoinTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/join.go#L16-L19>)
 
 ```go
 type JoinTask struct {
@@ -856,13 +856,13 @@ type JoinTask struct {
 }
 ```
 
-### func [NewJoinTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/join.go#L21>)
+### func [NewJoinTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/join.go#L21>)
 
 ```go
 func NewJoinTask(taskRefName string, joinOn ...string) *JoinTask
 ```
 
-### func \(\*JoinTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/join.go#L48>)
+### func \(\*JoinTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/join.go#L48>)
 
 ```go
 func (task *JoinTask) Description(description string) *JoinTask
@@ -870,7 +870,7 @@ func (task *JoinTask) Description(description string) *JoinTask
 
 Description of the task
 
-### func \(\*JoinTask\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/join.go#L42>)
+### func \(\*JoinTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/join.go#L42>)
 
 ```go
 func (task *JoinTask) Optional(optional bool) *JoinTask
@@ -878,7 +878,7 @@ func (task *JoinTask) Optional(optional bool) *JoinTask
 
 Optional if set to true\, the task will not fail the workflow if the task fails
 
-## type [KafkaPublishTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/kafka_publish.go#L12-L14>)
+## type [KafkaPublishTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/kafka_publish.go#L12-L14>)
 
 ```go
 type KafkaPublishTask struct {
@@ -886,13 +886,13 @@ type KafkaPublishTask struct {
 }
 ```
 
-### func [NewKafkaPublishTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/kafka_publish.go#L27>)
+### func [NewKafkaPublishTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/kafka_publish.go#L27>)
 
 ```go
 func NewKafkaPublishTask(taskRefName string, kafkaPublishTaskInput *KafkaPublishTaskInput) *KafkaPublishTask
 ```
 
-### func \(\*KafkaPublishTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/kafka_publish.go#L61>)
+### func \(\*KafkaPublishTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/kafka_publish.go#L61>)
 
 ```go
 func (task *KafkaPublishTask) Description(description string) *KafkaPublishTask
@@ -900,7 +900,7 @@ func (task *KafkaPublishTask) Description(description string) *KafkaPublishTask
 
 Description of the task
 
-### func \(\*KafkaPublishTask\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/kafka_publish.go#L41>)
+### func \(\*KafkaPublishTask\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/kafka_publish.go#L41>)
 
 ```go
 func (task *KafkaPublishTask) Input(key string, value interface{}) *KafkaPublishTask
@@ -908,7 +908,7 @@ func (task *KafkaPublishTask) Input(key string, value interface{}) *KafkaPublish
 
 Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*KafkaPublishTask\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/kafka_publish.go#L47>)
+### func \(\*KafkaPublishTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/kafka_publish.go#L47>)
 
 ```go
 func (task *KafkaPublishTask) InputMap(inputMap map[string]interface{}) *KafkaPublishTask
@@ -916,7 +916,7 @@ func (task *KafkaPublishTask) InputMap(inputMap map[string]interface{}) *KafkaPu
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*KafkaPublishTask\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/kafka_publish.go#L55>)
+### func \(\*KafkaPublishTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/kafka_publish.go#L55>)
 
 ```go
 func (task *KafkaPublishTask) Optional(optional bool) *KafkaPublishTask
@@ -924,7 +924,7 @@ func (task *KafkaPublishTask) Optional(optional bool) *KafkaPublishTask
 
 Optional if set to true\, the task will not fail the workflow if the task fails
 
-## type [KafkaPublishTaskInput](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/kafka_publish.go#L16-L25>)
+## type [KafkaPublishTaskInput](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/kafka_publish.go#L16-L25>)
 
 ```go
 type KafkaPublishTaskInput struct {
@@ -939,7 +939,7 @@ type KafkaPublishTaskInput struct {
 }
 ```
 
-## type [SetVariableTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/set_variable.go#L12-L14>)
+## type [SetVariableTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/set_variable.go#L12-L14>)
 
 ```go
 type SetVariableTask struct {
@@ -947,13 +947,13 @@ type SetVariableTask struct {
 }
 ```
 
-### func [NewSetVariableTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/set_variable.go#L16>)
+### func [NewSetVariableTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/set_variable.go#L16>)
 
 ```go
 func NewSetVariableTask(taskRefName string) *SetVariableTask
 ```
 
-### func \(\*SetVariableTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/set_variable.go#L50>)
+### func \(\*SetVariableTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/set_variable.go#L50>)
 
 ```go
 func (task *SetVariableTask) Description(description string) *SetVariableTask
@@ -961,7 +961,7 @@ func (task *SetVariableTask) Description(description string) *SetVariableTask
 
 Description of the task
 
-### func \(\*SetVariableTask\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/set_variable.go#L30>)
+### func \(\*SetVariableTask\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/set_variable.go#L30>)
 
 ```go
 func (task *SetVariableTask) Input(key string, value interface{}) *SetVariableTask
@@ -969,7 +969,7 @@ func (task *SetVariableTask) Input(key string, value interface{}) *SetVariableTa
 
 Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*SetVariableTask\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/set_variable.go#L36>)
+### func \(\*SetVariableTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/set_variable.go#L36>)
 
 ```go
 func (task *SetVariableTask) InputMap(inputMap map[string]interface{}) *SetVariableTask
@@ -977,7 +977,7 @@ func (task *SetVariableTask) InputMap(inputMap map[string]interface{}) *SetVaria
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*SetVariableTask\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/set_variable.go#L44>)
+### func \(\*SetVariableTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/set_variable.go#L44>)
 
 ```go
 func (task *SetVariableTask) Optional(optional bool) *SetVariableTask
@@ -985,7 +985,7 @@ func (task *SetVariableTask) Optional(optional bool) *SetVariableTask
 
 Optional if set to true\, the task will not fail the workflow if the task fails
 
-## type [SimpleTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/simple.go#L12-L14>)
+## type [SimpleTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/simple.go#L12-L14>)
 
 ```go
 type SimpleTask struct {
@@ -993,13 +993,13 @@ type SimpleTask struct {
 }
 ```
 
-### func [NewSimpleTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/simple.go#L16>)
+### func [NewSimpleTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/simple.go#L16>)
 
 ```go
 func NewSimpleTask(taskType string, taskRefName string) *SimpleTask
 ```
 
-### func \(\*SimpleTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/simple.go#L48>)
+### func \(\*SimpleTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/simple.go#L48>)
 
 ```go
 func (task *SimpleTask) Description(description string) *SimpleTask
@@ -1007,7 +1007,7 @@ func (task *SimpleTask) Description(description string) *SimpleTask
 
 Description of the task
 
-### func \(\*SimpleTask\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/simple.go#L28>)
+### func \(\*SimpleTask\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/simple.go#L28>)
 
 ```go
 func (task *SimpleTask) Input(key string, value interface{}) *SimpleTask
@@ -1015,7 +1015,7 @@ func (task *SimpleTask) Input(key string, value interface{}) *SimpleTask
 
 Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*SimpleTask\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/simple.go#L34>)
+### func \(\*SimpleTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/simple.go#L34>)
 
 ```go
 func (task *SimpleTask) InputMap(inputMap map[string]interface{}) *SimpleTask
@@ -1023,7 +1023,7 @@ func (task *SimpleTask) InputMap(inputMap map[string]interface{}) *SimpleTask
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*SimpleTask\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/simple.go#L42>)
+### func \(\*SimpleTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/simple.go#L42>)
 
 ```go
 func (task *SimpleTask) Optional(optional bool) *SimpleTask
@@ -1031,7 +1031,7 @@ func (task *SimpleTask) Optional(optional bool) *SimpleTask
 
 Optional if set to true\, the task will not fail the workflow if the task fails
 
-## type [StartWorkflowTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/start_workflow.go#L16-L18>)
+## type [StartWorkflowTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/start_workflow.go#L16-L18>)
 
 ```go
 type StartWorkflowTask struct {
@@ -1039,13 +1039,13 @@ type StartWorkflowTask struct {
 }
 ```
 
-### func [NewStartWorkflowTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/start_workflow.go#L20>)
+### func [NewStartWorkflowTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/start_workflow.go#L20>)
 
 ```go
 func NewStartWorkflowTask(taskRefName string, workflowName string, version *int32, startWorkflowRequest *model.StartWorkflowRequest) *StartWorkflowTask
 ```
 
-### func \(\*StartWorkflowTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/start_workflow.go#L46>)
+### func \(\*StartWorkflowTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/start_workflow.go#L46>)
 
 ```go
 func (task *StartWorkflowTask) Description(description string) *StartWorkflowTask
@@ -1053,7 +1053,7 @@ func (task *StartWorkflowTask) Description(description string) *StartWorkflowTas
 
 Description of the task
 
-### func \(\*StartWorkflowTask\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/start_workflow.go#L58>)
+### func \(\*StartWorkflowTask\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/start_workflow.go#L58>)
 
 ```go
 func (task *StartWorkflowTask) Input(key string, value interface{}) *StartWorkflowTask
@@ -1061,7 +1061,7 @@ func (task *StartWorkflowTask) Input(key string, value interface{}) *StartWorkfl
 
 Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*StartWorkflowTask\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/start_workflow.go#L64>)
+### func \(\*StartWorkflowTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/start_workflow.go#L64>)
 
 ```go
 func (task *StartWorkflowTask) InputMap(inputMap map[string]interface{}) *StartWorkflowTask
@@ -1069,7 +1069,7 @@ func (task *StartWorkflowTask) InputMap(inputMap map[string]interface{}) *StartW
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*StartWorkflowTask\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/start_workflow.go#L52>)
+### func \(\*StartWorkflowTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/start_workflow.go#L52>)
 
 ```go
 func (task *StartWorkflowTask) Optional(optional bool) *StartWorkflowTask
@@ -1077,7 +1077,7 @@ func (task *StartWorkflowTask) Optional(optional bool) *StartWorkflowTask
 
 Optional if set to true\, the task will not fail the workflow if the task fails
 
-## type [SubWorkflowTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/sub_workflow.go#L16-L22>)
+## type [SubWorkflowTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/sub_workflow.go#L16-L22>)
 
 ```go
 type SubWorkflowTask struct {
@@ -1086,19 +1086,19 @@ type SubWorkflowTask struct {
 }
 ```
 
-### func [NewSubWorkflowInlineTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/sub_workflow.go#L39>)
+### func [NewSubWorkflowInlineTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/sub_workflow.go#L39>)
 
 ```go
 func NewSubWorkflowInlineTask(taskRefName string, workflow *ConductorWorkflow) *SubWorkflowTask
 ```
 
-### func [NewSubWorkflowTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/sub_workflow.go#L24>)
+### func [NewSubWorkflowTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/sub_workflow.go#L24>)
 
 ```go
 func NewSubWorkflowTask(taskRefName string, workflowName string, version *int32) *SubWorkflowTask
 ```
 
-### func \(\*SubWorkflowTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/sub_workflow.go#L77>)
+### func \(\*SubWorkflowTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/sub_workflow.go#L77>)
 
 ```go
 func (task *SubWorkflowTask) Description(description string) *SubWorkflowTask
@@ -1106,7 +1106,7 @@ func (task *SubWorkflowTask) Description(description string) *SubWorkflowTask
 
 Description of the task
 
-### func \(\*SubWorkflowTask\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/sub_workflow.go#L89>)
+### func \(\*SubWorkflowTask\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/sub_workflow.go#L89>)
 
 ```go
 func (task *SubWorkflowTask) Input(key string, value interface{}) *SubWorkflowTask
@@ -1114,7 +1114,7 @@ func (task *SubWorkflowTask) Input(key string, value interface{}) *SubWorkflowTa
 
 Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*SubWorkflowTask\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/sub_workflow.go#L95>)
+### func \(\*SubWorkflowTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/sub_workflow.go#L95>)
 
 ```go
 func (task *SubWorkflowTask) InputMap(inputMap map[string]interface{}) *SubWorkflowTask
@@ -1122,7 +1122,7 @@ func (task *SubWorkflowTask) InputMap(inputMap map[string]interface{}) *SubWorkf
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*SubWorkflowTask\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/sub_workflow.go#L83>)
+### func \(\*SubWorkflowTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/sub_workflow.go#L83>)
 
 ```go
 func (task *SubWorkflowTask) Optional(optional bool) *SubWorkflowTask
@@ -1130,13 +1130,13 @@ func (task *SubWorkflowTask) Optional(optional bool) *SubWorkflowTask
 
 Optional if set to true\, the task will not fail the workflow if the task fails
 
-### func \(\*SubWorkflowTask\) [TaskToDomain](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/sub_workflow.go#L53>)
+### func \(\*SubWorkflowTask\) [TaskToDomain](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/sub_workflow.go#L53>)
 
 ```go
 func (task *SubWorkflowTask) TaskToDomain(taskToDomainMap map[string]string) *SubWorkflowTask
 ```
 
-## type [SwitchTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/switch.go#L16-L23>)
+## type [SwitchTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/switch.go#L16-L23>)
 
 ```go
 type SwitchTask struct {
@@ -1146,19 +1146,19 @@ type SwitchTask struct {
 }
 ```
 
-### func [NewSwitchTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/switch.go#L25>)
+### func [NewSwitchTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/switch.go#L25>)
 
 ```go
 func NewSwitchTask(taskRefName string, caseExpression string) *SwitchTask
 ```
 
-### func \(\*SwitchTask\) [DefaultCase](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/switch.go#L47>)
+### func \(\*SwitchTask\) [DefaultCase](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/switch.go#L47>)
 
 ```go
 func (task *SwitchTask) DefaultCase(tasks ...TaskInterface) *SwitchTask
 ```
 
-### func \(\*SwitchTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/switch.go#L97>)
+### func \(\*SwitchTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/switch.go#L97>)
 
 ```go
 func (task *SwitchTask) Description(description string) *SwitchTask
@@ -1166,7 +1166,7 @@ func (task *SwitchTask) Description(description string) *SwitchTask
 
 Description of the task
 
-### func \(\*SwitchTask\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/switch.go#L83>)
+### func \(\*SwitchTask\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/switch.go#L83>)
 
 ```go
 func (task *SwitchTask) Input(key string, value interface{}) *SwitchTask
@@ -1174,7 +1174,7 @@ func (task *SwitchTask) Input(key string, value interface{}) *SwitchTask
 
 Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*SwitchTask\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/switch.go#L89>)
+### func \(\*SwitchTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/switch.go#L89>)
 
 ```go
 func (task *SwitchTask) InputMap(inputMap map[string]interface{}) *SwitchTask
@@ -1182,7 +1182,7 @@ func (task *SwitchTask) InputMap(inputMap map[string]interface{}) *SwitchTask
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*SwitchTask\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/switch.go#L103>)
+### func \(\*SwitchTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/switch.go#L103>)
 
 ```go
 func (task *SwitchTask) Optional(optional bool) *SwitchTask
@@ -1190,13 +1190,13 @@ func (task *SwitchTask) Optional(optional bool) *SwitchTask
 
 Optional if set to true\, the task will not fail the workflow if the task fails
 
-### func \(\*SwitchTask\) [SwitchCase](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/switch.go#L43>)
+### func \(\*SwitchTask\) [SwitchCase](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/switch.go#L43>)
 
 ```go
 func (task *SwitchTask) SwitchCase(caseName string, tasks ...TaskInterface) *SwitchTask
 ```
 
-### func \(\*SwitchTask\) [UseJavascript](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/switch.go#L110>)
+### func \(\*SwitchTask\) [UseJavascript](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/switch.go#L110>)
 
 ```go
 func (task *SwitchTask) UseJavascript(use bool) *SwitchTask
@@ -1204,7 +1204,7 @@ func (task *SwitchTask) UseJavascript(use bool) *SwitchTask
 
 UseJavascript If set to to true\, the caseExpression parameter is treated as a Javascript\. If set to false\, the caseExpression follows the regular task input mapping format as described in https://conductor.netflix.com/how-tos/Tasks/task-inputs.html
 
-## type [Task](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/task.go#L46-L53>)
+## type [Task](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/task.go#L46-L53>)
 
 ```go
 type Task struct {
@@ -1212,7 +1212,7 @@ type Task struct {
 }
 ```
 
-### func \(\*Task\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/task.go#L105>)
+### func \(\*Task\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/task.go#L105>)
 
 ```go
 func (task *Task) Description(description string) *Task
@@ -1220,7 +1220,7 @@ func (task *Task) Description(description string) *Task
 
 Description of the task
 
-### func \(\*Task\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/task.go#L91>)
+### func \(\*Task\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/task.go#L91>)
 
 ```go
 func (task *Task) Input(key string, value interface{}) *Task
@@ -1228,7 +1228,7 @@ func (task *Task) Input(key string, value interface{}) *Task
 
 Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*Task\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/task.go#L97>)
+### func \(\*Task\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/task.go#L97>)
 
 ```go
 func (task *Task) InputMap(inputMap map[string]interface{}) *Task
@@ -1236,7 +1236,7 @@ func (task *Task) InputMap(inputMap map[string]interface{}) *Task
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*Task\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/task.go#L111>)
+### func \(\*Task\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/task.go#L111>)
 
 ```go
 func (task *Task) Optional(optional bool) *Task
@@ -1244,25 +1244,25 @@ func (task *Task) Optional(optional bool) *Task
 
 Optional if set to true\, the task will not fail the workflow if the task fails
 
-### func \(\*Task\) [OutputRef](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/task.go#L78>)
+### func \(\*Task\) [OutputRef](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/task.go#L78>)
 
 ```go
 func (task *Task) OutputRef(path string) string
 ```
 
-### func \(\*Task\) [ReferenceName](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/task.go#L75>)
+### func \(\*Task\) [ReferenceName](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/task.go#L75>)
 
 ```go
 func (task *Task) ReferenceName() string
 ```
 
-### func \(\*Task\) [ToTaskDef](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/task.go#L68>)
+### func \(\*Task\) [ToTaskDef](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/task.go#L68>)
 
 ```go
 func (task *Task) ToTaskDef() *model.TaskDef
 ```
 
-## type [TaskInterface](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/task.go#L40-L44>)
+## type [TaskInterface](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/task.go#L40-L44>)
 
 ```go
 type TaskInterface interface {
@@ -1272,7 +1272,7 @@ type TaskInterface interface {
 }
 ```
 
-## type [TaskType](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/task.go#L17>)
+## type [TaskType](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/task.go#L17>)
 
 ```go
 type TaskType string
@@ -1301,7 +1301,7 @@ const (
 )
 ```
 
-## type [TerminateTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/terminate.go#L16-L18>)
+## type [TerminateTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/terminate.go#L16-L18>)
 
 ```go
 type TerminateTask struct {
@@ -1309,13 +1309,13 @@ type TerminateTask struct {
 }
 ```
 
-### func [NewTerminateTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/terminate.go#L20>)
+### func [NewTerminateTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/terminate.go#L20>)
 
 ```go
 func NewTerminateTask(taskRefName string, status model.WorkflowStatus, terminationReason string) *TerminateTask
 ```
 
-### func \(\*TerminateTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/terminate.go#L37>)
+### func \(\*TerminateTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/terminate.go#L37>)
 
 ```go
 func (task *TerminateTask) Description(description string) *TerminateTask
@@ -1323,7 +1323,7 @@ func (task *TerminateTask) Description(description string) *TerminateTask
 
 Description of the task
 
-### func \(\*TerminateTask\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/terminate.go#L43>)
+### func \(\*TerminateTask\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/terminate.go#L43>)
 
 ```go
 func (task *TerminateTask) Input(key string, value interface{}) *TerminateTask
@@ -1331,7 +1331,7 @@ func (task *TerminateTask) Input(key string, value interface{}) *TerminateTask
 
 Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*TerminateTask\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/terminate.go#L49>)
+### func \(\*TerminateTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/terminate.go#L49>)
 
 ```go
 func (task *TerminateTask) InputMap(inputMap map[string]interface{}) *TerminateTask
@@ -1339,7 +1339,7 @@ func (task *TerminateTask) InputMap(inputMap map[string]interface{}) *TerminateT
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-## type [TimeoutPolicy](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/workflow.go#L19>)
+## type [TimeoutPolicy](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L19>)
 
 ```go
 type TimeoutPolicy string
@@ -1352,7 +1352,7 @@ const (
 )
 ```
 
-## type [WaitTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/wait.go#L16-L18>)
+## type [WaitTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/wait.go#L16-L18>)
 
 ```go
 type WaitTask struct {
@@ -1360,13 +1360,13 @@ type WaitTask struct {
 }
 ```
 
-### func [NewWaitForDurationTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/wait.go#L33>)
+### func [NewWaitForDurationTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/wait.go#L33>)
 
 ```go
 func NewWaitForDurationTask(taskRefName string, duration time.Duration) *WaitTask
 ```
 
-### func [NewWaitTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/wait.go#L21>)
+### func [NewWaitTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/wait.go#L21>)
 
 ```go
 func NewWaitTask(taskRefName string) *WaitTask
@@ -1374,13 +1374,13 @@ func NewWaitTask(taskRefName string) *WaitTask
 
 NewWaitTask creates WAIT task used to wait until an external event or a timeout occurs
 
-### func [NewWaitUntilTask](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/wait.go#L48>)
+### func [NewWaitUntilTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/wait.go#L48>)
 
 ```go
 func NewWaitUntilTask(taskRefName string, dateTime string) *WaitTask
 ```
 
-### func \(\*WaitTask\) [Description](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/wait.go#L64>)
+### func \(\*WaitTask\) [Description](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/wait.go#L64>)
 
 ```go
 func (task *WaitTask) Description(description string) *WaitTask
@@ -1388,7 +1388,7 @@ func (task *WaitTask) Description(description string) *WaitTask
 
 Description of the task
 
-### func \(\*WaitTask\) [Input](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/wait.go#L76>)
+### func \(\*WaitTask\) [Input](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/wait.go#L76>)
 
 ```go
 func (task *WaitTask) Input(key string, value interface{}) *WaitTask
@@ -1396,7 +1396,7 @@ func (task *WaitTask) Input(key string, value interface{}) *WaitTask
 
 Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*WaitTask\) [InputMap](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/wait.go#L82>)
+### func \(\*WaitTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/wait.go#L82>)
 
 ```go
 func (task *WaitTask) InputMap(inputMap map[string]interface{}) *WaitTask
@@ -1404,7 +1404,7 @@ func (task *WaitTask) InputMap(inputMap map[string]interface{}) *WaitTask
 
 InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
 
-### func \(\*WaitTask\) [Optional](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/wait.go#L70>)
+### func \(\*WaitTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/wait.go#L70>)
 
 ```go
 func (task *WaitTask) Optional(optional bool) *WaitTask

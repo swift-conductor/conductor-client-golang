@@ -16,13 +16,13 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/conductor-sdk/conductor-go/sdk/authentication"
-	"github.com/conductor-sdk/conductor-go/sdk/client"
-	"github.com/conductor-sdk/conductor-go/sdk/model"
-	"github.com/conductor-sdk/conductor-go/sdk/settings"
-	"github.com/conductor-sdk/conductor-go/sdk/worker"
-	"github.com/conductor-sdk/conductor-go/sdk/workflow"
-	"github.com/conductor-sdk/conductor-go/sdk/workflow/executor"
+	"github.com/swift-conductor/conductor-client-golang/sdk/authentication"
+	"github.com/swift-conductor/conductor-client-golang/sdk/client"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
+	"github.com/swift-conductor/conductor-client-golang/sdk/worker"
+	"github.com/swift-conductor/conductor-client-golang/sdk/workflow"
+	"github.com/swift-conductor/conductor-client-golang/sdk/workflow/executor"
 
 	log "github.com/sirupsen/logrus"
 )

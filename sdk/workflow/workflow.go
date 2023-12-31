@@ -12,8 +12,8 @@ package workflow
 import (
 	"encoding/json"
 
-	"github.com/conductor-sdk/conductor-go/sdk/model"
-	"github.com/conductor-sdk/conductor-go/sdk/workflow/executor"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/workflow/executor"
 	log "github.com/sirupsen/logrus"
 )
 

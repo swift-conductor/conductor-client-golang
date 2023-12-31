@@ -89,4 +89,4 @@ See [Docs](docs/executor.md) for APIs to start, pause, resume, terminate, search
 ### More Examples
 You can find more examples at the following GitHub repository:
 
-https://github.com/conductor-sdk/conductor-examples/tree/main/go-samples
+https://github.com/swift-conductor/conductor-examples/tree/main/go-samples

@@ -29,8 +29,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/conductor-sdk/conductor-go/sdk/authentication"
-	"github.com/conductor-sdk/conductor-go/sdk/settings"
+	"github.com/swift-conductor/conductor-client-golang/sdk/authentication"
+	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
 	"github.com/sirupsen/logrus"
 )
 
