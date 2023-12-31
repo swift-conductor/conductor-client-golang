@@ -79,13 +79,13 @@ func (task *SwitchTask) toWorkflowTask() []model.WorkflowTask {
 	return workflowTasks
 }
 
-// Input to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *SwitchTask) Input(key string, value interface{}) *SwitchTask {
 	task.Task.Input(key, value)
 	return task
 }
 
-// InputMap to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// InputMap to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *SwitchTask) InputMap(inputMap map[string]interface{}) *SwitchTask {
 	for k, v := range inputMap {
 		task.inputParameters[k] = v
@@ -106,7 +106,7 @@ func (task *SwitchTask) Optional(optional bool) *SwitchTask {
 }
 
 // UseJavascript If set to to true, the caseExpression parameter is treated as a Javascript.
-// If set to false, the caseExpression follows the regular task input mapping format as described in https://conductor.netflix.com/how-tos/Tasks/task-inputs.html
+// If set to false, the caseExpression follows the regular task input mapping format as described in https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html
 func (task *SwitchTask) UseJavascript(use bool) *SwitchTask {
 	task.useJavascript = use
 	return task

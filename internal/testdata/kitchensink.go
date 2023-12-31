@@ -95,7 +95,7 @@ func NewKitchenSinkWorkflow(executor *executor.WorkflowExecutor) *workflow.Condu
 	workflow := workflow.NewConductorWorkflow(executor).
 		Name("sdk_kitchen_sink2").
 		Version(1).
-		OwnerEmail("orkes-workers@apps.orkes.io").
+		OwnerEmail("hello@swiftsoftwaregroup.com").
 		Add(task).
 		Add(jqTask).
 		Add(graalTask).
@@ -165,7 +165,7 @@ func GetWorkflowWithComplexSwitchTask() *workflow.ConductorWorkflow {
 			httpTask := workflow.NewHttpTask(
 				fmt.Sprintf("ComplexSwitchTaskGoSDK-%d-%d", i, j),
 				&workflow.HttpInput{
-					Uri: "https://orkes-api-tester.orkesconductor.com/get",
+					Uri: "http://swiftconductor.com",
 				},
 			)
 			subtasks = append(subtasks, httpTask)
@@ -174,7 +174,7 @@ func GetWorkflowWithComplexSwitchTask() *workflow.ConductorWorkflow {
 	}
 	return workflow.NewConductorWorkflow(WorkflowExecutor).
 		Name("ComplexSwitchWorkflowGoSDK").
-		OwnerEmail("test@orkes.io").
+		OwnerEmail("hello@swiftsoftwaregroup.com").
 		Version(1).
 		Add(task)
 }

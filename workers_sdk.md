@@ -68,12 +68,8 @@ func LongRunningTaskWorker(t *model.Task) (interface{}, error) {
 
 ```go
 apiClient := client.NewAPIClient(
-    settings.NewAuthenticationSettings(
-        KEY,
-        SECRET,
-    ),
     settings.NewHttpSettings(
-    "https://play.orkes.io/api",
+    "http://localhost:8080/api",
 ))
 
 taskRunner := worker.NewTaskRunnerWithApiClient(apiClient)

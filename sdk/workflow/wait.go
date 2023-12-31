@@ -17,7 +17,7 @@ type WaitTask struct {
 	Task
 }
 
-//NewWaitTask creates WAIT task used to wait until an external event or a timeout occurs
+// NewWaitTask creates WAIT task used to wait until an external event or a timeout occurs
 func NewWaitTask(taskRefName string) *WaitTask {
 	return &WaitTask{
 		Task{
@@ -72,13 +72,13 @@ func (task *WaitTask) Optional(optional bool) *WaitTask {
 	return task
 }
 
-// Input to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *WaitTask) Input(key string, value interface{}) *WaitTask {
 	task.Task.Input(key, value)
 	return task
 }
 
-// InputMap to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// InputMap to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *WaitTask) InputMap(inputMap map[string]interface{}) *WaitTask {
 	for k, v := range inputMap {
 		task.inputParameters[k] = v

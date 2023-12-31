@@ -37,13 +37,13 @@ func NewKafkaPublishTask(taskRefName string, kafkaPublishTaskInput *KafkaPublish
 	}
 }
 
-// Input to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *KafkaPublishTask) Input(key string, value interface{}) *KafkaPublishTask {
 	task.Task.Input(key, value)
 	return task
 }
 
-// InputMap to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// InputMap to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *KafkaPublishTask) InputMap(inputMap map[string]interface{}) *KafkaPublishTask {
 	for k, v := range inputMap {
 		task.inputParameters[k] = v

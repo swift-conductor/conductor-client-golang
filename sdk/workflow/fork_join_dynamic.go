@@ -95,7 +95,7 @@ func (task *DynamicForkTask) Input(key string, value interface{}) *DynamicForkTa
 	return task
 }
 
-// InputMap to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// InputMap to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *DynamicForkTask) InputMap(inputMap map[string]interface{}) *DynamicForkTask {
 	for k, v := range inputMap {
 		task.inputParameters[k] = v

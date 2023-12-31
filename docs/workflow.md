@@ -245,7 +245,7 @@ func (workflow *ConductorWorkflow) Name(name string) *ConductorWorkflow
 func (workflow *ConductorWorkflow) OutputParameters(outputParameters interface{}) *ConductorWorkflow
 ```
 
-OutputParameters Workflow outputs\. Workflow output follows similar structure as task inputs See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for more details
+OutputParameters Workflow outputs\. Workflow output follows similar structure as task inputs See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for more details
 
 ### func \(\*ConductorWorkflow\) [OwnerEmail](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L118>)
 
@@ -368,7 +368,7 @@ Description of the task
 func (task *DoWhileTask) Input(key string, value interface{}) *DoWhileTask
 ```
 
-Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+Input to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*DoWhileTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/do_while.go#L91>)
 
@@ -376,7 +376,7 @@ Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs
 func (task *DoWhileTask) InputMap(inputMap map[string]interface{}) *DoWhileTask
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*DoWhileTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/do_while.go#L79>)
 
@@ -444,7 +444,7 @@ Input to the task
 func (task *DynamicForkTask) InputMap(inputMap map[string]interface{}) *DynamicForkTask
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*DynamicForkTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/fork_join_dynamic.go#L88>)
 
@@ -484,7 +484,7 @@ Description of the task
 func (task *DynamicTask) Input(key string, value interface{}) *DynamicTask
 ```
 
-Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+Input to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*DynamicTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/dynamic.go#L53>)
 
@@ -492,7 +492,7 @@ Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs
 func (task *DynamicTask) InputMap(inputMap map[string]interface{}) *DynamicTask
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*DynamicTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/dynamic.go#L61>)
 
@@ -547,7 +547,7 @@ Input to the task
 func (task *EventTask) InputMap(inputMap map[string]interface{}) *EventTask
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*EventTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/event.go#L75>)
 
@@ -609,7 +609,7 @@ Description of the task
 func (task *ForkTask) Input(key string, value interface{}) *ForkTask
 ```
 
-Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+Input to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*ForkTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/fork_join.go#L87>)
 
@@ -617,7 +617,7 @@ Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs
 func (task *ForkTask) InputMap(inputMap map[string]interface{}) *ForkTask
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*ForkTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/fork_join.go#L95>)
 
@@ -691,7 +691,7 @@ Description of the task
 func (task *HttpTask) Input(key string, value interface{}) *HttpTask
 ```
 
-Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+Input to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*HttpTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/http.go#L65>)
 
@@ -699,7 +699,7 @@ Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs
 func (task *HttpTask) InputMap(inputMap map[string]interface{}) *HttpTask
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*HttpTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/http.go#L73>)
 
@@ -737,7 +737,7 @@ Description of the task
 func (task *HumanTask) Input(key string, value interface{}) *HumanTask
 ```
 
-Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+Input to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*HumanTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/human.go#L34>)
 
@@ -745,7 +745,7 @@ Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs
 func (task *HumanTask) InputMap(inputMap map[string]interface{}) *HumanTask
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*HumanTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/human.go#L42>)
 
@@ -783,7 +783,7 @@ Description of the task
 func (task *InlineTask) Input(key string, value interface{}) *InlineTask
 ```
 
-Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+Input to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*InlineTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/inline.go#L41>)
 
@@ -791,7 +791,7 @@ Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs
 func (task *InlineTask) InputMap(inputMap map[string]interface{}) *InlineTask
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*InlineTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/inline.go#L49>)
 
@@ -829,7 +829,7 @@ Description of the task
 func (task *JQTask) Input(key string, value interface{}) *JQTask
 ```
 
-Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+Input to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*JQTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/json_jq.go#L36>)
 
@@ -837,7 +837,7 @@ Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs
 func (task *JQTask) InputMap(inputMap map[string]interface{}) *JQTask
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*JQTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/json_jq.go#L44>)
 
@@ -906,7 +906,7 @@ Description of the task
 func (task *KafkaPublishTask) Input(key string, value interface{}) *KafkaPublishTask
 ```
 
-Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+Input to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*KafkaPublishTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/kafka_publish.go#L47>)
 
@@ -914,7 +914,7 @@ Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs
 func (task *KafkaPublishTask) InputMap(inputMap map[string]interface{}) *KafkaPublishTask
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*KafkaPublishTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/kafka_publish.go#L55>)
 
@@ -967,7 +967,7 @@ Description of the task
 func (task *SetVariableTask) Input(key string, value interface{}) *SetVariableTask
 ```
 
-Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+Input to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*SetVariableTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/set_variable.go#L36>)
 
@@ -975,7 +975,7 @@ Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs
 func (task *SetVariableTask) InputMap(inputMap map[string]interface{}) *SetVariableTask
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*SetVariableTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/set_variable.go#L44>)
 
@@ -1013,7 +1013,7 @@ Description of the task
 func (task *SimpleTask) Input(key string, value interface{}) *SimpleTask
 ```
 
-Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+Input to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*SimpleTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/simple.go#L34>)
 
@@ -1021,7 +1021,7 @@ Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs
 func (task *SimpleTask) InputMap(inputMap map[string]interface{}) *SimpleTask
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*SimpleTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/simple.go#L42>)
 
@@ -1059,7 +1059,7 @@ Description of the task
 func (task *StartWorkflowTask) Input(key string, value interface{}) *StartWorkflowTask
 ```
 
-Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+Input to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*StartWorkflowTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/start_workflow.go#L64>)
 
@@ -1067,7 +1067,7 @@ Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs
 func (task *StartWorkflowTask) InputMap(inputMap map[string]interface{}) *StartWorkflowTask
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*StartWorkflowTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/start_workflow.go#L52>)
 
@@ -1112,7 +1112,7 @@ Description of the task
 func (task *SubWorkflowTask) Input(key string, value interface{}) *SubWorkflowTask
 ```
 
-Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+Input to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*SubWorkflowTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/sub_workflow.go#L95>)
 
@@ -1120,7 +1120,7 @@ Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs
 func (task *SubWorkflowTask) InputMap(inputMap map[string]interface{}) *SubWorkflowTask
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*SubWorkflowTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/sub_workflow.go#L83>)
 
@@ -1172,7 +1172,7 @@ Description of the task
 func (task *SwitchTask) Input(key string, value interface{}) *SwitchTask
 ```
 
-Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+Input to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*SwitchTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/switch.go#L89>)
 
@@ -1180,7 +1180,7 @@ Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs
 func (task *SwitchTask) InputMap(inputMap map[string]interface{}) *SwitchTask
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*SwitchTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/switch.go#L103>)
 
@@ -1202,7 +1202,7 @@ func (task *SwitchTask) SwitchCase(caseName string, tasks ...TaskInterface) *Swi
 func (task *SwitchTask) UseJavascript(use bool) *SwitchTask
 ```
 
-UseJavascript If set to to true\, the caseExpression parameter is treated as a Javascript\. If set to false\, the caseExpression follows the regular task input mapping format as described in https://conductor.netflix.com/how-tos/Tasks/task-inputs.html
+UseJavascript If set to to true\, the caseExpression parameter is treated as a Javascript\. If set to false\, the caseExpression follows the regular task input mapping format as described in https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html
 
 ## type [Task](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/task.go#L46-L53>)
 
@@ -1226,7 +1226,7 @@ Description of the task
 func (task *Task) Input(key string, value interface{}) *Task
 ```
 
-Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+Input to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*Task\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/task.go#L97>)
 
@@ -1234,7 +1234,7 @@ Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs
 func (task *Task) InputMap(inputMap map[string]interface{}) *Task
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*Task\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/task.go#L111>)
 
@@ -1329,7 +1329,7 @@ Description of the task
 func (task *TerminateTask) Input(key string, value interface{}) *TerminateTask
 ```
 
-Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+Input to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*TerminateTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/terminate.go#L49>)
 
@@ -1337,7 +1337,7 @@ Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs
 func (task *TerminateTask) InputMap(inputMap map[string]interface{}) *TerminateTask
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ## type [TimeoutPolicy](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L19>)
 
@@ -1394,7 +1394,7 @@ Description of the task
 func (task *WaitTask) Input(key string, value interface{}) *WaitTask
 ```
 
-Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+Input to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*WaitTask\) [InputMap](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/wait.go#L82>)
 
@@ -1402,7 +1402,7 @@ Input to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs
 func (task *WaitTask) InputMap(inputMap map[string]interface{}) *WaitTask
 ```
 
-InputMap to the task\.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+InputMap to the task\.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 
 ### func \(\*WaitTask\) [Optional](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/workflow/wait.go#L70>)
 

@@ -11,6 +11,7 @@ package workflow
 
 import (
 	"fmt"
+
 	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 )
 
@@ -87,13 +88,13 @@ func (task *Task) OutputRef(path string) string {
 //If not, the return type is a Task which makes it impossible to use fluent interface
 //For the tasks like Switch which has other methods too - quirks with Golang!
 
-// Input to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *Task) Input(key string, value interface{}) *Task {
 	task.inputParameters[key] = value
 	return task
 }
 
-// InputMap to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// InputMap to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *Task) InputMap(inputMap map[string]interface{}) *Task {
 	for k, v := range inputMap {
 		task.inputParameters[k] = v

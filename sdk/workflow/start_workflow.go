@@ -54,13 +54,13 @@ func (task *StartWorkflowTask) Optional(optional bool) *StartWorkflowTask {
 	return task
 }
 
-// Input to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *StartWorkflowTask) Input(key string, value interface{}) *StartWorkflowTask {
 	task.Task.Input(key, value)
 	return task
 }
 
-// InputMap to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// InputMap to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *StartWorkflowTask) InputMap(inputMap map[string]interface{}) *StartWorkflowTask {
 	for k, v := range inputMap {
 		task.inputParameters[k] = v

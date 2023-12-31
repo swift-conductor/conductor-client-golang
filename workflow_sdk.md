@@ -6,12 +6,8 @@
 
 //API client instance with server address and authentication details
 apiClient := client.NewAPIClient(
-    settings.NewAuthenticationSettings(
-        KEY,
-        SECRET,
-    ),
     settings.NewHttpSettings(
-        "https://play.orkes.io/api",
+        "http://localhost:8080/api",
     ))
 
 //Create new workflow executor
@@ -21,7 +17,7 @@ executor := executor.NewWorkflowExecutor(apiClient)
 conductorWorkflow := workflow.NewConductorWorkflow(executor).
     Name("my_first_workflow").
     Version(1).
-    OwnerEmail("developers@orkes.io")
+    OwnerEmail("hello@swiftsoftwaregroup.com")
 
 //now, let's add a couple of simple tasks
 conductorWorkflow.

@@ -15,12 +15,12 @@ import (
 	"os"
 	"testing"
 
+	log "github.com/sirupsen/logrus"
+	"github.com/stretchr/testify/assert"
 	"github.com/swift-conductor/conductor-client-golang/internal/testdata"
 	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 	"github.com/swift-conductor/conductor-client-golang/sdk/workflow"
 	"github.com/swift-conductor/conductor-client-golang/test/common"
-	log "github.com/sirupsen/logrus"
-	"github.com/stretchr/testify/assert"
 )
 
 func init() {
@@ -32,7 +32,7 @@ func init() {
 func TestHttpTask(t *testing.T) {
 	httpTaskWorkflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_WORKFLOW_HTTP").
-		OwnerEmail("test@orkes.io").
+		OwnerEmail("hello@swiftsoftwaregroup.com").
 		Version(1).
 		WorkflowStatusListenerEnabled(true).
 		Add(common.TestHttpTask)

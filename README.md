@@ -1,4 +1,4 @@
-# Netflix Conductor Go SDK
+# Swift Conductor Client SDK for Go
 
 The `conductor-client-golang` repository provides the client SDKs to build task workers in Go.
 
@@ -25,31 +25,12 @@ go get github.com/swift-conductor/conductor-client-golang
 ```
 ## Configurations
 
-### Authentication Settings (Optional)
-Configure the authentication settings if your Conductor server requires authentication.
-* keyId: Key for authentication.
-* keySecret: Secret for the key.
-
-```go
-authenticationSettings := settings.NewAuthenticationSettings(
-  "keyId",
-  "keySecret",
-)
-```
-
-### Access Control Setup
-See [Access Control](https://orkes.io/content/docs/getting-started/concepts/access-control) for more details on role-based access control with Conductor and generating API keys for your environment.
-
 ### Configure API Client
 ```go
 
 apiClient := client.NewAPIClient(
-    settings.NewAuthenticationSettings(
-        KEY,
-        SECRET,
-    ),
     settings.NewHttpSettings(
-        "https://play.orkes.io",
+        "http://localhost:8080/api",
     ),
 )
 	

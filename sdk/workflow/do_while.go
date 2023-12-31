@@ -11,6 +11,7 @@ package workflow
 
 import (
 	"fmt"
+
 	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 )
 
@@ -81,13 +82,13 @@ func (task *DoWhileTask) Optional(optional bool) *DoWhileTask {
 	return task
 }
 
-// Input to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *DoWhileTask) Input(key string, value interface{}) *DoWhileTask {
 	task.Task.Input(key, value)
 	return task
 }
 
-// InputMap to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// InputMap to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *DoWhileTask) InputMap(inputMap map[string]interface{}) *DoWhileTask {
 	for k, v := range inputMap {
 		task.inputParameters[k] = v

@@ -9,11 +9,11 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/swift-conductor/conductor-client-golang/internal/testdata"
 	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 	"github.com/swift-conductor/conductor-client-golang/sdk/workflow"
 	"github.com/swift-conductor/conductor-client-golang/test/common"
-	"github.com/stretchr/testify/assert"
 )
 
 const retryLimit = 5
@@ -73,7 +73,7 @@ func TestExecuteWorkflow(t *testing.T) {
 	wf := workflow.NewConductorWorkflow(executor).
 		Name("temp_wf_2_" + strconv.Itoa(time.Now().Nanosecond())).
 		Version(1).
-		OwnerEmail("test@orkes.io")
+		OwnerEmail("hello@swiftsoftwaregroup.com")
 	wf = wf.Add(workflow.NewSetVariableTask("set_var").Input("var_value", 42))
 	wf.OutputParameters(map[string]interface{}{
 		"param1": "Test",
@@ -111,12 +111,12 @@ func TestExecuteWorkflowWithCorrelationIds(t *testing.T) {
 
 	httpTaskWorkflow1 := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_WORKFLOW_HTTP" + correlationId1).
-		OwnerEmail("test@orkes.io").
+		OwnerEmail("hello@swiftsoftwaregroup.com").
 		Version(1).
 		Add(common.TestHttpTask)
 	httpTaskWorkflow2 := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_WORKFLOW_HTTP" + correlationId2).
-		OwnerEmail("test@orkes.io").
+		OwnerEmail("hello@swiftsoftwaregroup.com").
 		Version(1).
 		Add(common.TestHttpTask)
 	_, err := httpTaskWorkflow1.StartWorkflow(&model.StartWorkflowRequest{CorrelationId: correlationId1})
@@ -183,7 +183,7 @@ func TestExecuteWorkflowSync(t *testing.T) {
 	wf := workflow.NewConductorWorkflow(executor).
 		Name("temp_wf_3_" + strconv.Itoa(time.Now().Nanosecond())).
 		Version(1).
-		OwnerEmail("test@orkes.io")
+		OwnerEmail("hello@swiftsoftwaregroup.com")
 	wf = wf.Add(workflow.NewSetVariableTask("set_var").Input("var_value", 42))
 	wf.OutputParameters(map[string]interface{}{
 		"param1": "Test",

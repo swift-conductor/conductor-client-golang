@@ -55,13 +55,13 @@ type HttpInput struct {
 	Body              interface{}         `json:"body,omitempty"`
 }
 
-// Input to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *HttpTask) Input(key string, value interface{}) *HttpTask {
 	task.Task.Input(key, value)
 	return task
 }
 
-// InputMap to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// InputMap to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *HttpTask) InputMap(inputMap map[string]interface{}) *HttpTask {
 	for k, v := range inputMap {
 		task.inputParameters[k] = v

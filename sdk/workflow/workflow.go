@@ -12,9 +12,9 @@ package workflow
 import (
 	"encoding/json"
 
+	log "github.com/sirupsen/logrus"
 	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 	"github.com/swift-conductor/conductor-client-golang/sdk/workflow/executor"
-	log "github.com/sirupsen/logrus"
 )
 
 type TimeoutPolicy string
@@ -97,7 +97,7 @@ func (workflow *ConductorWorkflow) WorkflowStatusListenerEnabled(workflowStatusL
 }
 
 // OutputParameters Workflow outputs. Workflow output follows similar structure as task inputs
-// See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for more details
+// See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for more details
 func (workflow *ConductorWorkflow) OutputParameters(outputParameters interface{}) *ConductorWorkflow {
 	workflow.outputParameters = getInputAsMap(outputParameters)
 	return workflow

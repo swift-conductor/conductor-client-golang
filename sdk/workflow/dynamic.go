@@ -20,8 +20,8 @@ type DynamicTask struct {
 const dynamicTaskNameParameter = "taskToExecute"
 
 // NewDynamicTask
-//  - taskRefName Reference name for the task.  MUST be unique within the workflow
-//  - taskNameParameter Parameter that contains the expression for the dynamic task name.  e.g. ${workflow.input.dynamicTask}
+//   - taskRefName Reference name for the task.  MUST be unique within the workflow
+//   - taskNameParameter Parameter that contains the expression for the dynamic task name.  e.g. ${workflow.input.dynamicTask}
 func NewDynamicTask(taskRefName string, taskNameParameter string) *DynamicTask {
 	return &DynamicTask{
 		Task: Task{
@@ -43,13 +43,13 @@ func (task *DynamicTask) toWorkflowTask() []model.WorkflowTask {
 	return workflowTasks
 }
 
-// Input to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *DynamicTask) Input(key string, value interface{}) *DynamicTask {
 	task.Task.Input(key, value)
 	return task
 }
 
-// InputMap to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// InputMap to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *DynamicTask) InputMap(inputMap map[string]interface{}) *DynamicTask {
 	for k, v := range inputMap {
 		task.inputParameters[k] = v

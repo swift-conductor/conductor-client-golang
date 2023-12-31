@@ -63,7 +63,7 @@ func (task *EventTask) Input(key string, value interface{}) *EventTask {
 	return task
 }
 
-// InputMap to the task.  See https://conductor.netflix.com/how-tos/Tasks/task-inputs.html for details
+// InputMap to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *EventTask) InputMap(inputMap map[string]interface{}) *EventTask {
 	for k, v := range inputMap {
 		task.inputParameters[k] = v
