@@ -25,7 +25,7 @@ type EventResourceApiService struct {
 
 /*
 EventResourceApiService Add a new event handler.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
 */
 func (a *EventResourceApiService) AddEventHandler(ctx context.Context, body model.EventHandler) (*http.Response, error) {
@@ -90,7 +90,7 @@ func (a *EventResourceApiService) AddEventHandler(ctx context.Context, body mode
 
 /*
 EventResourceApiService Delete queue config by name
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param queueType
   - @param queueName
 */
@@ -156,7 +156,7 @@ func (a *EventResourceApiService) DeleteQueueConfig(ctx context.Context, queueTy
 
 /*
 EventResourceApiService Get all the event handlers
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return []model.EventHandler
 */
@@ -239,7 +239,7 @@ func (a *EventResourceApiService) GetEventHandlers(ctx context.Context) ([]model
 
 /*
 EventResourceApiService Get event handlers for a given event
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param event
  * @param optional nil or *EventResourceApiGetEventHandlersForEventOpts - Optional Parameters:
      * @param "ActiveOnly" (optional.Bool) -
@@ -333,7 +333,7 @@ func (a *EventResourceApiService) GetEventHandlersForEvent(ctx context.Context, 
 
 /*
 EventResourceApiService Get queue config by name
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param queueType
   - @param queueName
 
@@ -420,7 +420,7 @@ func (a *EventResourceApiService) GetQueueConfig(ctx context.Context, queueType 
 
 /*
 EventResourceApiService Get all queue configs
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return map[string]string
 */
@@ -503,7 +503,7 @@ func (a *EventResourceApiService) GetQueueNames(ctx context.Context) (map[string
 
 /*
 EventResourceApiService Create or update queue config by name
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
   - @param queueType
   - @param queueName
@@ -572,7 +572,7 @@ func (a *EventResourceApiService) PutQueueConfig(ctx context.Context, body strin
 
 /*
 EventResourceApiService Remove an event handler
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param name
 */
 func (a *EventResourceApiService) RemoveEventHandlerStatus(ctx context.Context, name string) (*http.Response, error) {
@@ -636,7 +636,7 @@ func (a *EventResourceApiService) RemoveEventHandlerStatus(ctx context.Context, 
 
 /*
 EventResourceApiService Update an existing event handler.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
 */
 func (a *EventResourceApiService) UpdateEventHandler(ctx context.Context, body model.EventHandler) (*http.Response, error) {

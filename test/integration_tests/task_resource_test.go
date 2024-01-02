@@ -24,6 +24,7 @@ func TestUpdateTaskRefByName(t *testing.T) {
 	simpleTaskWorkflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_WORKFLOW_UPDATE_TASK").
 		Version(1).
+		OwnerEmail("test@test.com").
 		Add(common.TestSimpleTask)
 
 	err := testdata.ValidateWorkflowRegistration(simpleTaskWorkflow)

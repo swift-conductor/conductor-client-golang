@@ -16,7 +16,6 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/swift-conductor/conductor-client-golang/sdk/authentication"
 	"github.com/swift-conductor/conductor-client-golang/sdk/client"
 	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
@@ -28,13 +27,11 @@ import (
 )
 
 const (
-	AUTHENTICATION_KEY_ID     = "KEY"
-	AUTHENTICATION_KEY_SECRET = "SECRET"
-	BASE_URL                  = "CONDUCTOR_SERVER_URL"
+	BASE_URL = "CONDUCTOR_SERVER_URL"
 )
 
 var (
-	apiClient = getApiClientWithAuthentication()
+	apiClient = getApiClient()
 )
 
 var (
@@ -48,9 +45,6 @@ var (
 		APIClient: apiClient,
 	}
 	EventClient = client.EventResourceApiService{
-		APIClient: apiClient,
-	}
-	TagsClient = client.TagsApiService{
 		APIClient: apiClient,
 	}
 )
@@ -93,27 +87,19 @@ func ValidateWorkflowDaemon(waitTime time.Duration, outputChannel chan error, wo
 	outputChannel <- nil
 }
 
-func getApiClientWithAuthentication() *client.APIClient {
-	return client.NewAPIClientWithTokenExpiration(
-		getAuthenticationSettings(),
-		getHttpSettingsWithAuth(),
-		authentication.NewTokenExpiration(
-			3*time.Second,
-			30*time.Second,
-		),
+func getApiClient() *client.APIClient {
+	return client.NewAPIClient(
+		getHttpSettings(),
 	)
 }
 
-func getAuthenticationSettings() *settings.AuthenticationSettings {
-	return settings.NewAuthenticationSettings(
-		os.Getenv(AUTHENTICATION_KEY_ID),
-		os.Getenv(AUTHENTICATION_KEY_SECRET),
-	)
-}
+func getHttpSettings() *settings.HttpSettings {
+	var base_url = os.Getenv(BASE_URL)
+	// if (base_url == nil)
+	// 	base_url := "http://localhost:8080/api"
 
-func getHttpSettingsWithAuth() *settings.HttpSettings {
 	return settings.NewHttpSettings(
-		os.Getenv(BASE_URL),
+		base_url,
 	)
 }
 

@@ -4,7 +4,7 @@
 
 ```go
 
-//API client instance with server address and authentication details
+//API client instance with server address
 apiClient := client.NewAPIClient(
     settings.NewHttpSettings(
         "http://localhost:8080/api",
@@ -30,6 +30,7 @@ conductorWorkflow.Register(true)        //Overwrite the existing definition with
 ### Execute Workflow
 
 #### Using Workflow Executor to start previously registered workflow
+
 ```go
 //Input can be either a map or a struct that is serializable to a JSON map
 workflowInput := map[string]interface{}{}
@@ -41,6 +42,7 @@ workflowId, err := executor.StartWorkflow(&model.StartWorkflowRequest{
 ```
 
 #### Using Workflow Executor to synchronously execute a workflow and get the output as a result
+
 ```go
 //Input can be either a map or a struct that is serializable to a JSON map
 workflowInput := map[string]interface{}{}

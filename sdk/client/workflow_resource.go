@@ -31,9 +31,8 @@ type WorkflowResourceApiService struct {
 
 /*
 WorkflowResourceApiService Starts the decision task for a workflow
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param workflowId
-
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param workflowId
 */
 func (a *WorkflowResourceApiService) Decide(ctx context.Context, workflowId string) (*http.Response, error) {
 	var (
@@ -97,7 +96,7 @@ func (a *WorkflowResourceApiService) Decide(ctx context.Context, workflowId stri
 
 /*
 WorkflowResourceApiService Removes the workflow from the system
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param workflowId
  * @param optional nil or *WorkflowResourceApiDeleteOpts - Optional Parameters:
      * @param "ArchiveWorkflow" (optional.Bool) -
@@ -173,7 +172,7 @@ func (a *WorkflowResourceApiService) Delete(ctx context.Context, workflowId stri
 
 /*
 WorkflowResourceApiService Gets the workflow by workflow id
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param workflowId
  * @param optional nil or *WorkflowResourceApiGetExecutionStatusOpts - Optional Parameters:
      * @param "IncludeTasks" (optional.Bool) -
@@ -349,10 +348,11 @@ func (a *WorkflowResourceApiService) GetWorkflowState(ctx context.Context, workf
 
 /*
 WorkflowResourceApiService Get the uri and path of the external storage where the workflow payload is to be stored
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param path
- * @param operation
- * @param payloadType
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param path
+  - @param operation
+  - @param payloadType
+
 @return http_model.ExternalStorageLocation
 */
 func (a *WorkflowResourceApiService) GetExternalStorageLocation(ctx context.Context, path string, operation string, payloadType string) (model.ExternalStorageLocation, *http.Response, error) {
@@ -438,7 +438,7 @@ func (a *WorkflowResourceApiService) GetExternalStorageLocation(ctx context.Cont
 
 /*
 WorkflowResourceApiService Retrieve all the running workflows
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param name
  * @param optional nil or *WorkflowResourceApiGetRunningWorkflowOpts - Optional Parameters:
      * @param "Version" (optional.Int32) -
@@ -543,7 +543,7 @@ func (a *WorkflowResourceApiService) GetRunningWorkflow(ctx context.Context, nam
 
 /*
 WorkflowResourceApiService Lists workflows for the given correlation id list
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param body
  * @param name
  * @param optional nil or *WorkflowResourceApiGetWorkflowsOpts - Optional Parameters:
@@ -731,7 +731,7 @@ func (a *WorkflowResourceApiService) GetWorkflowsBatch(ctx context.Context, body
 
 /*
 WorkflowResourceApiService Lists workflows for the given correlation id
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param name
  * @param correlationId
  * @param optional nil or *WorkflowResourceApiGetWorkflows1Opts - Optional Parameters:
@@ -833,9 +833,8 @@ func (a *WorkflowResourceApiService) GetWorkflows1(ctx context.Context, name str
 
 /*
 WorkflowResourceApiService Pauses the workflow
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param workflowId
-
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param workflowId
 */
 func (a *WorkflowResourceApiService) PauseWorkflow(ctx context.Context, workflowId string) (*http.Response, error) {
 	var (
@@ -899,9 +898,10 @@ func (a *WorkflowResourceApiService) PauseWorkflow(ctx context.Context, workflow
 
 /*
 WorkflowResourceApiService Reruns the workflow from a specific task
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param body
- * @param workflowId
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
+  - @param workflowId
+
 @return string
 */
 func (a *WorkflowResourceApiService) Rerun(ctx context.Context, body model.RerunWorkflowRequest, workflowId string) (string, *http.Response, error) {
@@ -987,9 +987,8 @@ func (a *WorkflowResourceApiService) Rerun(ctx context.Context, body model.Rerun
 
 /*
 WorkflowResourceApiService Resets callback times of all non-terminal SIMPLE tasks to 0
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param workflowId
-
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param workflowId
 */
 func (a *WorkflowResourceApiService) ResetWorkflow(ctx context.Context, workflowId string) (*http.Response, error) {
 	var (
@@ -1053,7 +1052,7 @@ func (a *WorkflowResourceApiService) ResetWorkflow(ctx context.Context, workflow
 
 /*
 WorkflowResourceApiService Restarts a completed workflow
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param workflowId
  * @param optional nil or *WorkflowResourceApiRestartOpts - Optional Parameters:
      * @param "UseLatestDefinitions" (optional.Bool) -
@@ -1129,9 +1128,8 @@ func (a *WorkflowResourceApiService) Restart(ctx context.Context, workflowId str
 
 /*
 WorkflowResourceApiService Resumes the workflow
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param workflowId
-
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param workflowId
 */
 func (a *WorkflowResourceApiService) ResumeWorkflow(ctx context.Context, workflowId string) (*http.Response, error) {
 	var (
@@ -1195,7 +1193,7 @@ func (a *WorkflowResourceApiService) ResumeWorkflow(ctx context.Context, workflo
 
 /*
 WorkflowResourceApiService Retries the last failed task
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param workflowId
  * @param optional nil or *WorkflowResourceApiRetryOpts - Optional Parameters:
      * @param "ResumeSubworkflowTasks" (optional.Bool) -
@@ -1272,7 +1270,7 @@ func (a *WorkflowResourceApiService) Retry(ctx context.Context, workflowId strin
 /*
 WorkflowResourceApiService Search for workflows based on payload and other parameters
 use sort options as sort&#x3D;&lt;field&gt;:ASC|DESC e.g. sort&#x3D;name&amp;sort&#x3D;workflowId:DESC. If order is not specified, defaults to ASC.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *WorkflowResourceApiSearchOpts - Optional Parameters:
      * @param "Start" (optional.Int32) -
      * @param "Size" (optional.Int32) -
@@ -1386,7 +1384,7 @@ func (a *WorkflowResourceApiService) Search(ctx context.Context, localVarOptiona
 /*
 WorkflowResourceApiService Search for workflows based on payload and other parameters
 use sort options as sort&#x3D;&lt;field&gt;:ASC|DESC e.g. sort&#x3D;name&amp;sort&#x3D;workflowId:DESC. If order is not specified, defaults to ASC.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *WorkflowResourceApiSearchV2Opts - Optional Parameters:
      * @param "Start" (optional.Int32) -
      * @param "Size" (optional.Int32) -
@@ -1500,7 +1498,7 @@ func (a *WorkflowResourceApiService) SearchV2(ctx context.Context, localVarOptio
 /*
 WorkflowResourceApiService Search for workflows based on task parameters
 use sort options as sort&#x3D;&lt;field&gt;:ASC|DESC e.g. sort&#x3D;name&amp;sort&#x3D;workflowId:DESC. If order is not specified, defaults to ASC
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *WorkflowResourceApiSearchWorkflowsByTasksOpts - Optional Parameters:
      * @param "Start" (optional.Int32) -
      * @param "Size" (optional.Int32) -
@@ -1614,7 +1612,7 @@ func (a *WorkflowResourceApiService) SearchWorkflowsByTasks(ctx context.Context,
 /*
 WorkflowResourceApiService Search for workflows based on task parameters
 use sort options as sort&#x3D;&lt;field&gt;:ASC|DESC e.g. sort&#x3D;name&amp;sort&#x3D;workflowId:DESC. If order is not specified, defaults to ASC
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *WorkflowResourceApiSearchWorkflowsByTasksV2Opts - Optional Parameters:
      * @param "Start" (optional.Int32) -
      * @param "Size" (optional.Int32) -
@@ -1727,11 +1725,10 @@ func (a *WorkflowResourceApiService) SearchWorkflowsByTasksV2(ctx context.Contex
 
 /*
 WorkflowResourceApiService Skips a given task from a current running workflow
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param workflowId
- * @param taskReferenceName
- * @param skipTaskRequest
-
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param workflowId
+  - @param taskReferenceName
+  - @param skipTaskRequest
 */
 func (a *WorkflowResourceApiService) SkipTaskFromWorkflow(ctx context.Context, workflowId string, taskReferenceName string, skipTaskRequest model.SkipTaskRequest) (*http.Response, error) {
 	var (
@@ -1797,7 +1794,7 @@ func (a *WorkflowResourceApiService) SkipTaskFromWorkflow(ctx context.Context, w
 
 /*
 WorkflowResourceApiService Start a new workflow. Returns the ID of the workflow instance that can be later used for tracking
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param body
  * @param name
  * @param optional nil or *WorkflowResourceApiStartWorkflowOpts - Optional Parameters:
@@ -1992,8 +1989,9 @@ func (a *WorkflowResourceApiService) ExecuteWorkflow(ctx context.Context, body m
 
 /*
 WorkflowResourceApiService Start a new workflow with http_model.StartWorkflowRequest, which allows task to be executed in a domain
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param body
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
+
 @return string
 */
 func (a *WorkflowResourceApiService) StartWorkflowWithRequest(ctx context.Context, body model.StartWorkflowRequest) (string, *http.Response, error) {
@@ -2078,7 +2076,7 @@ func (a *WorkflowResourceApiService) StartWorkflowWithRequest(ctx context.Contex
 
 /*
 WorkflowResourceApiService Terminate workflow execution
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param workflowId
  * @param optional nil or *WorkflowResourceApiTerminateOpts - Optional Parameters:
      * @param "Reason" (optional.String) -

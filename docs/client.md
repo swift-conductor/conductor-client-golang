@@ -229,7 +229,7 @@ func (a *EventResourceApiService) AddEventHandler(ctx context.Context, body mode
 
 EventResourceApiService Add a new event handler.
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 
 <a name="EventResourceApiService.DeleteQueueConfig"></a>
@@ -241,7 +241,7 @@ func (a *EventResourceApiService) DeleteQueueConfig(ctx context.Context, queueTy
 
 EventResourceApiService Delete queue config by name
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param queueType
 - @param queueName
 
@@ -254,7 +254,7 @@ func (a *EventResourceApiService) GetEventHandlers(ctx context.Context) ([]model
 
 EventResourceApiService Get all the event handlers
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 
 @return \[\]model.EventHandler
 
@@ -276,7 +276,7 @@ func (a *EventResourceApiService) GetQueueConfig(ctx context.Context, queueType 
 
 EventResourceApiService Get queue config by name
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param queueType
 - @param queueName
 
@@ -291,7 +291,7 @@ func (a *EventResourceApiService) GetQueueNames(ctx context.Context) (map[string
 
 EventResourceApiService Get all queue configs
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 
 @return map\[string\]string
 
@@ -304,7 +304,7 @@ func (a *EventResourceApiService) PutQueueConfig(ctx context.Context, body strin
 
 EventResourceApiService Create or update queue config by name
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 - @param queueType
 - @param queueName
@@ -318,7 +318,7 @@ func (a *EventResourceApiService) RemoveEventHandlerStatus(ctx context.Context, 
 
 EventResourceApiService Remove an event handler
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param name
 
 <a name="EventResourceApiService.UpdateEventHandler"></a>
@@ -330,7 +330,7 @@ func (a *EventResourceApiService) UpdateEventHandler(ctx context.Context, body m
 
 EventResourceApiService Update an existing event handler.
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 
 <a name="GenericSwaggerError"></a>
@@ -402,7 +402,7 @@ func (a *HealthCheckResourceApiService) DoCheck(ctx context.Context) (model.Heal
 
 HealthCheckResourceApiService
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 
 @return http\_model.HealthCheckStatus
 
@@ -466,7 +466,7 @@ func (a *MetadataResourceApiService) GetAll(ctx context.Context) ([]model.Workfl
 
 MetadataResourceApiService Retrieves all workflow definition along with blueprint
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 
 @return \[\]http\_model.WorkflowDef
 
@@ -497,7 +497,7 @@ func (a *MetadataResourceApiService) GetTaskDef(ctx context.Context, tasktype st
 
 MetadataResourceApiService Gets the task definition
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param tasktype
 
 @return http\_model.TaskDef
@@ -511,7 +511,7 @@ func (a *MetadataResourceApiService) GetTaskDefs(ctx context.Context) ([]model.T
 
 MetadataResourceApiService Gets all task definition
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 
 @return \[\]http\_model.TaskDef
 
@@ -524,7 +524,7 @@ func (a *MetadataResourceApiService) RegisterTaskDef(ctx context.Context, body [
 
 MetadataResourceApiService Create new task definition\(s\)
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 
 <a name="MetadataResourceApiService.RegisterTaskDefWithTags"></a>
@@ -536,7 +536,7 @@ func (a *MetadataResourceApiService) RegisterTaskDefWithTags(ctx context.Context
 
 MetadataResourceApiService Create new task definition with tags
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body model.TaskDef
 - @param tags \[\]model.MetadataTag
 
@@ -549,7 +549,7 @@ func (a *MetadataResourceApiService) RegisterWorkflowDef(ctx context.Context, ov
 
 MetadataResourceApiService Create a new workflow definition
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 
 <a name="MetadataResourceApiService.RegisterWorkflowDefWithTags"></a>
@@ -561,7 +561,7 @@ func (a *MetadataResourceApiService) RegisterWorkflowDefWithTags(ctx context.Con
 
 MetadataResourceApiService Create a new workflow definition with tags
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 
 <a name="MetadataResourceApiService.UnregisterTaskDef"></a>
@@ -573,7 +573,7 @@ func (a *MetadataResourceApiService) UnregisterTaskDef(ctx context.Context, task
 
 MetadataResourceApiService Remove a task definition
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param tasktype
 
 <a name="MetadataResourceApiService.UnregisterWorkflowDef"></a>
@@ -585,7 +585,7 @@ func (a *MetadataResourceApiService) UnregisterWorkflowDef(ctx context.Context, 
 
 MetadataResourceApiService Removes workflow definition. It does not remove workflows associated with the definition.
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param name
 - @param version
 
@@ -598,7 +598,7 @@ func (a *MetadataResourceApiService) Update(ctx context.Context, body []model.Wo
 
 MetadataResourceApiService Create or update workflow definition
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 
 <a name="MetadataResourceApiService.UpdateTaskDef"></a>
@@ -610,7 +610,7 @@ func (a *MetadataResourceApiService) UpdateTaskDef(ctx context.Context, body mod
 
 MetadataResourceApiService Update an existing task
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 
 <a name="MetadataResourceApiService.UpdateTaskDefWithTags"></a>
@@ -622,7 +622,7 @@ func (a *MetadataResourceApiService) UpdateTaskDefWithTags(ctx context.Context, 
 
 MetadataResourceApiService Update an existing task along with tags
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 
 <a name="MetadataResourceApiService.UpdateWorkflowDefWithTags"></a>
@@ -634,7 +634,7 @@ func (a *MetadataResourceApiService) UpdateWorkflowDefWithTags(ctx context.Conte
 
 MetadataResourceApiService Create or update workflow definition along with tags
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 
 <a name="NextFewSchedulesOpts"></a>
@@ -772,7 +772,7 @@ func (a *SchedulerResourceApiService) GetSchedule(ctx context.Context, name stri
 
 SchedulerResourceApiService Get an existing workflow schedule by name
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param name
 
 @return WorkflowSchedule
@@ -786,7 +786,7 @@ func (a *SchedulerResourceApiService) GetTagsForSchedule(ctx context.Context, na
 
 SchedulerResourceApiService Get tags by schedule
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param name
 
 @return \[\]TagObject
@@ -800,7 +800,7 @@ func (a *SchedulerResourceApiService) PauseAllSchedules(ctx context.Context) (ma
 
 SchedulerResourceApiService Pause all scheduling in a single conductor server instance \(for debugging only\)
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 
 @return map\[string\]interface\{\}
 
@@ -813,7 +813,7 @@ func (a *SchedulerResourceApiService) PauseSchedule(ctx context.Context, name st
 
 SchedulerResourceApiService Pauses an existing schedule by name
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param name
 
 <a name="SchedulerResourceApiService.ResumeAllSchedules"></a>
@@ -825,7 +825,7 @@ func (a *SchedulerResourceApiService) ResumeAllSchedules(ctx context.Context) (m
 
 SchedulerResourceApiService Resume all scheduling
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 
 @return map\[string\]interface\{\}
 
@@ -838,7 +838,7 @@ func (a *SchedulerResourceApiService) ResumeSchedule(ctx context.Context, name s
 
 SchedulerResourceApiService Resume a paused schedule by name
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param name
 
 <a name="SchedulerResourceApiService.SaveSchedule"></a>
@@ -850,7 +850,7 @@ func (a *SchedulerResourceApiService) SaveSchedule(ctx context.Context, body mod
 
 SchedulerResourceApiService Create or update a schedule for a specified workflow with a corresponding start workflow request
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 
 <a name="SchedulerResourceApiService.Search"></a>
@@ -897,7 +897,7 @@ func (a *TagsApiService) AddTaskTag(ctx context.Context, body model.TagObject, t
 
 TagsApiService Adds the tag to the task
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 - @param taskName
 
@@ -912,7 +912,7 @@ func (a *TagsApiService) AddWorkflowTag(ctx context.Context, body model.TagObjec
 
 TagsApiService Adds the tag to the workflow
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 - @param name
 
@@ -927,7 +927,7 @@ func (a *TagsApiService) DeleteTaskTag(ctx context.Context, body model.TagString
 
 TagsApiService Removes the tag of the task
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 - @param taskName
 
@@ -942,7 +942,7 @@ func (a *TagsApiService) DeleteWorkflowTag(ctx context.Context, body model.TagOb
 
 TagsApiService Removes the tag of the workflow
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 - @param name
 
@@ -957,7 +957,7 @@ func (a *TagsApiService) GetTags1(ctx context.Context) ([]model.TagObject, *http
 
 TagsApiService List all tags
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 
 @return \[\]model.TagObject
 
@@ -970,7 +970,7 @@ func (a *TagsApiService) GetTaskTags(ctx context.Context, taskName string) ([]mo
 
 TagsApiService Returns all the tags of the task
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param taskName
 
 @return \[\]model.TagObject
@@ -984,7 +984,7 @@ func (a *TagsApiService) GetWorkflowTags(ctx context.Context, name string) ([]mo
 
 TagsApiService Returns all the tags of the workflow
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param name
 
 @return \[\]model.TagObject
@@ -998,7 +998,7 @@ func (a *TagsApiService) SetTaskTags(ctx context.Context, body []model.TagObject
 
 TagsApiService Adds the tag to the task
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 - @param taskName
 
@@ -1013,7 +1013,7 @@ func (a *TagsApiService) SetWorkflowTags(ctx context.Context, body []model.TagOb
 
 TagsApiService Set the tags of the workflow
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 - @param name
 
@@ -1095,7 +1095,7 @@ func (a *TaskResourceApiService) All(ctx context.Context) (map[string]int64, *ht
 
 TaskResourceApiService Get the details about each queue
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 
 @return map\[string\]int64
 
@@ -1108,7 +1108,7 @@ func (a *TaskResourceApiService) AllVerbose(ctx context.Context) (map[string]map
 
 TaskResourceApiService Get the details about each queue
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 
 @return map\[string\]map\[string\]map\[string\]int64
 
@@ -1130,7 +1130,7 @@ func (a *TaskResourceApiService) GetAllPollData(ctx context.Context) ([]model.Po
 
 TaskResourceApiService Get the last poll data for all task types
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 
 @return \[\]PollData
 
@@ -1143,7 +1143,7 @@ func (a *TaskResourceApiService) GetExternalStorageLocation1(ctx context.Context
 
 TaskResourceApiService Get the external uri where the task payload is to be stored
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param path
 - @param operation
 - @param payloadType
@@ -1159,7 +1159,7 @@ func (a *TaskResourceApiService) GetPollData(ctx context.Context, taskType strin
 
 TaskResourceApiService Get the last poll data for a given task type
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param taskType
 
 @return \[\]PollData
@@ -1173,7 +1173,7 @@ func (a *TaskResourceApiService) GetTask(ctx context.Context, taskId string) (mo
 
 TaskResourceApiService Get task by Id
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param taskId
 
 @return Task
@@ -1187,7 +1187,7 @@ func (a *TaskResourceApiService) GetTaskLogs(ctx context.Context, taskId string)
 
 TaskResourceApiService Get Task Execution Logs
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param taskId
 
 @return \[\]TaskExecLog
@@ -1201,7 +1201,7 @@ func (a *TaskResourceApiService) Log(ctx context.Context, body string, taskId st
 
 TaskResourceApiService Log Task Execution Details
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 - @param taskId
 
@@ -1223,7 +1223,7 @@ func (a *TaskResourceApiService) RequeuePendingTask(ctx context.Context, taskTyp
 
 TaskResourceApiService Requeue pending tasks
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param taskType
 
 @return string
@@ -1264,7 +1264,7 @@ func (a *TaskResourceApiService) UpdateTask(ctx context.Context, taskResult *mod
 
 TaskResourceApiService Update a task
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 
 @return string
@@ -1278,7 +1278,7 @@ func (a *TaskResourceApiService) UpdateTaskByRefName(ctx context.Context, body m
 
 TaskResourceApiService Update a task By Ref Name
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 - @param workflowId
 - @param taskRefName
@@ -1295,7 +1295,7 @@ func (a *TaskResourceApiService) UpdateTaskByRefNameWithWorkerId(ctx context.Con
 
 TaskResourceApiService Update a task By Ref Name
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 - @param workflowId
 - @param taskRefName
@@ -1346,7 +1346,7 @@ func (a *WorkflowBulkResourceApiService) PauseWorkflow1(ctx context.Context, bod
 
 WorkflowBulkResourceApiService Pause the list of workflows
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 
 @return http\_model.BulkResponse
@@ -1369,7 +1369,7 @@ func (a *WorkflowBulkResourceApiService) ResumeWorkflow1(ctx context.Context, bo
 
 WorkflowBulkResourceApiService Resume the list of workflows
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 
 @return http\_model.BulkResponse
@@ -1383,7 +1383,7 @@ func (a *WorkflowBulkResourceApiService) Retry1(ctx context.Context, body []stri
 
 WorkflowBulkResourceApiService Retry the last failed task for each workflow from the list
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 
 @return http\_model.BulkResponse
@@ -1570,7 +1570,7 @@ func (a *WorkflowResourceApiService) Decide(ctx context.Context, workflowId stri
 
 WorkflowResourceApiService Starts the decision task for a workflow
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param workflowId
 
 <a name="WorkflowResourceApiService.Delete"></a>
@@ -1609,7 +1609,7 @@ func (a *WorkflowResourceApiService) GetExternalStorageLocation(ctx context.Cont
 
 WorkflowResourceApiService Get the uri and path of the external storage where the workflow payload is to be stored
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param path
 - @param operation
 - @param payloadType
@@ -1670,7 +1670,7 @@ func (a *WorkflowResourceApiService) PauseWorkflow(ctx context.Context, workflow
 
 WorkflowResourceApiService Pauses the workflow
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param workflowId
 
 <a name="WorkflowResourceApiService.Rerun"></a>
@@ -1682,7 +1682,7 @@ func (a *WorkflowResourceApiService) Rerun(ctx context.Context, body model.Rerun
 
 WorkflowResourceApiService Reruns the workflow from a specific task
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 - @param workflowId
 
@@ -1697,7 +1697,7 @@ func (a *WorkflowResourceApiService) ResetWorkflow(ctx context.Context, workflow
 
 WorkflowResourceApiService Resets callback times of all non\-terminal SIMPLE tasks to 0
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param workflowId
 
 <a name="WorkflowResourceApiService.Restart"></a>
@@ -1718,7 +1718,7 @@ func (a *WorkflowResourceApiService) ResumeWorkflow(ctx context.Context, workflo
 
 WorkflowResourceApiService Resumes the workflow
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param workflowId
 
 <a name="WorkflowResourceApiService.Retry"></a>
@@ -1775,7 +1775,7 @@ func (a *WorkflowResourceApiService) SkipTaskFromWorkflow(ctx context.Context, w
 
 WorkflowResourceApiService Skips a given task from a current running workflow
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param workflowId
 - @param taskReferenceName
 - @param skipTaskRequest
@@ -1798,7 +1798,7 @@ func (a *WorkflowResourceApiService) StartWorkflowWithRequest(ctx context.Contex
 
 WorkflowResourceApiService Start a new workflow with http\_model.StartWorkflowRequest, which allows task to be executed in a domain
 
-- @param ctx context.Context \- for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
+- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param body
 
 @return string

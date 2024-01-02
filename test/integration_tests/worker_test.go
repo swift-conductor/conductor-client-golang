@@ -13,18 +13,20 @@ import (
 	"testing"
 	"time"
 
+	"github.com/sirupsen/logrus"
 	"github.com/swift-conductor/conductor-client-golang/internal/testdata"
 	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 	"github.com/swift-conductor/conductor-client-golang/sdk/workflow"
 	"github.com/swift-conductor/conductor-client-golang/test/common"
-	"github.com/sirupsen/logrus"
 )
 
 func TestWorkerBatchSize(t *testing.T) {
 	simpleTaskWorkflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_WORKFLOW_SIMPLE").
 		Version(1).
+		OwnerEmail("test@test.com").
 		Add(common.TestSimpleTask)
+
 	err := testdata.TaskRunner.StartWorker(
 		common.TestSimpleTask.ReferenceName(),
 		testdata.SimpleWorker,
@@ -34,14 +36,18 @@ func TestWorkerBatchSize(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+
 	time.Sleep(1 * time.Second)
+
 	if testdata.TaskRunner.GetBatchSizeForTask(common.TestSimpleTask.ReferenceName()) != 5 {
 		t.Fatal("unexpected batch size")
 	}
+
 	err = testdata.ValidateWorkflowBulk(simpleTaskWorkflow, common.WorkflowValidationTimeout, common.WorkflowBulkQty)
 	if err != nil {
 		t.Fatal(err)
 	}
+
 	err = testdata.TaskRunner.SetBatchSize(
 		common.TestSimpleTask.ReferenceName(),
 		0,
@@ -49,10 +55,13 @@ func TestWorkerBatchSize(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+
 	time.Sleep(1 * time.Second)
+
 	if testdata.TaskRunner.GetBatchSizeForTask(common.TestSimpleTask.ReferenceName()) != 0 {
 		t.Fatal("unexpected batch size")
 	}
+
 	err = testdata.TaskRunner.SetBatchSize(
 		common.TestSimpleTask.ReferenceName(),
 		8,
@@ -60,10 +69,13 @@ func TestWorkerBatchSize(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+
 	time.Sleep(1 * time.Second)
+
 	if testdata.TaskRunner.GetBatchSizeForTask(common.TestSimpleTask.ReferenceName()) != 8 {
 		t.Fatal("unexpected batch size")
 	}
+
 	err = testdata.ValidateWorkflowBulk(simpleTaskWorkflow, common.WorkflowValidationTimeout, common.WorkflowBulkQty)
 	if err != nil {
 		t.Fatal(err)
@@ -76,6 +88,7 @@ func TestFaultyWorker(t *testing.T) {
 	wf := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_FAULTY_WORKFLOW").
 		Version(1).
+		OwnerEmail("test@test.com").
 		Add(workflow.NewSimpleTask(taskName, taskName))
 	err := wf.Register(true)
 	if err != nil {
@@ -102,6 +115,7 @@ func TestWorkerWithNonRetryableError(t *testing.T) {
 	wf := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_NON_RETRYABLE_ERROR_WF").
 		Version(1).
+		OwnerEmail("test@test.com").
 		Add(workflow.NewSimpleTask(taskName, taskName))
 	err := wf.Register(true)
 	if err != nil {
