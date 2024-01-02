@@ -22,6 +22,7 @@ func NewKitchenSinkWorkflow(executor *executor.WorkflowExecutor) *workflow.Condu
 	task := workflow.NewSimpleTask("simple_task", "simple_task_0")
 	simpleWorkflow := workflow.NewConductorWorkflow(executor).
 		Name("inline_sub").
+		OwnerEmail("test@test.com").
 		Add(
 			workflow.NewSimpleTask("simple_task", "simple_task_1"),
 		)
@@ -95,7 +96,7 @@ func NewKitchenSinkWorkflow(executor *executor.WorkflowExecutor) *workflow.Condu
 	workflow := workflow.NewConductorWorkflow(executor).
 		Name("sdk_kitchen_sink2").
 		Version(1).
-		OwnerEmail("hello@swiftsoftwaregroup.com").
+		OwnerEmail("test@test.com").
 		Add(task).
 		Add(jqTask).
 		Add(graalTask).
@@ -174,7 +175,7 @@ func GetWorkflowWithComplexSwitchTask() *workflow.ConductorWorkflow {
 	}
 	return workflow.NewConductorWorkflow(WorkflowExecutor).
 		Name("ComplexSwitchWorkflowGoSDK").
-		OwnerEmail("hello@swiftsoftwaregroup.com").
+		OwnerEmail("test@test.com").
 		Version(1).
 		Add(task)
 }

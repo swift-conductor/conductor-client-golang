@@ -111,12 +111,12 @@ func TestExecuteWorkflowWithCorrelationIds(t *testing.T) {
 
 	httpTaskWorkflow1 := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_WORKFLOW_HTTP" + correlationId1).
-		OwnerEmail("hello@swiftsoftwaregroup.com").
+		OwnerEmail("test@test.com").
 		Version(1).
 		Add(common.TestHttpTask)
 	httpTaskWorkflow2 := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_WORKFLOW_HTTP" + correlationId2).
-		OwnerEmail("hello@swiftsoftwaregroup.com").
+		OwnerEmail("test@test.com").
 		Version(1).
 		Add(common.TestHttpTask)
 	_, err := httpTaskWorkflow1.StartWorkflow(&model.StartWorkflowRequest{CorrelationId: correlationId1})
@@ -147,6 +147,7 @@ func TestTerminateWorkflowWithFailure(t *testing.T) {
 	wf := workflow.NewConductorWorkflow(executor).
 		Name("TEST_GO_SET_VAR_USED_AS_FAILURE").
 		Version(1).
+		OwnerEmail("test@test.com").
 		Add(workflow.NewSetVariableTask("set_var").Input("var_value", 42))
 	err := testdata.ValidateWorkflowRegistration(wf)
 	if err != nil {
@@ -156,6 +157,7 @@ func TestTerminateWorkflowWithFailure(t *testing.T) {
 	workflowWait := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_WORKFLOW_WAIT_CONDUCTOR").
 		Version(1).
+		OwnerEmail("test@test.com").
 		Add(workflow.NewWaitTask("termination_wait")).
 		FailureWorkflow(wf.GetName())
 	err = testdata.ValidateWorkflowRegistration(workflowWait)
@@ -183,7 +185,7 @@ func TestExecuteWorkflowSync(t *testing.T) {
 	wf := workflow.NewConductorWorkflow(executor).
 		Name("temp_wf_3_" + strconv.Itoa(time.Now().Nanosecond())).
 		Version(1).
-		OwnerEmail("hello@swiftsoftwaregroup.com")
+		OwnerEmail("test@test.com")
 	wf = wf.Add(workflow.NewSetVariableTask("set_var").Input("var_value", 42))
 	wf.OutputParameters(map[string]interface{}{
 		"param1": "Test",

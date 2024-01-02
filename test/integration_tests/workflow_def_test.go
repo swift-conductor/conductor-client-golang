@@ -32,8 +32,8 @@ func init() {
 func TestHttpTask(t *testing.T) {
 	httpTaskWorkflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_WORKFLOW_HTTP").
-		OwnerEmail("hello@swiftsoftwaregroup.com").
 		Version(1).
+		OwnerEmail("test@test.com").
 		WorkflowStatusListenerEnabled(true).
 		Add(common.TestHttpTask)
 	err := testdata.ValidateWorkflow(httpTaskWorkflow, common.WorkflowValidationTimeout, model.CompletedWorkflow)
@@ -61,6 +61,7 @@ func SimpleTask(t *testing.T) {
 	simpleTaskWorkflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_WORKFLOW_SIMPLE").
 		Version(1).
+		OwnerEmail("test@test.com").
 		Add(common.TestSimpleTask)
 	err = testdata.TaskRunner.StartWorker(
 		common.TestSimpleTask.ReferenceName(),
@@ -105,6 +106,7 @@ func SimpleTaskWithoutRetryCount(t *testing.T) {
 	simpleTaskWorkflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_WORKFLOW_SIMPLE").
 		Version(1).
+		OwnerEmail("test@test.com").
 		Add(common.TestSimpleTask)
 	err = testdata.TaskRunner.StartWorker(
 		common.TestSimpleTask.ReferenceName(),
@@ -143,6 +145,7 @@ func TestInlineTask(t *testing.T) {
 	inlineTaskWorkflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_WORKFLOW_INLINE_TASK").
 		Version(1).
+		OwnerEmail("test@test.com").
 		Add(common.TestInlineTask)
 	err := testdata.ValidateWorkflow(inlineTaskWorkflow, common.WorkflowValidationTimeout, model.CompletedWorkflow)
 	if err != nil {
@@ -165,6 +168,7 @@ func TestSqsEventTask(t *testing.T) {
 	workflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_WORKFLOW_EVENT_SQS").
 		Version(1).
+		OwnerEmail("test@test.com").
 		Add(common.TestSqsEventTask)
 	err := testdata.ValidateWorkflowRegistration(workflow)
 	if err != nil {
@@ -183,6 +187,7 @@ func TestConductorEventTask(t *testing.T) {
 	workflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_WORKFLOW_EVENT_CONDUCTOR").
 		Version(1).
+		OwnerEmail("test@test.com").
 		Add(common.TestConductorEventTask)
 	err := testdata.ValidateWorkflowRegistration(workflow)
 	if err != nil {
@@ -201,6 +206,7 @@ func TestKafkaPublishTask(t *testing.T) {
 	workflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_WORKFLOW_KAFKA_PUBLISH").
 		Version(1).
+		OwnerEmail("test@test.com").
 		Add(common.TestKafkaPublishTask)
 	err := testdata.ValidateWorkflowRegistration(workflow)
 	if err != nil {
@@ -223,6 +229,7 @@ func TestTerminateTask(t *testing.T) {
 	workflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_WORKFLOW_TERMINATE").
 		Version(1).
+		OwnerEmail("test@test.com").
 		Add(common.TestTerminateTask)
 	err := testdata.ValidateWorkflowRegistration(workflow)
 	if err != nil {
@@ -241,6 +248,7 @@ func TestSwitchTask(t *testing.T) {
 	workflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("TEST_GO_WORKFLOW_SWITCH").
 		Version(1).
+		OwnerEmail("test@test.com").
 		Add(common.TestSwitchTask)
 	err := testdata.ValidateWorkflowRegistration(workflow)
 	if err != nil {
@@ -259,6 +267,7 @@ func TestDynamicForkWorkflow(t *testing.T) {
 	wf := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
 		Name("dynamic_workflow_array_sub_workflow").
 		Version(1).
+		OwnerEmail("test@test.com").
 		Add(createDynamicForkTask())
 	err := wf.Register(true)
 	if err != nil {

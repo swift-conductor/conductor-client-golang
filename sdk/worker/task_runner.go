@@ -63,10 +63,9 @@ type TaskRunner struct {
 	pausedWorkers      map[string]bool
 }
 
-// NewTaskRunner returns a new TaskRunner which authenticates via HTTP using the provided settings.
-func NewTaskRunner(authenticationSettings *settings.AuthenticationSettings, httpSettings *settings.HttpSettings) *TaskRunner {
+// NewTaskRunner returns a new TaskRunner using the provided settings.
+func NewTaskRunner(httpSettings *settings.HttpSettings) *TaskRunner {
 	apiClient := client.NewAPIClient(
-		authenticationSettings,
 		httpSettings,
 	)
 	return NewTaskRunnerWithApiClient(apiClient)

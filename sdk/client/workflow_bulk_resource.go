@@ -30,8 +30,9 @@ type WorkflowBulkResourceApiService struct {
 
 /*
 WorkflowBulkResourceApiService Pause the list of workflows
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param body
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
+
 @return http_model.BulkResponse
 */
 func (a *WorkflowBulkResourceApiService) PauseWorkflow1(ctx context.Context, body []string) (model.BulkResponse, *http.Response, error) {
@@ -116,7 +117,7 @@ func (a *WorkflowBulkResourceApiService) PauseWorkflow1(ctx context.Context, bod
 
 /*
 WorkflowBulkResourceApiService Restart the list of completed workflow
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param body
  * @param optional nil or *WorkflowBulkResourceApiRestart1Opts - Optional Parameters:
      * @param "UseLatestDefinitions" (optional.Bool) -
@@ -212,8 +213,9 @@ func (a *WorkflowBulkResourceApiService) Restart1(ctx context.Context, body []st
 
 /*
 WorkflowBulkResourceApiService Resume the list of workflows
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param body
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
+
 @return http_model.BulkResponse
 */
 func (a *WorkflowBulkResourceApiService) ResumeWorkflow1(ctx context.Context, body []string) (model.BulkResponse, *http.Response, error) {
@@ -298,8 +300,9 @@ func (a *WorkflowBulkResourceApiService) ResumeWorkflow1(ctx context.Context, bo
 
 /*
 WorkflowBulkResourceApiService Retry the last failed task for each workflow from the list
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param body
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
+
 @return http_model.BulkResponse
 */
 func (a *WorkflowBulkResourceApiService) Retry1(ctx context.Context, body []string) (model.BulkResponse, *http.Response, error) {
@@ -384,7 +387,7 @@ func (a *WorkflowBulkResourceApiService) Retry1(ctx context.Context, body []stri
 
 /*
 WorkflowBulkResourceApiService Terminate workflows execution
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param body
  * @param optional nil or *WorkflowBulkResourceApiTerminateOpts - Optional Parameters:
      * @param "Reason" (optional.String) -

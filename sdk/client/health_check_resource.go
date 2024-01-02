@@ -29,7 +29,8 @@ type HealthCheckResourceApiService struct {
 
 /*
 HealthCheckResourceApiService
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return http_model.HealthCheckStatus
 */
 func (a *HealthCheckResourceApiService) DoCheck(ctx context.Context) (model.HealthCheckStatus, *http.Response, error) {

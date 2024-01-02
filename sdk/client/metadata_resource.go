@@ -32,7 +32,7 @@ type MetadataResourceApiService struct {
 
 /*
 MetadataResourceApiService Create a new workflow definition
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
 */
 func (a *MetadataResourceApiService) RegisterWorkflowDef(ctx context.Context, overwrite bool, body model.WorkflowDef) (*http.Response, error) {
@@ -100,10 +100,10 @@ func (a *MetadataResourceApiService) RegisterWorkflowDef(ctx context.Context, ov
 
 /*
 MetadataResourceApiService Create a new workflow definition with tags
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
 */
-func (a *MetadataResourceApiService) RegisterWorkflowDefWithTags(ctx context.Context, overwrite bool, body model.WorkflowDef, tags []model.MetadataTag) (*http.Response, error) {
+func (a *MetadataResourceApiService) RegisterWorkflowDefWithTags(ctx context.Context, overwrite bool, body model.WorkflowDef) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -138,14 +138,7 @@ func (a *MetadataResourceApiService) RegisterWorkflowDefWithTags(ctx context.Con
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 
-	tagObjects := []model.TagObject{}
-	for i := 0; i < len(tags); i++ {
-		tagObjects = append(tagObjects, model.NewTagObject(tags[i]))
-	}
-
 	workflowDefWithTags := body
-	workflowDefWithTags.Tags = tagObjects
-	workflowDefWithTags.OverwriteTags = true
 	localVarPostBody = &workflowDefWithTags
 
 	r, err := a.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -177,7 +170,7 @@ func (a *MetadataResourceApiService) RegisterWorkflowDefWithTags(ctx context.Con
 
 /*
 MetadataResourceApiService Retrieves workflow definition along with blueprint
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param name
  * @param optional nil or *MetadataResourceApiGetOpts - Optional Parameters:
      * @param "Version" (optional.Int32) -
@@ -272,7 +265,7 @@ func (a *MetadataResourceApiService) Get(ctx context.Context, name string, local
 
 /*
 MetadataResourceApiService Retrieves all workflow definition along with blueprint
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return []http_model.WorkflowDef
 */
@@ -356,7 +349,7 @@ func (a *MetadataResourceApiService) GetAll(ctx context.Context) ([]model.Workfl
 
 /*
 MetadataResourceApiService Gets the task definition
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param tasktype
 
 @return http_model.TaskDef
@@ -442,7 +435,7 @@ func (a *MetadataResourceApiService) GetTaskDef(ctx context.Context, tasktype st
 
 /*
 MetadataResourceApiService Gets all task definition
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return []http_model.TaskDef
 */
@@ -526,7 +519,7 @@ func (a *MetadataResourceApiService) GetTaskDefs(ctx context.Context) ([]model.T
 
 /*
 MetadataResourceApiService Update an existing task
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
 */
 func (a *MetadataResourceApiService) UpdateTaskDef(ctx context.Context, body model.TaskDef) (*http.Response, error) {
@@ -592,10 +585,10 @@ func (a *MetadataResourceApiService) UpdateTaskDef(ctx context.Context, body mod
 
 /*
 MetadataResourceApiService Update an existing task along with tags
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
 */
-func (a *MetadataResourceApiService) UpdateTaskDefWithTags(ctx context.Context, body model.TaskDef, tags []model.MetadataTag, overwriteTags bool) (*http.Response, error) {
+func (a *MetadataResourceApiService) UpdateTaskDefWithTags(ctx context.Context, body model.TaskDef) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
 		localVarPutBody    interface{}
@@ -628,14 +621,7 @@ func (a *MetadataResourceApiService) UpdateTaskDefWithTags(ctx context.Context, 
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 
-	tagObjects := []model.TagObject{}
-	for i := 0; i < len(tags); i++ {
-		tagObjects = append(tagObjects, model.NewTagObject(tags[i]))
-	}
-
 	taskDefWithTags := body
-	taskDefWithTags.Tags = tagObjects
-	taskDefWithTags.OverwriteTags = overwriteTags
 	localVarPutBody = &taskDefWithTags
 
 	r, err := a.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPutBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -667,7 +653,7 @@ func (a *MetadataResourceApiService) UpdateTaskDefWithTags(ctx context.Context, 
 
 /*
 MetadataResourceApiService Create new task definition(s)
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
 */
 func (a *MetadataResourceApiService) RegisterTaskDef(ctx context.Context, body []model.TaskDef) (*http.Response, error) {
@@ -733,11 +719,11 @@ func (a *MetadataResourceApiService) RegisterTaskDef(ctx context.Context, body [
 
 /*
 MetadataResourceApiService Create new task definition with tags
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body model.TaskDef
   - @param tags []model.MetadataTag
 */
-func (a *MetadataResourceApiService) RegisterTaskDefWithTags(ctx context.Context, body model.TaskDef, tags []model.MetadataTag) (*http.Response, error) {
+func (a *MetadataResourceApiService) RegisterTaskDefWithTags(ctx context.Context, body model.TaskDef) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -770,14 +756,7 @@ func (a *MetadataResourceApiService) RegisterTaskDefWithTags(ctx context.Context
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 
-	tagObjects := []model.TagObject{}
-	for i := 0; i < len(tags); i++ {
-		tagObjects = append(tagObjects, model.NewTagObject(tags[i]))
-	}
-
 	taskDefWithTags := body
-	taskDefWithTags.Tags = tagObjects
-	taskDefWithTags.OverwriteTags = true
 	taskDefs := []model.TaskDef{taskDefWithTags}
 	localVarPostBody = &taskDefs
 	r, err := a.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -809,7 +788,7 @@ func (a *MetadataResourceApiService) RegisterTaskDefWithTags(ctx context.Context
 
 /*
 MetadataResourceApiService Remove a task definition
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param tasktype
 */
 func (a *MetadataResourceApiService) UnregisterTaskDef(ctx context.Context, tasktype string) (*http.Response, error) {
@@ -874,7 +853,7 @@ func (a *MetadataResourceApiService) UnregisterTaskDef(ctx context.Context, task
 
 /*
 MetadataResourceApiService Removes workflow definition. It does not remove workflows associated with the definition.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param name
   - @param version
 */
@@ -941,7 +920,7 @@ func (a *MetadataResourceApiService) UnregisterWorkflowDef(ctx context.Context, 
 
 /*
 MetadataResourceApiService Create or update workflow definition
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
 */
 func (a *MetadataResourceApiService) Update(ctx context.Context, body []model.WorkflowDef) (*http.Response, error) {
@@ -1007,10 +986,10 @@ func (a *MetadataResourceApiService) Update(ctx context.Context, body []model.Wo
 
 /*
 MetadataResourceApiService Create or update workflow definition along with tags
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
 */
-func (a *MetadataResourceApiService) UpdateWorkflowDefWithTags(ctx context.Context, body model.WorkflowDef, tags []model.MetadataTag, overwriteTags bool) (*http.Response, error) {
+func (a *MetadataResourceApiService) UpdateWorkflowDefWithTags(ctx context.Context, body model.WorkflowDef) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
 		localVarPostBody   interface{}
@@ -1042,15 +1021,8 @@ func (a *MetadataResourceApiService) UpdateWorkflowDefWithTags(ctx context.Conte
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	// body params
-	tagObjects := []model.TagObject{}
-	for i := 0; i < len(tags); i++ {
-		tagObjects = append(tagObjects, model.NewTagObject(tags[i]))
-	}
 
 	workflowDefWithTags := body
-	workflowDefWithTags.Tags = tagObjects
-	workflowDefWithTags.OverwriteTags = overwriteTags
 	workflowDefs := []model.WorkflowDef{workflowDefWithTags}
 	localVarPostBody = &workflowDefs
 
@@ -1079,159 +1051,4 @@ func (a *MetadataResourceApiService) UpdateWorkflowDefWithTags(ctx context.Conte
 	}
 
 	return localVarHttpResponse, nil
-}
-
-func (a *MetadataResourceApiService) GetTagsForWorkflowDef(ctx context.Context, name string) ([]model.MetadataTag, error) {
-	var (
-		localVarHttpMethod  = strings.ToUpper("Get")
-		localVarPostBody    interface{}
-		localVarFileName    string
-		localVarFileBytes   []byte
-		localVarReturnValue []model.MetadataTag
-	)
-
-	// create path and map variables
-	localVarPath := "/metadata/workflow/{name}?metadata=true"
-	localVarPath = strings.Replace(localVarPath, "{"+"name"+"}", fmt.Sprintf("%v", name), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"*/*"}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	r, err := a.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return localVarReturnValue, err
-	}
-
-	localVarHttpResponse, err := a.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return localVarReturnValue, err
-	}
-
-	localVarBody, err := getDecompressedBody(localVarHttpResponse)
-
-	if err != nil {
-		return localVarReturnValue, err
-	}
-
-	if localVarHttpResponse.StatusCode < 300 {
-		extendedWorkflowDef := model.WorkflowDef{}
-		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.decode(&extendedWorkflowDef, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-		if err == nil {
-			for i := 0; i < len(extendedWorkflowDef.Tags); i++ {
-				value := fmt.Sprintf("%v", *extendedWorkflowDef.Tags[i].Value)
-				tag := model.MetadataTag{
-					Key:   extendedWorkflowDef.Tags[i].Key,
-					Value: value,
-				}
-				localVarReturnValue = append(localVarReturnValue, tag)
-			}
-			return localVarReturnValue, err
-		}
-	}
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body:  localVarBody,
-			error: string(localVarBody),
-		}
-		return localVarReturnValue, newErr
-	}
-
-	return localVarReturnValue, nil
-}
-
-func (a *MetadataResourceApiService) GetTagsForTaskDef(ctx context.Context, tasktype string) ([]model.MetadataTag, error) {
-	var (
-		localVarHttpMethod  = strings.ToUpper("Get")
-		localVarPostBody    interface{}
-		localVarFileName    string
-		localVarFileBytes   []byte
-		localVarReturnValue []model.MetadataTag
-	)
-
-	// create path and map variables
-	localVarPath := "/metadata/taskdefs/{tasktype}?metadata=true"
-	localVarPath = strings.Replace(localVarPath, "{"+"tasktype"+"}", fmt.Sprintf("%v", tasktype), -1)
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"*/*"}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	r, err := a.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return localVarReturnValue, err
-	}
-
-	localVarHttpResponse, err := a.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return localVarReturnValue, err
-	}
-
-	localVarBody, err := getDecompressedBody(localVarHttpResponse)
-	if err != nil {
-		return localVarReturnValue, err
-	}
-
-	if localVarHttpResponse.StatusCode < 300 {
-		extendedTaskDef := model.WorkflowDef{}
-		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.decode(&extendedTaskDef, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-
-		if err == nil {
-			for i := 0; i < len(extendedTaskDef.Tags); i++ {
-				value := fmt.Sprintf("%v", *extendedTaskDef.Tags[i].Value)
-				tag := model.MetadataTag{
-					Key:   extendedTaskDef.Tags[i].Key,
-					Value: value,
-				}
-				localVarReturnValue = append(localVarReturnValue, tag)
-			}
-			return localVarReturnValue, err
-		}
-	}
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body:  localVarBody,
-			error: string(localVarBody),
-		}
-		return localVarReturnValue, newErr
-	}
-
-	return localVarReturnValue, nil
 }

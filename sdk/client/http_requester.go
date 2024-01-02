@@ -20,28 +20,18 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/swift-conductor/conductor-client-golang/sdk/authentication"
 	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
 )
 
 type HttpRequester struct {
 	httpSettings *settings.HttpSettings
 	httpClient   *http.Client
-	tokenManager *authentication.TokenManager
 }
 
-func NewHttpRequester(authenticationSettings *settings.AuthenticationSettings, httpSettings *settings.HttpSettings, httpClient *http.Client, tokenExpiration *authentication.TokenExpiration) *HttpRequester {
-	var tokenManager *authentication.TokenManager
-	tokenManager = nil
-	if authenticationSettings != nil && !authenticationSettings.IsEmpty() {
-		tokenManager = authentication.NewTokenManager(
-			*authenticationSettings, tokenExpiration,
-		)
-	}
+func NewHttpRequester(httpSettings *settings.HttpSettings, httpClient *http.Client) *HttpRequester {
 	return &HttpRequester{
 		httpSettings: httpSettings,
 		httpClient:   httpClient,
-		tokenManager: tokenManager,
 	}
 }
 
@@ -160,13 +150,6 @@ func (h *HttpRequester) prepareRequest(
 
 	for header, value := range h.httpSettings.Headers {
 		localVarRequest.Header.Add(header, value)
-	}
-
-	if h.tokenManager != nil {
-		token, err := h.tokenManager.RefreshToken(h.httpSettings, h.httpClient)
-		if err == nil {
-			localVarRequest.Header.Add("X-Authorization", token)
-		}
 	}
 
 	return localVarRequest, nil

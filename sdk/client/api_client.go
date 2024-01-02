@@ -29,9 +29,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/swift-conductor/conductor-client-golang/sdk/authentication"
-	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
 	"github.com/sirupsen/logrus"
+	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
 )
 
 var (
@@ -44,51 +43,40 @@ type APIClient struct {
 }
 
 func NewAPIClient(
-	authenticationSettings *settings.AuthenticationSettings,
 	httpSettings *settings.HttpSettings,
 ) *APIClient {
 	return newAPIClient(
-		authenticationSettings,
 		httpSettings,
-		nil,
 	)
 }
 
-func NewAPIClientWithTokenExpiration(
-	authenticationSettings *settings.AuthenticationSettings,
-	httpSettings *settings.HttpSettings,
-	tokenExpiration *authentication.TokenExpiration,
-) *APIClient {
-	return newAPIClient(
-		authenticationSettings,
-		httpSettings,
-		tokenExpiration,
-	)
-}
-
-func newAPIClient(authenticationSettings *settings.AuthenticationSettings, httpSettings *settings.HttpSettings, tokenExpiration *authentication.TokenExpiration) *APIClient {
+func newAPIClient(httpSettings *settings.HttpSettings) *APIClient {
 	if httpSettings == nil {
 		httpSettings = settings.NewHttpDefaultSettings()
 	}
+
 	baseDialer := &net.Dialer{
 		Timeout:   30 * time.Second,
 		KeepAlive: 30 * time.Second,
 	}
+
 	netTransport := &http.Transport{
 		DialContext:         baseDialer.DialContext,
 		MaxIdleConns:        100,
 		MaxIdleConnsPerHost: 100,
 		DisableCompression:  false,
 	}
+
 	client := http.Client{
 		Transport:     netTransport,
 		CheckRedirect: nil,
 		Jar:           nil,
 		Timeout:       30 * time.Second,
 	}
+
 	return &APIClient{
 		httpRequester: NewHttpRequester(
-			authenticationSettings, httpSettings, &client, tokenExpiration,
+			httpSettings, &client,
 		),
 	}
 }

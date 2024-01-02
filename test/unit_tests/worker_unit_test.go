@@ -10,58 +10,39 @@
 package unit_tests
 
 import (
+	"testing"
+	"time"
+
+	"github.com/stretchr/testify/assert"
 	"github.com/swift-conductor/conductor-client-golang/sdk/client"
 	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
 	"github.com/swift-conductor/conductor-client-golang/sdk/worker"
-	"github.com/stretchr/testify/assert"
-	"testing"
-	"time"
 )
 
 func TestSimpleTaskRunner(t *testing.T) {
-	taskRunner := worker.NewTaskRunner(nil, nil)
+	taskRunner := worker.NewTaskRunner(settings.NewHttpDefaultSettings())
 	if taskRunner == nil {
 		t.Fail()
 	}
 }
 
-func TestTaskRunnerWithoutAuthenticationSettings(t *testing.T) {
+func TestTaskRunner(t *testing.T) {
 	apiClient := client.NewAPIClient(
-		nil,
 		settings.NewHttpDefaultSettings(),
 	)
+
 	taskRunner := worker.NewTaskRunnerWithApiClient(
 		apiClient,
 	)
+
 	if taskRunner == nil {
 		t.Fail()
 	}
 }
 
-func TestTaskRunnerWithAuthenticationSettings(t *testing.T) {
-	authenticationSettings := settings.NewAuthenticationSettings(
-		"keyId",
-		"keySecret",
-	)
-	apiClient := client.NewAPIClient(
-		authenticationSettings,
-		settings.NewHttpDefaultSettings(),
-	)
-	taskRunner := worker.NewTaskRunnerWithApiClient(
-		apiClient,
-	)
-	if taskRunner == nil {
-		t.Fail()
-	}
-}
 func TestPauseResume(t *testing.T) {
-	authenticationSettings := settings.NewAuthenticationSettings(
-		"keyId",
-		"keySecret",
-	)
 	apiClient := client.NewAPIClient(
-		authenticationSettings,
 		settings.NewHttpDefaultSettings(),
 	)
 	taskRunner := worker.NewTaskRunnerWithApiClient(

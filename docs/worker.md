@@ -8,26 +8,32 @@ import "github.com/swift-conductor/conductor-client-golang/sdk/worker"
 
 ## Index
 
-- [type TaskRunner](<#type-taskrunner>)
-  - [func NewTaskRunner(authenticationSettings *settings.AuthenticationSettings, httpSettings *settings.HttpSettings) *TaskRunner](<#func-newtaskrunner>)
-  - [func NewTaskRunnerWithApiClient(apiClient *client.APIClient) *TaskRunner](<#func-newtaskrunnerwithapiclient>)
-  - [func (c *TaskRunner) DecreaseBatchSize(taskName string, batchSize int) error](<#func-taskrunner-decreasebatchsize>)
-  - [func (c *TaskRunner) GetBatchSizeForAll() (batchSizeByTaskName map[string]int)](<#func-taskrunner-getbatchsizeforall>)
-  - [func (c *TaskRunner) GetBatchSizeForTask(taskName string) (batchSize int)](<#func-taskrunner-getbatchsizefortask>)
-  - [func (c *TaskRunner) GetPollIntervalForTask(taskName string) (pollInterval time.Duration, err error)](<#func-taskrunner-getpollintervalfortask>)
-  - [func (c *TaskRunner) IncreaseBatchSize(taskName string, batchSize int) error](<#func-taskrunner-increasebatchsize>)
-  - [func (c *TaskRunner) Pause(taskName string)](<#func-taskrunner-pause>)
-  - [func (c *TaskRunner) Resume(taskName string)](<#func-taskrunner-resume>)
-  - [func (c *TaskRunner) SetBatchSize(taskName string, batchSize int) error](<#func-taskrunner-setbatchsize>)
-  - [func (c *TaskRunner) SetPollIntervalForTask(taskName string, pollInterval time.Duration) error](<#func-taskrunner-setpollintervalfortask>)
-  - [func (c *TaskRunner) StartWorker(taskName string, executeFunction model.ExecuteTaskFunction, batchSize int, pollInterval time.Duration) error](<#func-taskrunner-startworker>)
-  - [func (c *TaskRunner) StartWorkerWithDomain(taskName string, executeFunction model.ExecuteTaskFunction, batchSize int, pollInterval time.Duration, domain string) error](<#func-taskrunner-startworkerwithdomain>)
-  - [func (c *TaskRunner) WaitWorkers()](<#func-taskrunner-waitworkers>)
+- [type TaskRunner](<#TaskRunner>)
+  - [func NewTaskRunner\(httpSettings \*settings.HttpSettings\) \*TaskRunner](<#NewTaskRunner>)
+  - [func NewTaskRunnerWithApiClient\(apiClient \*client.APIClient\) \*TaskRunner](<#NewTaskRunnerWithApiClient>)
+  - [func \(c \*TaskRunner\) DecreaseBatchSize\(taskName string, batchSize int\) error](<#TaskRunner.DecreaseBatchSize>)
+  - [func \(c \*TaskRunner\) GetBatchSizeForAll\(\) \(batchSizeByTaskName map\[string\]int\)](<#TaskRunner.GetBatchSizeForAll>)
+  - [func \(c \*TaskRunner\) GetBatchSizeForTask\(taskName string\) \(batchSize int\)](<#TaskRunner.GetBatchSizeForTask>)
+  - [func \(c \*TaskRunner\) GetPollIntervalForTask\(taskName string\) \(pollInterval time.Duration, err error\)](<#TaskRunner.GetPollIntervalForTask>)
+  - [func \(c \*TaskRunner\) IncreaseBatchSize\(taskName string, batchSize int\) error](<#TaskRunner.IncreaseBatchSize>)
+  - [func \(c \*TaskRunner\) Pause\(taskName string\)](<#TaskRunner.Pause>)
+  - [func \(c \*TaskRunner\) Resume\(taskName string\)](<#TaskRunner.Resume>)
+  - [func \(c \*TaskRunner\) SetBatchSize\(taskName string, batchSize int\) error](<#TaskRunner.SetBatchSize>)
+  - [func \(c \*TaskRunner\) SetPollIntervalForTask\(taskName string, pollInterval time.Duration\) error](<#TaskRunner.SetPollIntervalForTask>)
+  - [func \(c \*TaskRunner\) SetSleepOnGenericError\(duration time.Duration\)](<#TaskRunner.SetSleepOnGenericError>)
+  - [func \(c \*TaskRunner\) StartWorker\(taskName string, executeFunction model.ExecuteTaskFunction, batchSize int, pollInterval time.Duration\) error](<#TaskRunner.StartWorker>)
+  - [func \(c \*TaskRunner\) StartWorkerWithDomain\(taskName string, executeFunction model.ExecuteTaskFunction, batchSize int, pollInterval time.Duration, domain string\) error](<#TaskRunner.StartWorkerWithDomain>)
+  - [func \(c \*TaskRunner\) WaitWorkers\(\)](<#TaskRunner.WaitWorkers>)
 
 
-## type [TaskRunner](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L37-L51>)
+<a name="TaskRunner"></a>
+## type [TaskRunner](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L48-L64>)
 
-TaskRunner Runner for the Task Workers.  Task Runners implements the polling and execution logic for the workers
+TaskRunner implements polling and execution logic for a Conductor worker. Every polling interval, each running task attempts to retrieve a from Conductor. Multiple tasks can be started in parallel. All Goroutines started by this worker cannot be stopped, only paused and resumed.
+
+Conductor tasks are tracked by name separately. Each TaskRunner tracks a separate poll interval and batch size for each task, which is shared by all workers running that task. For instance, if task "foo" is running with a batch size of n, and k workers, the average number of tasks retrieved during each polling interval is n\*k.
+
+All methods on TaskRunner are thread\-safe.
 
 ```go
 type TaskRunner struct {
@@ -35,98 +41,143 @@ type TaskRunner struct {
 }
 ```
 
-### func [NewTaskRunner](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L53>)
+<a name="NewTaskRunner"></a>
+### func [NewTaskRunner](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L67>)
 
 ```go
-func NewTaskRunner(authenticationSettings *settings.AuthenticationSettings, httpSettings *settings.HttpSettings) *TaskRunner
+func NewTaskRunner(httpSettings *settings.HttpSettings) *TaskRunner
 ```
 
-### func [NewTaskRunnerWithApiClient](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L61-L63>)
+NewTaskRunner returns a new TaskRunner using the provided settings.
+
+<a name="NewTaskRunnerWithApiClient"></a>
+### func [NewTaskRunnerWithApiClient](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L76-L78>)
 
 ```go
 func NewTaskRunnerWithApiClient(apiClient *client.APIClient) *TaskRunner
 ```
 
-### func \(\*TaskRunner\) [DecreaseBatchSize](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L140>)
+NewTaskRunnerWithApiClient creates a new TaskRunner which uses the provided client.APIClient to communicate with Conductor.
+
+<a name="TaskRunner.DecreaseBatchSize"></a>
+### func \(\*TaskRunner\) [DecreaseBatchSize](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L164>)
 
 ```go
 func (c *TaskRunner) DecreaseBatchSize(taskName string, batchSize int) error
 ```
 
-### func \(\*TaskRunner\) [GetBatchSizeForAll](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L454>)
+DecreaseBatchSize decreases the batch size used for all workers running the provided task.
+
+<a name="TaskRunner.GetBatchSizeForAll"></a>
+### func \(\*TaskRunner\) [GetBatchSizeForAll](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L514>)
 
 ```go
 func (c *TaskRunner) GetBatchSizeForAll() (batchSizeByTaskName map[string]int)
 ```
 
-### func \(\*TaskRunner\) [GetBatchSizeForTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L464>)
+GetBatchSizeForAll returns a map from taskName to batch size for all batch sizes currently registered with this TaskRunner.
+
+<a name="TaskRunner.GetBatchSizeForTask"></a>
+### func \(\*TaskRunner\) [GetBatchSizeForTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L525>)
 
 ```go
 func (c *TaskRunner) GetBatchSizeForTask(taskName string) (batchSize int)
 ```
 
-### func \(\*TaskRunner\) [GetPollIntervalForTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L444>)
+GetBatchSizeForTask retrieves the current batch size for the provided task.
+
+<a name="TaskRunner.GetPollIntervalForTask"></a>
+### func \(\*TaskRunner\) [GetPollIntervalForTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L502>)
 
 ```go
 func (c *TaskRunner) GetPollIntervalForTask(taskName string) (pollInterval time.Duration, err error)
 ```
 
-### func \(\*TaskRunner\) [IncreaseBatchSize](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L118>)
+GetPollIntervalForTask retrieves the poll interval for all tasks running the provided taskName. An error is returned if no pollInterval has been registered for the provided task.
+
+<a name="TaskRunner.IncreaseBatchSize"></a>
+### func \(\*TaskRunner\) [IncreaseBatchSize](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L141>)
 
 ```go
 func (c *TaskRunner) IncreaseBatchSize(taskName string, batchSize int) error
 ```
 
-### func \(\*TaskRunner\) [Pause](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L164>)
+IncreaseBatchSize increases the batch size used for all workers running the provided task.
+
+<a name="TaskRunner.Pause"></a>
+### func \(\*TaskRunner\) [Pause](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L190>)
 
 ```go
 func (c *TaskRunner) Pause(taskName string)
 ```
 
-Pause a running worker.  When paused worker will not poll for new task.  Worker must be resumed using Resume
+Pause pauses all workers running the provided task. When paused, workers will not poll for new tasks and no new goroutines are started. However it does not stop any goroutines running. Workers must be resumed at a later time using Resume. Failing to call \`Resume\(\)\` on a TaskRunner running one or more workers can result in a goroutine leak.
 
-### func \(\*TaskRunner\) [Resume](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L169>)
+<a name="TaskRunner.Resume"></a>
+### func \(\*TaskRunner\) [Resume](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L198>)
 
 ```go
 func (c *TaskRunner) Resume(taskName string)
 ```
 
-Resume a running worker.  If the worker is not paused, calling this method has no impact
+Resume all running workers for the provided taskName. If workers for the provided task are not paused, calling this method has no impact.
 
-### func \(\*TaskRunner\) [SetBatchSize](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L94>)
+<a name="TaskRunner.SetBatchSize"></a>
+### func \(\*TaskRunner\) [SetBatchSize](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L116>)
 
 ```go
 func (c *TaskRunner) SetBatchSize(taskName string, batchSize int) error
 ```
 
-### func \(\*TaskRunner\) [SetPollIntervalForTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L436>)
+SetBatchSize can be used to set the batch size for all workers running the provided task.
+
+<a name="TaskRunner.SetPollIntervalForTask"></a>
+### func \(\*TaskRunner\) [SetPollIntervalForTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L492>)
 
 ```go
 func (c *TaskRunner) SetPollIntervalForTask(taskName string, pollInterval time.Duration) error
 ```
 
-### func \(\*TaskRunner\) [StartWorker](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L90>)
+SetPollIntervalForTask sets the pollInterval for all workers running the task with the provided taskName.
+
+<a name="TaskRunner.SetSleepOnGenericError"></a>
+### func \(\*TaskRunner\) [SetSleepOnGenericError](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L93>)
+
+```go
+func (c *TaskRunner) SetSleepOnGenericError(duration time.Duration)
+```
+
+SetSleepOnGenericError Sets the time for which to wait before continuing to poll/execute when there is an error Default is 200 millis, and this function can be used to increase/decrease the duration of the wait time Useful to avoid excessive logs in the worker when there are intermittent issues
+
+<a name="TaskRunner.StartWorker"></a>
+### func \(\*TaskRunner\) [StartWorker](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L111>)
 
 ```go
 func (c *TaskRunner) StartWorker(taskName string, executeFunction model.ExecuteTaskFunction, batchSize int, pollInterval time.Duration) error
 ```
 
-StartWorker \- taskName Task name to poll and execute the work \- executeFunction Task execution function \- batchSize Amount of tasks to be polled. Each polled task will be executed and updated within its own unique goroutine. \- pollInterval Time to wait for between polls if there are no tasks available. Reduces excessive polling on the server when there is no work
+StartWorker starts a worker on a new goroutine, which polls conductor periodically for tasks matching the provided taskName and, if any are available, uses executeFunction to run them on a separate goroutine. Each call to StartWorker starts a new goroutine which performs batch polling to retrieve as many tasks from Conductor as are available, up to the batchSize set for the task. This func additionally sets the pollInterval and increases the batch size for the task, which applies to all tasks shared by this TaskRunner with the same taskName.
 
-### func \(\*TaskRunner\) [StartWorkerWithDomain](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L81>)
+<a name="TaskRunner.StartWorkerWithDomain"></a>
+### func \(\*TaskRunner\) [StartWorkerWithDomain](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L101>)
 
 ```go
 func (c *TaskRunner) StartWorkerWithDomain(taskName string, executeFunction model.ExecuteTaskFunction, batchSize int, pollInterval time.Duration, domain string) error
 ```
 
-StartWorkerWithDomain \- taskName Task name to poll and execute the work \- executeFunction Task execution function \- batchSize Amount of tasks to be polled. Each polled task will be executed and updated within its own unique goroutine. \- pollInterval Time to wait for between polls if there are no tasks available. Reduces excessive polling on the server when there is no work \- domain Task domain. Optional for polling
+StartWorkerWithDomain starts a polling worker on a new goroutine, which only polls for tasks using the provided domain. Equivalent to:
 
-### func \(\*TaskRunner\) [WaitWorkers](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L173>)
+```
+StartWorkerWithDomain(taskName, executeFunction, batchSize, pollInterval, "")
+```
+
+<a name="TaskRunner.WaitWorkers"></a>
+### func \(\*TaskRunner\) [WaitWorkers](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/task_runner.go#L212>)
 
 ```go
 func (c *TaskRunner) WaitWorkers()
 ```
 
-
+WaitWorkers uses an internal waitgroup to block the calling thread until all workers started by this TaskRunner have been stopped.
 
 Generated by [gomarkdoc](<https://github.com/princjef/gomarkdoc>)
