@@ -14,13 +14,13 @@ import (
 )
 
 type WaitTask struct {
-	Task
+	WorkflowTaskEx
 }
 
 // NewWaitTask creates WAIT task used to wait until an external event or a timeout occurs
 func NewWaitTask(taskRefName string) *WaitTask {
 	return &WaitTask{
-		Task{
+		WorkflowTaskEx{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -32,7 +32,7 @@ func NewWaitTask(taskRefName string) *WaitTask {
 }
 func NewWaitForDurationTask(taskRefName string, duration time.Duration) *WaitTask {
 	return &WaitTask{
-		Task{
+		WorkflowTaskEx{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -47,7 +47,7 @@ func NewWaitForDurationTask(taskRefName string, duration time.Duration) *WaitTas
 
 func NewWaitUntilTask(taskRefName string, dateTime string) *WaitTask {
 	return &WaitTask{
-		Task{
+		WorkflowTaskEx{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -62,19 +62,19 @@ func NewWaitUntilTask(taskRefName string, dateTime string) *WaitTask {
 
 // Description of the task
 func (task *WaitTask) Description(description string) *WaitTask {
-	task.Task.Description(description)
+	task.WorkflowTaskEx.Description(description)
 	return task
 }
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *WaitTask) Optional(optional bool) *WaitTask {
-	task.Task.Optional(optional)
+	task.WorkflowTaskEx.Optional(optional)
 	return task
 }
 
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *WaitTask) Input(key string, value interface{}) *WaitTask {
-	task.Task.Input(key, value)
+	task.WorkflowTaskEx.Input(key, value)
 	return task
 }
 

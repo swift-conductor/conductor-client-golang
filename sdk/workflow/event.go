@@ -10,7 +10,7 @@
 package workflow
 
 import (
-	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"swiftconductor.com/swift-conductor-client/sdk/model"
 )
 
 const (
@@ -20,7 +20,7 @@ const (
 
 // EventTask Task to publish Events to external queuing systems like SQS, NATS, AMQP etc.
 type EventTask struct {
-	Task
+	WorkflowTaskEx
 	sink string
 }
 
@@ -42,7 +42,7 @@ func NewConductorEventTask(taskRefName string, eventName string) *EventTask {
 
 func newEventTask(taskRefName string, eventPrefix string, eventSuffix string) *EventTask {
 	return &EventTask{
-		Task: Task{
+		WorkflowTaskEx: WorkflowTaskEx{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			taskType:          EVENT,
@@ -52,14 +52,14 @@ func newEventTask(taskRefName string, eventPrefix string, eventSuffix string) *E
 }
 
 func (task *EventTask) toWorkflowTask() []model.WorkflowTask {
-	workflowTasks := task.Task.toWorkflowTask()
+	workflowTasks := task.WorkflowTaskEx.toWorkflowTask()
 	workflowTasks[0].Sink = task.sink
 	return workflowTasks
 }
 
 // Input to the task
 func (task *EventTask) Input(key string, value interface{}) *EventTask {
-	task.Task.Input(key, value)
+	task.WorkflowTaskEx.Input(key, value)
 	return task
 }
 
@@ -73,12 +73,12 @@ func (task *EventTask) InputMap(inputMap map[string]interface{}) *EventTask {
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *EventTask) Optional(optional bool) *EventTask {
-	task.Task.Optional(optional)
+	task.WorkflowTaskEx.Optional(optional)
 	return task
 }
 
 // Description of the task
 func (task *EventTask) Description(description string) *EventTask {
-	task.Task.Description(description)
+	task.WorkflowTaskEx.Description(description)
 	return task
 }

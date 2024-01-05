@@ -14,25 +14,25 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/swift-conductor/conductor-client-golang/sdk/client"
-	"github.com/swift-conductor/conductor-client-golang/sdk/model"
-	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
-	"github.com/swift-conductor/conductor-client-golang/sdk/worker"
+	"swiftconductor.com/swift-conductor-client/sdk/client"
+	"swiftconductor.com/swift-conductor-client/sdk/model"
+	"swiftconductor.com/swift-conductor-client/sdk/settings"
+	"swiftconductor.com/swift-conductor-client/sdk/worker"
 )
 
-func TestSimpleTaskRunner(t *testing.T) {
-	taskRunner := worker.NewTaskRunner(settings.NewHttpDefaultSettings())
+func TestSimpleWorkerRunner(t *testing.T) {
+	taskRunner := worker.NewWorkerRunner(settings.NewHttpDefaultSettings())
 	if taskRunner == nil {
 		t.Fail()
 	}
 }
 
-func TestTaskRunner(t *testing.T) {
+func TestWorkerRunner(t *testing.T) {
 	apiClient := client.NewAPIClient(
 		settings.NewHttpDefaultSettings(),
 	)
 
-	taskRunner := worker.NewTaskRunnerWithApiClient(
+	taskRunner := worker.NewWorkerRunnerWithApiClient(
 		apiClient,
 	)
 
@@ -45,7 +45,7 @@ func TestPauseResume(t *testing.T) {
 	apiClient := client.NewAPIClient(
 		settings.NewHttpDefaultSettings(),
 	)
-	taskRunner := worker.NewTaskRunnerWithApiClient(
+	taskRunner := worker.NewWorkerRunnerWithApiClient(
 		apiClient,
 	)
 	taskRunner.StartWorker("test", TaskWorker, 21, time.Second)
@@ -56,7 +56,7 @@ func TestPauseResume(t *testing.T) {
 
 }
 
-func TaskWorker(task *model.Task) (interface{}, error) {
+func TaskWorker(task *model.WorkerTask) (interface{}, error) {
 	return map[string]interface{}{
 		"zip": "10121",
 	}, nil

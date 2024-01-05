@@ -17,7 +17,7 @@ import (
 	"strings"
 
 	"github.com/antihax/optional"
-	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"swiftconductor.com/swift-conductor-client/sdk/model"
 )
 
 // Linger please
@@ -1900,7 +1900,7 @@ func (a *WorkflowResourceApiService) StartWorkflow(ctx context.Context, body map
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 
-func (a *WorkflowResourceApiService) ExecuteWorkflow(ctx context.Context, body model.StartWorkflowRequest, requestId string, name string, version int32, waitUntilTask string) (model.WorkflowRun, *http.Response, error) {
+func (a *WorkflowResourceApiService) RunWorkflow(ctx context.Context, body model.StartWorkflowRequest, requestId string, name string, version int32, waitUntilTask string) (model.WorkflowRun, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}

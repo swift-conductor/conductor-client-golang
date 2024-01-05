@@ -7,36 +7,36 @@
 //  an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
 //  specific language governing permissions and limitations under the License.
 
-package executor
+package workflow
 
 import (
 	"fmt"
 	"time"
 
-	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"swiftconductor.com/swift-conductor-client/sdk/model"
 )
 
-type WorkflowExecutionChannel chan *model.Workflow
+type RunningWorkflowChannel chan *model.Workflow
 
 type RunningWorkflow struct {
-	WorkflowId               string
-	WorkflowExecutionChannel WorkflowExecutionChannel
-	Err                      error
-	CompletedWorkflow        *model.Workflow
+	WorkflowId             string
+	RunningWorkflowChannel RunningWorkflowChannel
+	Err                    error
+	CompletedWorkflow      *model.Workflow
 }
 
-func NewRunningWorkflow(workflowId string, workflowExecutionChannel WorkflowExecutionChannel, err error) *RunningWorkflow {
+func NewRunningWorkflow(workflowId string, runningWorkflowChannel RunningWorkflowChannel, err error) *RunningWorkflow {
 	return &RunningWorkflow{
-		WorkflowId:               workflowId,
-		WorkflowExecutionChannel: workflowExecutionChannel,
-		Err:                      err,
-		CompletedWorkflow:        nil,
+		WorkflowId:             workflowId,
+		RunningWorkflowChannel: runningWorkflowChannel,
+		Err:                    err,
+		CompletedWorkflow:      nil,
 	}
 }
 
 func (rw *RunningWorkflow) WaitForCompletionUntilTimeout(timeout time.Duration) (workflow *model.Workflow, err error) {
 	select {
-	case workflow, ok := <-rw.WorkflowExecutionChannel:
+	case workflow, ok := <-rw.RunningWorkflowChannel:
 		if !ok {
 			return nil, fmt.Errorf("channel closed")
 		}

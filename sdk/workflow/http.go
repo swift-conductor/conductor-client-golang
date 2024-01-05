@@ -10,7 +10,7 @@
 package workflow
 
 type HttpTask struct {
-	Task
+	WorkflowTaskEx
 }
 
 type HttpMethod string
@@ -30,7 +30,7 @@ func NewHttpTask(taskRefName string, input *HttpInput) *HttpTask {
 		input.Method = GET
 	}
 	return &HttpTask{
-		Task{
+		WorkflowTaskEx{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -57,7 +57,7 @@ type HttpInput struct {
 
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *HttpTask) Input(key string, value interface{}) *HttpTask {
-	task.Task.Input(key, value)
+	task.WorkflowTaskEx.Input(key, value)
 	return task
 }
 
@@ -71,12 +71,12 @@ func (task *HttpTask) InputMap(inputMap map[string]interface{}) *HttpTask {
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *HttpTask) Optional(optional bool) *HttpTask {
-	task.Task.Optional(optional)
+	task.WorkflowTaskEx.Optional(optional)
 	return task
 }
 
 // Description of the task
 func (task *HttpTask) Description(description string) *HttpTask {
-	task.Task.Description(description)
+	task.WorkflowTaskEx.Description(description)
 	return task
 }

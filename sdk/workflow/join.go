@@ -10,17 +10,17 @@
 package workflow
 
 import (
-	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"swiftconductor.com/swift-conductor-client/sdk/model"
 )
 
 type JoinTask struct {
-	Task
+	WorkflowTaskEx
 	joinOn []string
 }
 
 func NewJoinTask(taskRefName string, joinOn ...string) *JoinTask {
 	return &JoinTask{
-		Task: Task{
+		WorkflowTaskEx: WorkflowTaskEx{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -33,19 +33,19 @@ func NewJoinTask(taskRefName string, joinOn ...string) *JoinTask {
 }
 
 func (task *JoinTask) toWorkflowTask() []model.WorkflowTask {
-	workflowTasks := task.Task.toWorkflowTask()
+	workflowTasks := task.WorkflowTaskEx.toWorkflowTask()
 	workflowTasks[0].JoinOn = task.joinOn
 	return workflowTasks
 }
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *JoinTask) Optional(optional bool) *JoinTask {
-	task.Task.Optional(optional)
+	task.WorkflowTaskEx.Optional(optional)
 	return task
 }
 
 // Description of the task
 func (task *JoinTask) Description(description string) *JoinTask {
-	task.Task.Description(description)
+	task.WorkflowTaskEx.Description(description)
 	return task
 }

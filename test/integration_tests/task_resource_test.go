@@ -14,14 +14,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/swift-conductor/conductor-client-golang/internal/testdata"
-	"github.com/swift-conductor/conductor-client-golang/sdk/model"
-	"github.com/swift-conductor/conductor-client-golang/sdk/workflow"
-	"github.com/swift-conductor/conductor-client-golang/test/common"
+	"swiftconductor.com/swift-conductor-client/internal/testdata"
+	"swiftconductor.com/swift-conductor-client/sdk/model"
+	"swiftconductor.com/swift-conductor-client/sdk/workflow"
+	"swiftconductor.com/swift-conductor-client/test/common"
 )
 
 func TestUpdateTaskRefByName(t *testing.T) {
-	simpleTaskWorkflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
+	simpleTaskWorkflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_UPDATE_TASK").
 		Version(1).
 		OwnerEmail("test@test.com").

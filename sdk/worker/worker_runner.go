@@ -17,11 +17,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/swift-conductor/conductor-client-golang/sdk/client"
-	"github.com/swift-conductor/conductor-client-golang/sdk/concurrency"
-	"github.com/swift-conductor/conductor-client-golang/sdk/metrics"
-	"github.com/swift-conductor/conductor-client-golang/sdk/model"
-	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
+	"swiftconductor.com/swift-conductor-client/sdk/client"
+	"swiftconductor.com/swift-conductor-client/sdk/concurrency"
+	"swiftconductor.com/swift-conductor-client/sdk/metrics"
+	"swiftconductor.com/swift-conductor-client/sdk/model"
+	"swiftconductor.com/swift-conductor-client/sdk/settings"
 
 	"github.com/antihax/optional"
 	log "github.com/sirupsen/logrus"
@@ -36,16 +36,16 @@ var (
 
 var hostname, _ = os.Hostname()
 
-// TaskRunner implements polling and execution logic for a Conductor worker. Every polling interval, each running
+// WorkerRunner implements polling and execution logic for a Conductor worker. Every polling interval, each running
 // task attempts to retrieve a from Conductor. Multiple tasks can be started in parallel. All Goroutines started by this
 // worker cannot be stopped, only paused and resumed.
 //
-// Conductor tasks are tracked by name separately. Each TaskRunner tracks a separate poll interval and batch size for
+// Conductor tasks are tracked by name separately. Each WorkerRunner tracks a separate poll interval and batch size for
 // each task, which is shared by all workers running that task. For instance, if task "foo" is running with a batch size
 // of n, and k workers, the average number of tasks retrieved during each polling interval is n*k.
 //
-// All methods on TaskRunner are thread-safe.
-type TaskRunner struct {
+// All methods on WorkerRunner are thread-safe.
+type WorkerRunner struct {
 	conductorTaskResourceClient *client.TaskResourceApiService
 
 	workerWaitGroup sync.WaitGroup
@@ -63,20 +63,20 @@ type TaskRunner struct {
 	pausedWorkers      map[string]bool
 }
 
-// NewTaskRunner returns a new TaskRunner using the provided settings.
-func NewTaskRunner(httpSettings *settings.HttpSettings) *TaskRunner {
+// NewWorkerRunner returns a new WorkerRunner using the provided settings.
+func NewWorkerRunner(httpSettings *settings.HttpSettings) *WorkerRunner {
 	apiClient := client.NewAPIClient(
 		httpSettings,
 	)
-	return NewTaskRunnerWithApiClient(apiClient)
+	return NewWorkerRunnerWithApiClient(apiClient)
 }
 
-// NewTaskRunnerWithApiClient creates a new TaskRunner which uses the provided client.APIClient to communicate with
+// NewWorkerRunnerWithApiClient creates a new WorkerRunner which uses the provided client.APIClient to communicate with
 // Conductor.
-func NewTaskRunnerWithApiClient(
+func NewWorkerRunnerWithApiClient(
 	apiClient *client.APIClient,
-) *TaskRunner {
-	return &TaskRunner{
+) *WorkerRunner {
+	return &WorkerRunner{
 		conductorTaskResourceClient: &client.TaskResourceApiService{
 			APIClient: apiClient,
 		},
@@ -90,7 +90,7 @@ func NewTaskRunnerWithApiClient(
 // SetSleepOnGenericError Sets the time for which to wait before continuing to poll/execute when there is an error
 // Default is 200 millis, and this function can be used to increase/decrease the duration of the wait time
 // Useful to avoid excessive logs in the worker when there are intermittent issues
-func (c *TaskRunner) SetSleepOnGenericError(duration time.Duration) {
+func (c *WorkerRunner) SetSleepOnGenericError(duration time.Duration) {
 	sleepForOnGenericError = duration
 }
 
@@ -98,7 +98,7 @@ func (c *TaskRunner) SetSleepOnGenericError(duration time.Duration) {
 // domain. Equivalent to:
 //
 //	StartWorkerWithDomain(taskName, executeFunction, batchSize, pollInterval, "")
-func (c *TaskRunner) StartWorkerWithDomain(taskName string, executeFunction model.ExecuteTaskFunction, batchSize int, pollInterval time.Duration, domain string) error {
+func (c *WorkerRunner) StartWorkerWithDomain(taskName string, executeFunction model.WorkerTaskFunction, batchSize int, pollInterval time.Duration, domain string) error {
 	return c.startWorker(taskName, executeFunction, batchSize, pollInterval, domain)
 }
 
@@ -106,14 +106,14 @@ func (c *TaskRunner) StartWorkerWithDomain(taskName string, executeFunction mode
 // taskName and, if any are available, uses executeFunction to run them on a separate goroutine. Each call to
 // StartWorker starts a new goroutine which performs batch polling to retrieve as many
 // tasks from Conductor as are available, up to the batchSize set for the task. This func additionally sets the
-// pollInterval and increases the batch size for the task, which applies to all tasks shared by this TaskRunner with the
+// pollInterval and increases the batch size for the task, which applies to all tasks shared by this WorkerRunner with the
 // same taskName.
-func (c *TaskRunner) StartWorker(taskName string, executeFunction model.ExecuteTaskFunction, batchSize int, pollInterval time.Duration) error {
+func (c *WorkerRunner) StartWorker(taskName string, executeFunction model.WorkerTaskFunction, batchSize int, pollInterval time.Duration) error {
 	return c.startWorker(taskName, executeFunction, batchSize, pollInterval, "")
 }
 
 // SetBatchSize can be used to set the batch size for all workers running the provided task.
-func (c *TaskRunner) SetBatchSize(taskName string, batchSize int) error {
+func (c *WorkerRunner) SetBatchSize(taskName string, batchSize int) error {
 	if batchSize < 0 {
 		return fmt.Errorf("batchSize can not be negative")
 	}
@@ -138,7 +138,7 @@ func (c *TaskRunner) SetBatchSize(taskName string, batchSize int) error {
 }
 
 // IncreaseBatchSize increases the batch size used for all workers running the provided task.
-func (c *TaskRunner) IncreaseBatchSize(taskName string, batchSize int) error {
+func (c *WorkerRunner) IncreaseBatchSize(taskName string, batchSize int) error {
 	if batchSize < 1 {
 		return fmt.Errorf("batchSize value must be positive")
 	}
@@ -161,7 +161,7 @@ func (c *TaskRunner) IncreaseBatchSize(taskName string, batchSize int) error {
 }
 
 // DecreaseBatchSize decreases the batch size used for all workers running the provided task.
-func (c *TaskRunner) DecreaseBatchSize(taskName string, batchSize int) error {
+func (c *WorkerRunner) DecreaseBatchSize(taskName string, batchSize int) error {
 	if batchSize < 1 {
 		return fmt.Errorf("batchSize value must be positive")
 	}
@@ -186,8 +186,8 @@ func (c *TaskRunner) DecreaseBatchSize(taskName string, batchSize int) error {
 
 // Pause pauses all workers running the provided task. When paused, workers will not poll for new tasks and no new
 // goroutines are started. However it does not stop any goroutines running. Workers must be resumed at a later time
-// using Resume. Failing to call `Resume()` on a TaskRunner running one or more workers can result in a goroutine leak.
-func (c *TaskRunner) Pause(taskName string) {
+// using Resume. Failing to call `Resume()` on a WorkerRunner running one or more workers can result in a goroutine leak.
+func (c *WorkerRunner) Pause(taskName string) {
 	c.pausedWorkersMutex.Lock()
 	defer c.pausedWorkersMutex.Unlock()
 	c.pausedWorkers[taskName] = true
@@ -195,25 +195,25 @@ func (c *TaskRunner) Pause(taskName string) {
 
 // Resume all running workers for the provided taskName. If workers for the provided task are not paused, calling this
 // method has no impact.
-func (c *TaskRunner) Resume(taskName string) {
+func (c *WorkerRunner) Resume(taskName string) {
 	c.pausedWorkersMutex.Lock()
 	defer c.pausedWorkersMutex.Unlock()
 	c.pausedWorkers[taskName] = false
 }
 
-func (c *TaskRunner) isPaused(taskName string) bool {
+func (c *WorkerRunner) isPaused(taskName string) bool {
 	c.pausedWorkersMutex.RLock()
 	defer c.pausedWorkersMutex.RUnlock()
 	return c.pausedWorkers[taskName]
 }
 
-// WaitWorkers uses an internal waitgroup to block the calling thread until all workers started by this TaskRunner have
+// WaitWorkers uses an internal waitgroup to block the calling thread until all workers started by this WorkerRunner have
 // been stopped.
-func (c *TaskRunner) WaitWorkers() {
+func (c *WorkerRunner) WaitWorkers() {
 	c.workerWaitGroup.Wait()
 }
 
-func (c *TaskRunner) startWorker(taskName string, executeFunction model.ExecuteTaskFunction, batchSize int, pollInterval time.Duration, taskDomain string) error {
+func (c *WorkerRunner) startWorker(taskName string, executeFunction model.WorkerTaskFunction, batchSize int, pollInterval time.Duration, taskDomain string) error {
 	c.SetPollIntervalForTask(taskName, pollInterval)
 	c.Resume(taskName)
 	previousMaxAllowedWorkers, err := c.getMaxAllowedWorkers(taskName)
@@ -239,7 +239,7 @@ func (c *TaskRunner) startWorker(taskName string, executeFunction model.ExecuteT
 	return nil
 }
 
-func (c *TaskRunner) work4ever(taskName string, executeFunction model.ExecuteTaskFunction, domain string) {
+func (c *WorkerRunner) work4ever(taskName string, executeFunction model.WorkerTaskFunction, domain string) {
 	defer c.workerWaitGroup.Done()
 	defer concurrency.HandlePanicError("poll_and_execute")
 	for c.isWorkerRegistered(taskName) {
@@ -247,7 +247,7 @@ func (c *TaskRunner) work4ever(taskName string, executeFunction model.ExecuteTas
 	}
 }
 
-func (c *TaskRunner) workOnce(taskName string, executeFunction model.ExecuteTaskFunction, domain string) {
+func (c *WorkerRunner) workOnce(taskName string, executeFunction model.WorkerTaskFunction, domain string) {
 	if c.isPaused(taskName) {
 		pauseOnGenericError(taskName, domain, fmt.Errorf("worker is paused"))
 		return
@@ -291,7 +291,7 @@ func (c *TaskRunner) workOnce(taskName string, executeFunction model.ExecuteTask
 	}
 }
 
-func (c *TaskRunner) executeAndUpdateTask(taskName string, task model.Task, executeFunction model.ExecuteTaskFunction) {
+func (c *WorkerRunner) executeAndUpdateTask(taskName string, task model.WorkerTask, executeFunction model.WorkerTaskFunction) {
 	defer c.runningWorkerDone(taskName)
 	defer concurrency.HandlePanicError("execute_and_update_task " + string(task.TaskId) + ": " + string(task.Status))
 	taskResult := c.executeTask(&task, executeFunction)
@@ -301,7 +301,7 @@ func (c *TaskRunner) executeAndUpdateTask(taskName string, task model.Task, exec
 	}
 }
 
-func (c *TaskRunner) batchPoll(taskName string, count int, domain string) ([]model.Task, error) {
+func (c *WorkerRunner) batchPoll(taskName string, count int, domain string) ([]model.WorkerTask, error) {
 	timeout, err := c.GetPollIntervalForTask(taskName)
 	if err != nil {
 		return nil, err
@@ -344,7 +344,7 @@ func (c *TaskRunner) batchPoll(taskName string, count int, domain string) ([]mod
 	return tasks, nil
 }
 
-func (c *TaskRunner) executeTask(t *model.Task, executeFunction model.ExecuteTaskFunction) *model.TaskResult {
+func (c *WorkerRunner) executeTask(t *model.WorkerTask, executeFunction model.WorkerTaskFunction) *model.TaskResult {
 	log.Trace(
 		"Executing task of type: ", t.TaskDefName,
 		", taskId: ", t.TaskId,
@@ -389,7 +389,7 @@ func (c *TaskRunner) executeTask(t *model.Task, executeFunction model.ExecuteTas
 	return taskResult
 }
 
-func (c *TaskRunner) updateTaskWithRetry(taskName string, taskResult *model.TaskResult) error {
+func (c *WorkerRunner) updateTaskWithRetry(taskName string, taskResult *model.TaskResult) error {
 	log.Debug(
 		"Updating task of type: ", taskName,
 		", taskId: ", taskResult.TaskId,
@@ -417,7 +417,7 @@ func (c *TaskRunner) updateTaskWithRetry(taskName string, taskResult *model.Task
 	return fmt.Errorf("failed to update task %s after %d attempts. %s", taskName, taskUpdateRetryAttemptsLimit, lastError)
 }
 
-func (c *TaskRunner) updateTask(taskName string, taskResult *model.TaskResult) (*http.Response, error) {
+func (c *WorkerRunner) updateTask(taskName string, taskResult *model.TaskResult) (*http.Response, error) {
 	startTime := time.Now()
 	_, response, err := c.conductorTaskResourceClient.UpdateTask(context.Background(), taskResult)
 	spentTime := time.Since(startTime).Milliseconds()
@@ -425,7 +425,7 @@ func (c *TaskRunner) updateTask(taskName string, taskResult *model.TaskResult) (
 	return response, err
 }
 
-func (c *TaskRunner) getAvailableWorkerAmount(taskName string) (int, error) {
+func (c *WorkerRunner) getAvailableWorkerAmount(taskName string) (int, error) {
 	allowed, err := c.getMaxAllowedWorkers(taskName)
 	if err != nil {
 		return -1, err
@@ -437,7 +437,7 @@ func (c *TaskRunner) getAvailableWorkerAmount(taskName string) (int, error) {
 	return allowed - running, nil
 }
 
-func (c *TaskRunner) getMaxAllowedWorkers(taskName string) (int, error) {
+func (c *WorkerRunner) getMaxAllowedWorkers(taskName string) (int, error) {
 	c.batchSizeByTaskNameMutex.RLock()
 	defer c.batchSizeByTaskNameMutex.RUnlock()
 	amount, ok := c.batchSizeByTaskName[taskName]
@@ -447,7 +447,7 @@ func (c *TaskRunner) getMaxAllowedWorkers(taskName string) (int, error) {
 	return amount, nil
 }
 
-func (c *TaskRunner) getRunningWorkers(taskName string) (int, error) {
+func (c *WorkerRunner) getRunningWorkers(taskName string) (int, error) {
 	c.runningWorkersByTaskNameMutex.RLock()
 	defer c.runningWorkersByTaskNameMutex.RUnlock()
 	amount, ok := c.runningWorkersByTaskName[taskName]
@@ -457,14 +457,14 @@ func (c *TaskRunner) getRunningWorkers(taskName string) (int, error) {
 	return amount, nil
 }
 
-func (c *TaskRunner) isWorkerRegistered(taskName string) bool {
+func (c *WorkerRunner) isWorkerRegistered(taskName string) bool {
 	c.batchSizeByTaskNameMutex.RLock()
 	defer c.batchSizeByTaskNameMutex.RUnlock()
 	_, ok := c.batchSizeByTaskName[taskName]
 	return ok
 }
 
-func (c *TaskRunner) increaseRunningWorkers(taskName string) error {
+func (c *WorkerRunner) increaseRunningWorkers(taskName string) error {
 	c.runningWorkersByTaskNameMutex.Lock()
 	defer c.runningWorkersByTaskNameMutex.Unlock()
 	c.runningWorkersByTaskName[taskName] += 1
@@ -472,7 +472,7 @@ func (c *TaskRunner) increaseRunningWorkers(taskName string) error {
 	return nil
 }
 
-func (c *TaskRunner) runningWorkerDone(taskName string) error {
+func (c *WorkerRunner) runningWorkerDone(taskName string) error {
 	c.runningWorkersByTaskNameMutex.Lock()
 	defer c.runningWorkersByTaskNameMutex.Unlock()
 	c.runningWorkersByTaskName[taskName] -= 1
@@ -480,7 +480,7 @@ func (c *TaskRunner) runningWorkerDone(taskName string) error {
 	return nil
 }
 
-func (c *TaskRunner) increaseMaxAllowedWorkers(taskName string, batchSize int) error {
+func (c *WorkerRunner) increaseMaxAllowedWorkers(taskName string, batchSize int) error {
 	c.batchSizeByTaskNameMutex.Lock()
 	defer c.batchSizeByTaskNameMutex.Unlock()
 	c.batchSizeByTaskName[taskName] += batchSize
@@ -489,7 +489,7 @@ func (c *TaskRunner) increaseMaxAllowedWorkers(taskName string, batchSize int) e
 }
 
 // SetPollIntervalForTask sets the pollInterval for all workers running the task with the provided taskName.
-func (c *TaskRunner) SetPollIntervalForTask(taskName string, pollInterval time.Duration) error {
+func (c *WorkerRunner) SetPollIntervalForTask(taskName string, pollInterval time.Duration) error {
 	c.pollIntervalByTaskNameMutex.Lock()
 	defer c.pollIntervalByTaskNameMutex.Unlock()
 	c.pollIntervalByTaskName[taskName] = pollInterval
@@ -499,7 +499,7 @@ func (c *TaskRunner) SetPollIntervalForTask(taskName string, pollInterval time.D
 
 // GetPollIntervalForTask retrieves the poll interval for all tasks running the provided taskName. An error is returned
 // if no pollInterval has been registered for the provided task.
-func (c *TaskRunner) GetPollIntervalForTask(taskName string) (pollInterval time.Duration, err error) {
+func (c *WorkerRunner) GetPollIntervalForTask(taskName string) (pollInterval time.Duration, err error) {
 	c.pollIntervalByTaskNameMutex.RLock()
 	defer c.pollIntervalByTaskNameMutex.RUnlock()
 	pollInterval, ok := c.pollIntervalByTaskName[taskName]
@@ -510,8 +510,8 @@ func (c *TaskRunner) GetPollIntervalForTask(taskName string) (pollInterval time.
 }
 
 // GetBatchSizeForAll returns a map from taskName to batch size for all batch sizes currently registered with this
-// TaskRunner.
-func (c *TaskRunner) GetBatchSizeForAll() (batchSizeByTaskName map[string]int) {
+// WorkerRunner.
+func (c *WorkerRunner) GetBatchSizeForAll() (batchSizeByTaskName map[string]int) {
 	c.batchSizeByTaskNameMutex.RLock()
 	defer c.batchSizeByTaskNameMutex.RUnlock()
 	batchSizeByTaskName = make(map[string]int)
@@ -522,7 +522,7 @@ func (c *TaskRunner) GetBatchSizeForAll() (batchSizeByTaskName map[string]int) {
 }
 
 // GetBatchSizeForTask retrieves the current batch size for the provided task.
-func (c *TaskRunner) GetBatchSizeForTask(taskName string) (batchSize int) {
+func (c *WorkerRunner) GetBatchSizeForTask(taskName string) (batchSize int) {
 	c.batchSizeByTaskNameMutex.RLock()
 	defer c.batchSizeByTaskNameMutex.RUnlock()
 	batchSize, ok := c.batchSizeByTaskName[taskName]

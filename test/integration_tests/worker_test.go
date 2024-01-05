@@ -14,20 +14,20 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
-	"github.com/swift-conductor/conductor-client-golang/internal/testdata"
-	"github.com/swift-conductor/conductor-client-golang/sdk/model"
-	"github.com/swift-conductor/conductor-client-golang/sdk/workflow"
-	"github.com/swift-conductor/conductor-client-golang/test/common"
+	"swiftconductor.com/swift-conductor-client/internal/testdata"
+	"swiftconductor.com/swift-conductor-client/sdk/model"
+	"swiftconductor.com/swift-conductor-client/sdk/workflow"
+	"swiftconductor.com/swift-conductor-client/test/common"
 )
 
 func TestWorkerBatchSize(t *testing.T) {
-	simpleTaskWorkflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
+	simpleTaskWorkflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_SIMPLE").
 		Version(1).
 		OwnerEmail("test@test.com").
 		Add(common.TestSimpleTask)
 
-	err := testdata.TaskRunner.StartWorker(
+	err := testdata.WorkerRunner.StartWorker(
 		common.TestSimpleTask.ReferenceName(),
 		testdata.SimpleWorker,
 		5,
@@ -39,7 +39,7 @@ func TestWorkerBatchSize(t *testing.T) {
 
 	time.Sleep(1 * time.Second)
 
-	if testdata.TaskRunner.GetBatchSizeForTask(common.TestSimpleTask.ReferenceName()) != 5 {
+	if testdata.WorkerRunner.GetBatchSizeForTask(common.TestSimpleTask.ReferenceName()) != 5 {
 		t.Fatal("unexpected batch size")
 	}
 
@@ -48,7 +48,7 @@ func TestWorkerBatchSize(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	err = testdata.TaskRunner.SetBatchSize(
+	err = testdata.WorkerRunner.SetBatchSize(
 		common.TestSimpleTask.ReferenceName(),
 		0,
 	)
@@ -58,11 +58,11 @@ func TestWorkerBatchSize(t *testing.T) {
 
 	time.Sleep(1 * time.Second)
 
-	if testdata.TaskRunner.GetBatchSizeForTask(common.TestSimpleTask.ReferenceName()) != 0 {
+	if testdata.WorkerRunner.GetBatchSizeForTask(common.TestSimpleTask.ReferenceName()) != 0 {
 		t.Fatal("unexpected batch size")
 	}
 
-	err = testdata.TaskRunner.SetBatchSize(
+	err = testdata.WorkerRunner.SetBatchSize(
 		common.TestSimpleTask.ReferenceName(),
 		8,
 	)
@@ -72,7 +72,7 @@ func TestWorkerBatchSize(t *testing.T) {
 
 	time.Sleep(1 * time.Second)
 
-	if testdata.TaskRunner.GetBatchSizeForTask(common.TestSimpleTask.ReferenceName()) != 8 {
+	if testdata.WorkerRunner.GetBatchSizeForTask(common.TestSimpleTask.ReferenceName()) != 8 {
 		t.Fatal("unexpected batch size")
 	}
 
@@ -85,7 +85,7 @@ func TestWorkerBatchSize(t *testing.T) {
 func TestFaultyWorker(t *testing.T) {
 	logrus.SetLevel(logrus.ErrorLevel)
 	taskName := "TEST_GO_FAULTY_TASK"
-	wf := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
+	wf := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
 		Name("TEST_GO_FAULTY_WORKFLOW").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -94,7 +94,7 @@ func TestFaultyWorker(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.TaskRunner.StartWorker(
+	err = testdata.WorkerRunner.StartWorker(
 		taskName,
 		testdata.FaultyWorker,
 		5,
@@ -112,7 +112,7 @@ func TestFaultyWorker(t *testing.T) {
 func TestWorkerWithNonRetryableError(t *testing.T) {
 	logrus.SetLevel(logrus.ErrorLevel)
 	taskName := "TEST_GO_NON_RETRYABLE_ERROR_TASK"
-	wf := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
+	wf := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
 		Name("TEST_GO_NON_RETRYABLE_ERROR_WF").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -121,7 +121,7 @@ func TestWorkerWithNonRetryableError(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.TaskRunner.StartWorker(
+	err = testdata.WorkerRunner.StartWorker(
 		taskName,
 		testdata.FaultyWorker,
 		5,

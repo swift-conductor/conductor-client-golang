@@ -17,10 +17,10 @@ import (
 
 	log "github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
-	"github.com/swift-conductor/conductor-client-golang/internal/testdata"
-	"github.com/swift-conductor/conductor-client-golang/sdk/model"
-	"github.com/swift-conductor/conductor-client-golang/sdk/workflow"
-	"github.com/swift-conductor/conductor-client-golang/test/common"
+	"swiftconductor.com/swift-conductor-client/internal/testdata"
+	"swiftconductor.com/swift-conductor-client/sdk/model"
+	"swiftconductor.com/swift-conductor-client/sdk/workflow"
+	"swiftconductor.com/swift-conductor-client/test/common"
 )
 
 func init() {
@@ -30,7 +30,7 @@ func init() {
 }
 
 func TestHttpTask(t *testing.T) {
-	httpTaskWorkflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
+	httpTaskWorkflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_HTTP").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -58,12 +58,12 @@ func SimpleTask(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	simpleTaskWorkflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
+	simpleTaskWorkflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_SIMPLE").
 		Version(1).
 		OwnerEmail("test@test.com").
 		Add(common.TestSimpleTask)
-	err = testdata.TaskRunner.StartWorker(
+	err = testdata.WorkerRunner.StartWorker(
 		common.TestSimpleTask.ReferenceName(),
 		testdata.SimpleWorker,
 		testdata.WorkerQty,
@@ -80,7 +80,7 @@ func SimpleTask(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.TaskRunner.DecreaseBatchSize(
+	err = testdata.WorkerRunner.DecreaseBatchSize(
 		common.TestSimpleTask.ReferenceName(),
 		testdata.WorkerQty,
 	)
@@ -103,12 +103,12 @@ func SimpleTaskWithoutRetryCount(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	simpleTaskWorkflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
+	simpleTaskWorkflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_SIMPLE").
 		Version(1).
 		OwnerEmail("test@test.com").
 		Add(common.TestSimpleTask)
-	err = testdata.TaskRunner.StartWorker(
+	err = testdata.WorkerRunner.StartWorker(
 		common.TestSimpleTask.ReferenceName(),
 		testdata.SimpleWorker,
 		testdata.WorkerQty,
@@ -125,7 +125,7 @@ func SimpleTaskWithoutRetryCount(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.TaskRunner.DecreaseBatchSize(
+	err = testdata.WorkerRunner.DecreaseBatchSize(
 		common.TestSimpleTask.ReferenceName(),
 		testdata.WorkerQty,
 	)
@@ -142,7 +142,7 @@ func SimpleTaskWithoutRetryCount(t *testing.T) {
 }
 
 func TestInlineTask(t *testing.T) {
-	inlineTaskWorkflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
+	inlineTaskWorkflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_INLINE_TASK").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -165,7 +165,7 @@ func TestInlineTask(t *testing.T) {
 }
 
 func TestSqsEventTask(t *testing.T) {
-	workflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
+	workflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_EVENT_SQS").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -184,7 +184,7 @@ func TestSqsEventTask(t *testing.T) {
 }
 
 func TestConductorEventTask(t *testing.T) {
-	workflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
+	workflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_EVENT_CONDUCTOR").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -203,7 +203,7 @@ func TestConductorEventTask(t *testing.T) {
 }
 
 func TestKafkaPublishTask(t *testing.T) {
-	workflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
+	workflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_KAFKA_PUBLISH").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -226,7 +226,7 @@ func TestDoWhileTask(t *testing.T) {
 }
 
 func TestTerminateTask(t *testing.T) {
-	workflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
+	workflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_TERMINATE").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -245,7 +245,7 @@ func TestTerminateTask(t *testing.T) {
 }
 
 func TestSwitchTask(t *testing.T) {
-	workflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
+	workflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_SWITCH").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -264,7 +264,7 @@ func TestSwitchTask(t *testing.T) {
 }
 
 func TestDynamicForkWorkflow(t *testing.T) {
-	wf := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
+	wf := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
 		Name("dynamic_workflow_array_sub_workflow").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -303,7 +303,7 @@ func createDynamicForkTask() *workflow.DynamicForkTask {
 }
 
 func TestComplexSwitchWorkflow(t *testing.T) {
-	wf := testdata.GetWorkflowWithComplexSwitchTask()
+	wf := testdata.GetWorkflowDefExWithComplexSwitchTask()
 	err := testdata.ValidateWorkflowRegistration(wf)
 	if err != nil {
 		t.Fatal(err)

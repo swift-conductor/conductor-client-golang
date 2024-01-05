@@ -30,7 +30,7 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
-	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
+	"swiftconductor.com/swift-conductor-client/sdk/settings"
 )
 
 var (

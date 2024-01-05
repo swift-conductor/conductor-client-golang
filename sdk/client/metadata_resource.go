@@ -18,7 +18,7 @@ import (
 	"strings"
 
 	"github.com/antihax/optional"
-	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"swiftconductor.com/swift-conductor-client/sdk/model"
 )
 
 // Linger please

@@ -12,7 +12,7 @@ package workflow
 import (
 	"fmt"
 
-	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"swiftconductor.com/swift-conductor-client/sdk/model"
 )
 
 const (
@@ -21,16 +21,16 @@ const (
 
 // DoWhileTask Do...While task
 type DoWhileTask struct {
-	Task
+	WorkflowTaskEx
 	loopCondition string
-	loopOver      []TaskInterface
+	loopOver      []WorkflowTaskInterface
 }
 
 // NewDoWhileTask DoWhileTask Crate a new DoWhile task.
 // terminationCondition is a Javascript expression that evaluates to True or False
-func NewDoWhileTask(taskRefName string, terminationCondition string, tasks ...TaskInterface) *DoWhileTask {
+func NewDoWhileTask(taskRefName string, terminationCondition string, tasks ...WorkflowTaskInterface) *DoWhileTask {
 	return &DoWhileTask{
-		Task: Task{
+		WorkflowTaskEx: WorkflowTaskEx{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			taskType:          DO_WHILE,
@@ -42,9 +42,9 @@ func NewDoWhileTask(taskRefName string, terminationCondition string, tasks ...Ta
 }
 
 // NewLoopTask Loop over N times when N is specified as iterations
-func NewLoopTask(taskRefName string, iterations int32, tasks ...TaskInterface) *DoWhileTask {
+func NewLoopTask(taskRefName string, iterations int32, tasks ...WorkflowTaskInterface) *DoWhileTask {
 	return &DoWhileTask{
-		Task: Task{
+		WorkflowTaskEx: WorkflowTaskEx{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			taskType:          DO_WHILE,
@@ -58,7 +58,7 @@ func NewLoopTask(taskRefName string, iterations int32, tasks ...TaskInterface) *
 }
 
 func (task *DoWhileTask) toWorkflowTask() []model.WorkflowTask {
-	workflowTasks := task.Task.toWorkflowTask()
+	workflowTasks := task.WorkflowTaskEx.toWorkflowTask()
 	workflowTasks[0].LoopCondition = task.loopCondition
 	workflowTasks[0].LoopOver = []model.WorkflowTask{}
 	for _, loopTask := range task.loopOver {
@@ -78,13 +78,13 @@ func getForLoopCondition(loopValue string, taskReferenceName string) string {
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *DoWhileTask) Optional(optional bool) *DoWhileTask {
-	task.Task.Optional(optional)
+	task.WorkflowTaskEx.Optional(optional)
 	return task
 }
 
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *DoWhileTask) Input(key string, value interface{}) *DoWhileTask {
-	task.Task.Input(key, value)
+	task.WorkflowTaskEx.Input(key, value)
 	return task
 }
 
@@ -98,6 +98,6 @@ func (task *DoWhileTask) InputMap(inputMap map[string]interface{}) *DoWhileTask 
 
 // Description of the task
 func (task *DoWhileTask) Description(description string) *DoWhileTask {
-	task.Task.Description(description)
+	task.WorkflowTaskEx.Description(description)
 	return task
 }

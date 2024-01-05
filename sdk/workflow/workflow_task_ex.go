@@ -12,7 +12,7 @@ package workflow
 import (
 	"fmt"
 
-	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"swiftconductor.com/swift-conductor-client/sdk/model"
 )
 
 type TaskType string
@@ -38,13 +38,13 @@ const (
 	SET_VARIABLE      TaskType = "SET_VARIABLE"
 )
 
-type TaskInterface interface {
+type WorkflowTaskInterface interface {
 	toWorkflowTask() []model.WorkflowTask
-	OutputRef(path string) string
 	ToTaskDef() *model.TaskDef
+	OutputRef(path string) string
 }
 
-type Task struct {
+type WorkflowTaskEx struct {
 	name              string
 	taskReferenceName string
 	description       string
@@ -53,7 +53,7 @@ type Task struct {
 	inputParameters   map[string]interface{}
 }
 
-func (task *Task) toWorkflowTask() []model.WorkflowTask {
+func (task *WorkflowTaskEx) toWorkflowTask() []model.WorkflowTask {
 	return []model.WorkflowTask{
 		{
 			Name:              task.name,
@@ -66,17 +66,14 @@ func (task *Task) toWorkflowTask() []model.WorkflowTask {
 	}
 }
 
-func (task *Task) ToTaskDef() *model.TaskDef {
+func (task *WorkflowTaskEx) ToTaskDef() *model.TaskDef {
 	return &model.TaskDef{
 		Name:        task.name,
 		Description: task.description,
 	}
 }
 
-func (task *Task) ReferenceName() string {
-	return task.taskReferenceName
-}
-func (task *Task) OutputRef(path string) string {
+func (task *WorkflowTaskEx) OutputRef(path string) string {
 	if path == "" {
 		return fmt.Sprintf("${%s.output}", task.taskReferenceName)
 	}
@@ -88,14 +85,18 @@ func (task *Task) OutputRef(path string) string {
 //If not, the return type is a Task which makes it impossible to use fluent interface
 //For the tasks like Switch which has other methods too - quirks with Golang!
 
+func (task *WorkflowTaskEx) ReferenceName() string {
+	return task.taskReferenceName
+}
+
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
-func (task *Task) Input(key string, value interface{}) *Task {
+func (task *WorkflowTaskEx) Input(key string, value interface{}) *WorkflowTaskEx {
 	task.inputParameters[key] = value
 	return task
 }
 
 // InputMap to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
-func (task *Task) InputMap(inputMap map[string]interface{}) *Task {
+func (task *WorkflowTaskEx) InputMap(inputMap map[string]interface{}) *WorkflowTaskEx {
 	for k, v := range inputMap {
 		task.inputParameters[k] = v
 	}
@@ -103,13 +104,13 @@ func (task *Task) InputMap(inputMap map[string]interface{}) *Task {
 }
 
 // Description of the task
-func (task *Task) Description(description string) *Task {
+func (task *WorkflowTaskEx) Description(description string) *WorkflowTaskEx {
 	task.description = description
 	return task
 }
 
 // Optional if set to true, the task will not fail the workflow if the task fails
-func (task *Task) Optional(optional bool) *Task {
+func (task *WorkflowTaskEx) Optional(optional bool) *WorkflowTaskEx {
 	task.optional = optional
 	return task
 }

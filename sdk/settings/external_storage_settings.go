@@ -10,7 +10,7 @@
 package settings
 
 import (
-	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"swiftconductor.com/swift-conductor-client/sdk/model"
 )
 
 type ExternalStorageSettings struct {

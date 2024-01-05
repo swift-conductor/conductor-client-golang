@@ -2,9 +2,7 @@
 
 ### [Conductor Client](client.md)
 
-### [Workflow Authoring](workflow.md)
-
-### [Workflow Execution](executor.md)
+### [Workflow Authoring and Running](workflow.md)
 
 ### [Task Worker](worker.md)
 

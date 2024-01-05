@@ -1,4 +1,4 @@
-module github.com/swift-conductor/conductor-client-golang
+module swiftconductor.com/swift-conductor-client
 
 go 1.17
 

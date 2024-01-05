@@ -10,20 +10,20 @@
 package workflow
 
 import (
-	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"swiftconductor.com/swift-conductor-client/sdk/model"
 )
 
 type SubWorkflowTask struct {
-	Task
+	WorkflowTaskEx
 	workflowName    string
 	version         int32
 	taskToDomainMap map[string]string
-	workflow        *ConductorWorkflow
+	workflow        *WorkflowDefEx
 }
 
 func NewSubWorkflowTask(taskRefName string, workflowName string, version int32) *SubWorkflowTask {
 	return &SubWorkflowTask{
-		Task: Task{
+		WorkflowTaskEx: WorkflowTaskEx{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -36,9 +36,9 @@ func NewSubWorkflowTask(taskRefName string, workflowName string, version int32) 
 	}
 }
 
-func NewSubWorkflowInlineTask(taskRefName string, workflow *ConductorWorkflow) *SubWorkflowTask {
+func NewSubWorkflowInlineTask(taskRefName string, workflow *WorkflowDefEx) *SubWorkflowTask {
 	return &SubWorkflowTask{
-		Task: Task{
+		WorkflowTaskEx: WorkflowTaskEx{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -55,7 +55,7 @@ func (task *SubWorkflowTask) TaskToDomain(taskToDomainMap map[string]string) *Su
 	return task
 }
 func (task *SubWorkflowTask) toWorkflowTask() []model.WorkflowTask {
-	workflowTasks := task.Task.toWorkflowTask()
+	workflowTasks := task.WorkflowTaskEx.toWorkflowTask()
 	if task.workflow != nil {
 		workflowTasks[0].SubWorkflowParam = &model.SubWorkflowParams{
 			Name:               task.workflow.name,
@@ -75,19 +75,19 @@ func (task *SubWorkflowTask) toWorkflowTask() []model.WorkflowTask {
 
 // Description of the task
 func (task *SubWorkflowTask) Description(description string) *SubWorkflowTask {
-	task.Task.Description(description)
+	task.WorkflowTaskEx.Description(description)
 	return task
 }
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *SubWorkflowTask) Optional(optional bool) *SubWorkflowTask {
-	task.Task.Optional(optional)
+	task.WorkflowTaskEx.Optional(optional)
 	return task
 }
 
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *SubWorkflowTask) Input(key string, value interface{}) *SubWorkflowTask {
-	task.Task.Input(key, value)
+	task.WorkflowTaskEx.Input(key, value)
 	return task
 }
 

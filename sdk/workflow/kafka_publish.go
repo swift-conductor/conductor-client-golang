@@ -10,7 +10,7 @@
 package workflow
 
 type KafkaPublishTask struct {
-	Task
+	WorkflowTaskEx
 }
 
 type KafkaPublishTaskInput struct {
@@ -26,7 +26,7 @@ type KafkaPublishTaskInput struct {
 
 func NewKafkaPublishTask(taskRefName string, kafkaPublishTaskInput *KafkaPublishTaskInput) *KafkaPublishTask {
 	return &KafkaPublishTask{
-		Task: Task{
+		WorkflowTaskEx: WorkflowTaskEx{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			taskType:          KAFKA_PUBLISH,
@@ -39,7 +39,7 @@ func NewKafkaPublishTask(taskRefName string, kafkaPublishTaskInput *KafkaPublish
 
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *KafkaPublishTask) Input(key string, value interface{}) *KafkaPublishTask {
-	task.Task.Input(key, value)
+	task.WorkflowTaskEx.Input(key, value)
 	return task
 }
 
@@ -53,12 +53,12 @@ func (task *KafkaPublishTask) InputMap(inputMap map[string]interface{}) *KafkaPu
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *KafkaPublishTask) Optional(optional bool) *KafkaPublishTask {
-	task.Task.Optional(optional)
+	task.WorkflowTaskEx.Optional(optional)
 	return task
 }
 
 // Description of the task
 func (task *KafkaPublishTask) Description(description string) *KafkaPublishTask {
-	task.Task.Description(description)
+	task.WorkflowTaskEx.Description(description)
 	return task
 }

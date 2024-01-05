@@ -3,50 +3,25 @@
 # workflow
 
 ```go
-import "github.com/swift-conductor/conductor-client-golang/sdk/workflow"
+import "swiftconductor.com/swift-conductor-client/sdk/workflow"
 ```
 
 ## Index
 
 - [Constants](<#constants>)
-- [type ConductorWorkflow](<#ConductorWorkflow>)
-  - [func NewConductorWorkflow\(executor \*executor.WorkflowExecutor\) \*ConductorWorkflow](<#NewConductorWorkflow>)
-  - [func \(workflow \*ConductorWorkflow\) Add\(task TaskInterface\) \*ConductorWorkflow](<#ConductorWorkflow.Add>)
-  - [func \(workflow \*ConductorWorkflow\) Description\(description string\) \*ConductorWorkflow](<#ConductorWorkflow.Description>)
-  - [func \(workflow \*ConductorWorkflow\) ExecuteWorkflowWithInput\(input interface\{\}, waitUntilTask string\) \(worfklowRun \*model.WorkflowRun, err error\)](<#ConductorWorkflow.ExecuteWorkflowWithInput>)
-  - [func \(workflow \*ConductorWorkflow\) FailureWorkflow\(failureWorkflow string\) \*ConductorWorkflow](<#ConductorWorkflow.FailureWorkflow>)
-  - [func \(workflow \*ConductorWorkflow\) GetName\(\) \(name string\)](<#ConductorWorkflow.GetName>)
-  - [func \(workflow \*ConductorWorkflow\) GetOutputParameters\(\) \(outputParameters map\[string\]interface\{\}\)](<#ConductorWorkflow.GetOutputParameters>)
-  - [func \(workflow \*ConductorWorkflow\) GetVersion\(\) \(version int32\)](<#ConductorWorkflow.GetVersion>)
-  - [func \(workflow \*ConductorWorkflow\) InputParameters\(inputParameters ...string\) \*ConductorWorkflow](<#ConductorWorkflow.InputParameters>)
-  - [func \(workflow \*ConductorWorkflow\) InputTemplate\(inputTemplate interface\{\}\) \*ConductorWorkflow](<#ConductorWorkflow.InputTemplate>)
-  - [func \(workflow \*ConductorWorkflow\) Name\(name string\) \*ConductorWorkflow](<#ConductorWorkflow.Name>)
-  - [func \(workflow \*ConductorWorkflow\) OutputParameters\(outputParameters interface\{\}\) \*ConductorWorkflow](<#ConductorWorkflow.OutputParameters>)
-  - [func \(workflow \*ConductorWorkflow\) OwnerEmail\(ownerEmail string\) \*ConductorWorkflow](<#ConductorWorkflow.OwnerEmail>)
-  - [func \(workflow \*ConductorWorkflow\) Register\(overwrite bool\) error](<#ConductorWorkflow.Register>)
-  - [func \(workflow \*ConductorWorkflow\) Restartable\(restartable bool\) \*ConductorWorkflow](<#ConductorWorkflow.Restartable>)
-  - [func \(workflow \*ConductorWorkflow\) StartWorkflow\(startWorkflowRequest \*model.StartWorkflowRequest\) \(workflowId string, err error\)](<#ConductorWorkflow.StartWorkflow>)
-  - [func \(workflow \*ConductorWorkflow\) StartWorkflowWithInput\(input interface\{\}\) \(workflowId string, err error\)](<#ConductorWorkflow.StartWorkflowWithInput>)
-  - [func \(workflow \*ConductorWorkflow\) StartWorkflowsAndMonitorExecution\(startWorkflowRequest \*model.StartWorkflowRequest\) \(executionChannel executor.WorkflowExecutionChannel, err error\)](<#ConductorWorkflow.StartWorkflowsAndMonitorExecution>)
-  - [func \(workflow \*ConductorWorkflow\) TimeoutPolicy\(timeoutPolicy TimeoutPolicy, timeoutSeconds int64\) \*ConductorWorkflow](<#ConductorWorkflow.TimeoutPolicy>)
-  - [func \(workflow \*ConductorWorkflow\) TimeoutSeconds\(timeoutSeconds int64\) \*ConductorWorkflow](<#ConductorWorkflow.TimeoutSeconds>)
-  - [func \(workflow \*ConductorWorkflow\) ToWorkflowDef\(\) \*model.WorkflowDef](<#ConductorWorkflow.ToWorkflowDef>)
-  - [func \(workflow \*ConductorWorkflow\) UnRegister\(\) error](<#ConductorWorkflow.UnRegister>)
-  - [func \(workflow \*ConductorWorkflow\) Variables\(variables interface\{\}\) \*ConductorWorkflow](<#ConductorWorkflow.Variables>)
-  - [func \(workflow \*ConductorWorkflow\) Version\(version int32\) \*ConductorWorkflow](<#ConductorWorkflow.Version>)
-  - [func \(workflow \*ConductorWorkflow\) WorkflowStatusListenerEnabled\(workflowStatusListenerEnabled bool\) \*ConductorWorkflow](<#ConductorWorkflow.WorkflowStatusListenerEnabled>)
+- [func WaitForWorkflowCompletionUntilTimeout\(runningChannel RunningWorkflowChannel, timeout time.Duration\) \(workflow \*model.Workflow, err error\)](<#WaitForWorkflowCompletionUntilTimeout>)
 - [type DoWhileTask](<#DoWhileTask>)
-  - [func NewDoWhileTask\(taskRefName string, terminationCondition string, tasks ...TaskInterface\) \*DoWhileTask](<#NewDoWhileTask>)
-  - [func NewLoopTask\(taskRefName string, iterations int32, tasks ...TaskInterface\) \*DoWhileTask](<#NewLoopTask>)
+  - [func NewDoWhileTask\(taskRefName string, terminationCondition string, tasks ...WorkflowTaskInterface\) \*DoWhileTask](<#NewDoWhileTask>)
+  - [func NewLoopTask\(taskRefName string, iterations int32, tasks ...WorkflowTaskInterface\) \*DoWhileTask](<#NewLoopTask>)
   - [func \(task \*DoWhileTask\) Description\(description string\) \*DoWhileTask](<#DoWhileTask.Description>)
   - [func \(task \*DoWhileTask\) Input\(key string, value interface\{\}\) \*DoWhileTask](<#DoWhileTask.Input>)
   - [func \(task \*DoWhileTask\) InputMap\(inputMap map\[string\]interface\{\}\) \*DoWhileTask](<#DoWhileTask.InputMap>)
   - [func \(task \*DoWhileTask\) Optional\(optional bool\) \*DoWhileTask](<#DoWhileTask.Optional>)
 - [type DynamicForkInput](<#DynamicForkInput>)
 - [type DynamicForkTask](<#DynamicForkTask>)
-  - [func NewDynamicForkTask\(taskRefName string, forkPrepareTask TaskInterface\) \*DynamicForkTask](<#NewDynamicForkTask>)
+  - [func NewDynamicForkTask\(taskRefName string, forkPrepareTask WorkflowTaskInterface\) \*DynamicForkTask](<#NewDynamicForkTask>)
   - [func NewDynamicForkTaskWithoutPrepareTask\(taskRefName string\) \*DynamicForkTask](<#NewDynamicForkTaskWithoutPrepareTask>)
-  - [func NewDynamicForkWithJoinTask\(taskRefName string, forkPrepareTask TaskInterface, join JoinTask\) \*DynamicForkTask](<#NewDynamicForkWithJoinTask>)
+  - [func NewDynamicForkWithJoinTask\(taskRefName string, forkPrepareTask WorkflowTaskInterface, join JoinTask\) \*DynamicForkTask](<#NewDynamicForkWithJoinTask>)
   - [func \(task \*DynamicForkTask\) Description\(description string\) \*DynamicForkTask](<#DynamicForkTask.Description>)
   - [func \(task \*DynamicForkTask\) Input\(key string, value interface\{\}\) \*DynamicForkTask](<#DynamicForkTask.Input>)
   - [func \(task \*DynamicForkTask\) InputMap\(inputMap map\[string\]interface\{\}\) \*DynamicForkTask](<#DynamicForkTask.InputMap>)
@@ -65,8 +40,8 @@ import "github.com/swift-conductor/conductor-client-golang/sdk/workflow"
   - [func \(task \*EventTask\) InputMap\(inputMap map\[string\]interface\{\}\) \*EventTask](<#EventTask.InputMap>)
   - [func \(task \*EventTask\) Optional\(optional bool\) \*EventTask](<#EventTask.Optional>)
 - [type ForkTask](<#ForkTask>)
-  - [func NewForkTask\(taskRefName string, forkedTask ...\[\]TaskInterface\) \*ForkTask](<#NewForkTask>)
-  - [func NewForkTaskWithJoin\(taskRefName string, join \*JoinTask, forkedTask ...\[\]TaskInterface\) \*ForkTask](<#NewForkTaskWithJoin>)
+  - [func NewForkTask\(taskRefName string, forkedTask ...\[\]WorkflowTaskInterface\) \*ForkTask](<#NewForkTask>)
+  - [func NewForkTaskWithJoin\(taskRefName string, join \*JoinTask, forkedTask ...\[\]WorkflowTaskInterface\) \*ForkTask](<#NewForkTaskWithJoin>)
   - [func \(task \*ForkTask\) Description\(description string\) \*ForkTask](<#ForkTask.Description>)
   - [func \(task \*ForkTask\) Input\(key string, value interface\{\}\) \*ForkTask](<#ForkTask.Input>)
   - [func \(task \*ForkTask\) InputMap\(inputMap map\[string\]interface\{\}\) \*ForkTask](<#ForkTask.InputMap>)
@@ -109,6 +84,10 @@ import "github.com/swift-conductor/conductor-client-golang/sdk/workflow"
   - [func \(task \*KafkaPublishTask\) InputMap\(inputMap map\[string\]interface\{\}\) \*KafkaPublishTask](<#KafkaPublishTask.InputMap>)
   - [func \(task \*KafkaPublishTask\) Optional\(optional bool\) \*KafkaPublishTask](<#KafkaPublishTask.Optional>)
 - [type KafkaPublishTaskInput](<#KafkaPublishTaskInput>)
+- [type RunningWorkflow](<#RunningWorkflow>)
+  - [func NewRunningWorkflow\(workflowId string, runningWorkflowChannel RunningWorkflowChannel, err error\) \*RunningWorkflow](<#NewRunningWorkflow>)
+  - [func \(rw \*RunningWorkflow\) WaitForCompletionUntilTimeout\(timeout time.Duration\) \(workflow \*model.Workflow, err error\)](<#RunningWorkflow.WaitForCompletionUntilTimeout>)
+- [type RunningWorkflowChannel](<#RunningWorkflowChannel>)
 - [type SetVariableTask](<#SetVariableTask>)
   - [func NewSetVariableTask\(taskRefName string\) \*SetVariableTask](<#NewSetVariableTask>)
   - [func \(task \*SetVariableTask\) Description\(description string\) \*SetVariableTask](<#SetVariableTask.Description>)
@@ -128,7 +107,7 @@ import "github.com/swift-conductor/conductor-client-golang/sdk/workflow"
   - [func \(task \*StartWorkflowTask\) InputMap\(inputMap map\[string\]interface\{\}\) \*StartWorkflowTask](<#StartWorkflowTask.InputMap>)
   - [func \(task \*StartWorkflowTask\) Optional\(optional bool\) \*StartWorkflowTask](<#StartWorkflowTask.Optional>)
 - [type SubWorkflowTask](<#SubWorkflowTask>)
-  - [func NewSubWorkflowInlineTask\(taskRefName string, workflow \*ConductorWorkflow\) \*SubWorkflowTask](<#NewSubWorkflowInlineTask>)
+  - [func NewSubWorkflowInlineTask\(taskRefName string, workflow \*WorkflowDefEx\) \*SubWorkflowTask](<#NewSubWorkflowInlineTask>)
   - [func NewSubWorkflowTask\(taskRefName string, workflowName string, version int32\) \*SubWorkflowTask](<#NewSubWorkflowTask>)
   - [func \(task \*SubWorkflowTask\) Description\(description string\) \*SubWorkflowTask](<#SubWorkflowTask.Description>)
   - [func \(task \*SubWorkflowTask\) Input\(key string, value interface\{\}\) \*SubWorkflowTask](<#SubWorkflowTask.Input>)
@@ -137,22 +116,13 @@ import "github.com/swift-conductor/conductor-client-golang/sdk/workflow"
   - [func \(task \*SubWorkflowTask\) TaskToDomain\(taskToDomainMap map\[string\]string\) \*SubWorkflowTask](<#SubWorkflowTask.TaskToDomain>)
 - [type SwitchTask](<#SwitchTask>)
   - [func NewSwitchTask\(taskRefName string, caseExpression string\) \*SwitchTask](<#NewSwitchTask>)
-  - [func \(task \*SwitchTask\) DefaultCase\(tasks ...TaskInterface\) \*SwitchTask](<#SwitchTask.DefaultCase>)
+  - [func \(task \*SwitchTask\) DefaultCase\(tasks ...WorkflowTaskInterface\) \*SwitchTask](<#SwitchTask.DefaultCase>)
   - [func \(task \*SwitchTask\) Description\(description string\) \*SwitchTask](<#SwitchTask.Description>)
   - [func \(task \*SwitchTask\) Input\(key string, value interface\{\}\) \*SwitchTask](<#SwitchTask.Input>)
   - [func \(task \*SwitchTask\) InputMap\(inputMap map\[string\]interface\{\}\) \*SwitchTask](<#SwitchTask.InputMap>)
   - [func \(task \*SwitchTask\) Optional\(optional bool\) \*SwitchTask](<#SwitchTask.Optional>)
-  - [func \(task \*SwitchTask\) SwitchCase\(caseName string, tasks ...TaskInterface\) \*SwitchTask](<#SwitchTask.SwitchCase>)
+  - [func \(task \*SwitchTask\) SwitchCase\(caseName string, tasks ...WorkflowTaskInterface\) \*SwitchTask](<#SwitchTask.SwitchCase>)
   - [func \(task \*SwitchTask\) UseJavascript\(use bool\) \*SwitchTask](<#SwitchTask.UseJavascript>)
-- [type Task](<#Task>)
-  - [func \(task \*Task\) Description\(description string\) \*Task](<#Task.Description>)
-  - [func \(task \*Task\) Input\(key string, value interface\{\}\) \*Task](<#Task.Input>)
-  - [func \(task \*Task\) InputMap\(inputMap map\[string\]interface\{\}\) \*Task](<#Task.InputMap>)
-  - [func \(task \*Task\) Optional\(optional bool\) \*Task](<#Task.Optional>)
-  - [func \(task \*Task\) OutputRef\(path string\) string](<#Task.OutputRef>)
-  - [func \(task \*Task\) ReferenceName\(\) string](<#Task.ReferenceName>)
-  - [func \(task \*Task\) ToTaskDef\(\) \*model.TaskDef](<#Task.ToTaskDef>)
-- [type TaskInterface](<#TaskInterface>)
 - [type TaskType](<#TaskType>)
 - [type TerminateTask](<#TerminateTask>)
   - [func NewTerminateTask\(taskRefName string, status model.WorkflowStatus, terminationReason string\) \*TerminateTask](<#NewTerminateTask>)
@@ -168,6 +138,72 @@ import "github.com/swift-conductor/conductor-client-golang/sdk/workflow"
   - [func \(task \*WaitTask\) Input\(key string, value interface\{\}\) \*WaitTask](<#WaitTask.Input>)
   - [func \(task \*WaitTask\) InputMap\(inputMap map\[string\]interface\{\}\) \*WaitTask](<#WaitTask.InputMap>)
   - [func \(task \*WaitTask\) Optional\(optional bool\) \*WaitTask](<#WaitTask.Optional>)
+- [type WorkflowDefEx](<#WorkflowDefEx>)
+  - [func NewWorkflowDefEx\(manager \*WorkflowManager\) \*WorkflowDefEx](<#NewWorkflowDefEx>)
+  - [func \(workflow \*WorkflowDefEx\) Add\(task WorkflowTaskInterface\) \*WorkflowDefEx](<#WorkflowDefEx.Add>)
+  - [func \(workflow \*WorkflowDefEx\) Description\(description string\) \*WorkflowDefEx](<#WorkflowDefEx.Description>)
+  - [func \(workflow \*WorkflowDefEx\) FailureWorkflow\(failureWorkflow string\) \*WorkflowDefEx](<#WorkflowDefEx.FailureWorkflow>)
+  - [func \(workflow \*WorkflowDefEx\) GetName\(\) \(name string\)](<#WorkflowDefEx.GetName>)
+  - [func \(workflow \*WorkflowDefEx\) GetOutputParameters\(\) \(outputParameters map\[string\]interface\{\}\)](<#WorkflowDefEx.GetOutputParameters>)
+  - [func \(workflow \*WorkflowDefEx\) GetVersion\(\) \(version int32\)](<#WorkflowDefEx.GetVersion>)
+  - [func \(workflow \*WorkflowDefEx\) InputParameters\(inputParameters ...string\) \*WorkflowDefEx](<#WorkflowDefEx.InputParameters>)
+  - [func \(workflow \*WorkflowDefEx\) InputTemplate\(inputTemplate interface\{\}\) \*WorkflowDefEx](<#WorkflowDefEx.InputTemplate>)
+  - [func \(workflow \*WorkflowDefEx\) Name\(name string\) \*WorkflowDefEx](<#WorkflowDefEx.Name>)
+  - [func \(workflow \*WorkflowDefEx\) OutputParameters\(outputParameters interface\{\}\) \*WorkflowDefEx](<#WorkflowDefEx.OutputParameters>)
+  - [func \(workflow \*WorkflowDefEx\) OwnerEmail\(ownerEmail string\) \*WorkflowDefEx](<#WorkflowDefEx.OwnerEmail>)
+  - [func \(workflow \*WorkflowDefEx\) Register\(overwrite bool\) error](<#WorkflowDefEx.Register>)
+  - [func \(workflow \*WorkflowDefEx\) Restartable\(restartable bool\) \*WorkflowDefEx](<#WorkflowDefEx.Restartable>)
+  - [func \(workflow \*WorkflowDefEx\) RunWorkflowWithInput\(input interface\{\}, waitUntilTask string\) \(worfklowRun \*model.WorkflowRun, err error\)](<#WorkflowDefEx.RunWorkflowWithInput>)
+  - [func \(workflow \*WorkflowDefEx\) StartWorkflow\(startWorkflowRequest \*model.StartWorkflowRequest\) \(workflowId string, err error\)](<#WorkflowDefEx.StartWorkflow>)
+  - [func \(workflow \*WorkflowDefEx\) StartWorkflowWithInput\(input interface\{\}\) \(workflowId string, err error\)](<#WorkflowDefEx.StartWorkflowWithInput>)
+  - [func \(workflow \*WorkflowDefEx\) StartWorkflowsAndMonitorExecution\(startWorkflowRequest \*model.StartWorkflowRequest\) \(runningChannel RunningWorkflowChannel, err error\)](<#WorkflowDefEx.StartWorkflowsAndMonitorExecution>)
+  - [func \(workflow \*WorkflowDefEx\) TimeoutPolicy\(timeoutPolicy TimeoutPolicy, timeoutSeconds int64\) \*WorkflowDefEx](<#WorkflowDefEx.TimeoutPolicy>)
+  - [func \(workflow \*WorkflowDefEx\) TimeoutSeconds\(timeoutSeconds int64\) \*WorkflowDefEx](<#WorkflowDefEx.TimeoutSeconds>)
+  - [func \(workflow \*WorkflowDefEx\) ToWorkflowDef\(\) \*model.WorkflowDef](<#WorkflowDefEx.ToWorkflowDef>)
+  - [func \(workflow \*WorkflowDefEx\) UnRegister\(\) error](<#WorkflowDefEx.UnRegister>)
+  - [func \(workflow \*WorkflowDefEx\) Variables\(variables interface\{\}\) \*WorkflowDefEx](<#WorkflowDefEx.Variables>)
+  - [func \(workflow \*WorkflowDefEx\) Version\(version int32\) \*WorkflowDefEx](<#WorkflowDefEx.Version>)
+  - [func \(workflow \*WorkflowDefEx\) WorkflowStatusListenerEnabled\(workflowStatusListenerEnabled bool\) \*WorkflowDefEx](<#WorkflowDefEx.WorkflowStatusListenerEnabled>)
+- [type WorkflowManager](<#WorkflowManager>)
+  - [func NewWorkflowManager\(apiClient \*client.APIClient\) \*WorkflowManager](<#NewWorkflowManager>)
+  - [func \(e \*WorkflowManager\) DeleteQueueConfiguration\(queueConfiguration queue.QueueConfiguration\) \(\*http.Response, error\)](<#WorkflowManager.DeleteQueueConfiguration>)
+  - [func \(e \*WorkflowManager\) GetByCorrelationIds\(workflowName string, includeClosed bool, includeTasks bool, correlationIds ...string\) \(map\[string\]\[\]model.Workflow, error\)](<#WorkflowManager.GetByCorrelationIds>)
+  - [func \(e \*WorkflowManager\) GetByCorrelationIdsAndNames\(includeClosed bool, includeTasks bool, correlationIds \[\]string, workflowNames \[\]string\) \(map\[string\]\[\]model.Workflow, error\)](<#WorkflowManager.GetByCorrelationIdsAndNames>)
+  - [func \(e \*WorkflowManager\) GetQueueConfiguration\(queueConfiguration queue.QueueConfiguration\) \(map\[string\]interface\{\}, \*http.Response, error\)](<#WorkflowManager.GetQueueConfiguration>)
+  - [func \(e \*WorkflowManager\) GetTask\(taskId string\) \(task \*model.WorkerTask, err error\)](<#WorkflowManager.GetTask>)
+  - [func \(e \*WorkflowManager\) GetWorkflow\(workflowId string, includeTasks bool\) \(\*model.Workflow, error\)](<#WorkflowManager.GetWorkflow>)
+  - [func \(e \*WorkflowManager\) GetWorkflowStatus\(workflowId string, includeOutput bool, includeVariables bool\) \(\*model.WorkflowState, error\)](<#WorkflowManager.GetWorkflowStatus>)
+  - [func \(e \*WorkflowManager\) MonitorExecution\(workflowId string\) \(workflowMonitor RunningWorkflowChannel, err error\)](<#WorkflowManager.MonitorExecution>)
+  - [func \(e \*WorkflowManager\) Pause\(workflowId string\) error](<#WorkflowManager.Pause>)
+  - [func \(e \*WorkflowManager\) PutQueueConfiguration\(queueConfiguration queue.QueueConfiguration\) \(\*http.Response, error\)](<#WorkflowManager.PutQueueConfiguration>)
+  - [func \(e \*WorkflowManager\) ReRun\(workflowId string, reRunRequest model.RerunWorkflowRequest\) \(id string, error error\)](<#WorkflowManager.ReRun>)
+  - [func \(e \*WorkflowManager\) RegisterWorkflow\(overwrite bool, workflow \*model.WorkflowDef\) error](<#WorkflowManager.RegisterWorkflow>)
+  - [func \(e \*WorkflowManager\) RemoveWorkflow\(workflowId string\) error](<#WorkflowManager.RemoveWorkflow>)
+  - [func \(e \*WorkflowManager\) Restart\(workflowId string, useLatestDefinition bool\) error](<#WorkflowManager.Restart>)
+  - [func \(e \*WorkflowManager\) Resume\(workflowId string\) error](<#WorkflowManager.Resume>)
+  - [func \(e \*WorkflowManager\) Retry\(workflowId string, resumeSubworkflowTasks bool\) error](<#WorkflowManager.Retry>)
+  - [func \(e \*WorkflowManager\) RunWorkflow\(startWorkflowRequest \*model.StartWorkflowRequest, waitUntilTask string\) \(run \*model.WorkflowRun, err error\)](<#WorkflowManager.RunWorkflow>)
+  - [func \(e \*WorkflowManager\) Search\(start int32, size int32, query string, freeText string\) \(\[\]model.WorkflowSummary, error\)](<#WorkflowManager.Search>)
+  - [func \(e \*WorkflowManager\) SkipTasksFromWorkflow\(workflowId string, taskReferenceName string, skipTaskRequest model.SkipTaskRequest\) error](<#WorkflowManager.SkipTasksFromWorkflow>)
+  - [func \(e \*WorkflowManager\) StartWorkflow\(startWorkflowRequest \*model.StartWorkflowRequest\) \(workflowId string, err error\)](<#WorkflowManager.StartWorkflow>)
+  - [func \(e \*WorkflowManager\) StartWorkflows\(monitorExecution bool, startWorkflowRequests ...\*model.StartWorkflowRequest\) \[\]\*RunningWorkflow](<#WorkflowManager.StartWorkflows>)
+  - [func \(e \*WorkflowManager\) Terminate\(workflowId string, reason string\) error](<#WorkflowManager.Terminate>)
+  - [func \(e \*WorkflowManager\) TerminateWithFailure\(workflowId string, reason string, triggerFailureWorkflow bool\) error](<#WorkflowManager.TerminateWithFailure>)
+  - [func \(e \*WorkflowManager\) UnRegisterWorkflow\(name string, version int32\) error](<#WorkflowManager.UnRegisterWorkflow>)
+  - [func \(e \*WorkflowManager\) UpdateTask\(taskId string, workflowInstanceId string, status model.TaskResultStatus, output interface\{\}\) error](<#WorkflowManager.UpdateTask>)
+  - [func \(e \*WorkflowManager\) UpdateTaskByRefName\(taskRefName string, workflowInstanceId string, status model.TaskResultStatus, output interface\{\}\) error](<#WorkflowManager.UpdateTaskByRefName>)
+  - [func \(e \*WorkflowManager\) WaitForRunningWorkflowsUntilTimeout\(timeout time.Duration, runningWorkflows ...\*RunningWorkflow\)](<#WorkflowManager.WaitForRunningWorkflowsUntilTimeout>)
+- [type WorkflowMonitor](<#WorkflowMonitor>)
+  - [func NewWorkflowMonitor\(workflowClient \*client.WorkflowResourceApiService\) \*WorkflowMonitor](<#NewWorkflowMonitor>)
+- [type WorkflowTaskEx](<#WorkflowTaskEx>)
+  - [func \(task \*WorkflowTaskEx\) Description\(description string\) \*WorkflowTaskEx](<#WorkflowTaskEx.Description>)
+  - [func \(task \*WorkflowTaskEx\) Input\(key string, value interface\{\}\) \*WorkflowTaskEx](<#WorkflowTaskEx.Input>)
+  - [func \(task \*WorkflowTaskEx\) InputMap\(inputMap map\[string\]interface\{\}\) \*WorkflowTaskEx](<#WorkflowTaskEx.InputMap>)
+  - [func \(task \*WorkflowTaskEx\) Optional\(optional bool\) \*WorkflowTaskEx](<#WorkflowTaskEx.Optional>)
+  - [func \(task \*WorkflowTaskEx\) OutputRef\(path string\) string](<#WorkflowTaskEx.OutputRef>)
+  - [func \(task \*WorkflowTaskEx\) ReferenceName\(\) string](<#WorkflowTaskEx.ReferenceName>)
+  - [func \(task \*WorkflowTaskEx\) ToTaskDef\(\) \*model.TaskDef](<#WorkflowTaskEx.ToTaskDef>)
+- [type WorkflowTaskInterface](<#WorkflowTaskInterface>)
 
 
 ## Constants
@@ -180,241 +216,14 @@ const (
 )
 ```
 
-<a name="ConductorWorkflow"></a>
-## type [ConductorWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L27-L43>)
-
-
+<a name="WaitForWorkflowCompletionUntilTimeout"></a>
+## func [WaitForWorkflowCompletionUntilTimeout](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L174>)
 
 ```go
-type ConductorWorkflow struct {
-    // contains filtered or unexported fields
-}
+func WaitForWorkflowCompletionUntilTimeout(runningChannel RunningWorkflowChannel, timeout time.Duration) (workflow *model.Workflow, err error)
 ```
 
-<a name="NewConductorWorkflow"></a>
-### func [NewConductorWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L45>)
-
-```go
-func NewConductorWorkflow(executor *executor.WorkflowExecutor) *ConductorWorkflow
-```
-
-
-
-<a name="ConductorWorkflow.Add"></a>
-### func \(\*ConductorWorkflow\) [Add](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L143>)
-
-```go
-func (workflow *ConductorWorkflow) Add(task TaskInterface) *ConductorWorkflow
-```
-
-
-
-<a name="ConductorWorkflow.Description"></a>
-### func \(\*ConductorWorkflow\) [Description](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L63>)
-
-```go
-func (workflow *ConductorWorkflow) Description(description string) *ConductorWorkflow
-```
-
-
-
-<a name="ConductorWorkflow.ExecuteWorkflowWithInput"></a>
-### func \(\*ConductorWorkflow\) [ExecuteWorkflowWithInput](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L186>)
-
-```go
-func (workflow *ConductorWorkflow) ExecuteWorkflowWithInput(input interface{}, waitUntilTask string) (worfklowRun *model.WorkflowRun, err error)
-```
-
-ExecuteWorkflowWithInput Execute the workflow with specific input and wait for the workflow to complete or until the task specified as waitUntil is completed. waitUntilTask Reference name of the task which MUST be completed before returning the output. if specified as empty string, then the call waits until the workflow completes or reaches the timeout \(as specified on the server\) The input struct MUST be serializable to JSON Returns the workflow output
-
-<a name="ConductorWorkflow.FailureWorkflow"></a>
-### func \(\*ConductorWorkflow\) [FailureWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L81>)
-
-```go
-func (workflow *ConductorWorkflow) FailureWorkflow(failureWorkflow string) *ConductorWorkflow
-```
-
-FailureWorkflow name of the workflow to execute when this workflow fails. Failure workflows can be used for handling compensation logic
-
-<a name="ConductorWorkflow.GetName"></a>
-### func \(\*ConductorWorkflow\) [GetName](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L131>)
-
-```go
-func (workflow *ConductorWorkflow) GetName() (name string)
-```
-
-
-
-<a name="ConductorWorkflow.GetOutputParameters"></a>
-### func \(\*ConductorWorkflow\) [GetOutputParameters](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L135>)
-
-```go
-func (workflow *ConductorWorkflow) GetOutputParameters() (outputParameters map[string]interface{})
-```
-
-
-
-<a name="ConductorWorkflow.GetVersion"></a>
-### func \(\*ConductorWorkflow\) [GetVersion](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L139>)
-
-```go
-func (workflow *ConductorWorkflow) GetVersion() (version int32)
-```
-
-
-
-<a name="ConductorWorkflow.InputParameters"></a>
-### func \(\*ConductorWorkflow\) [InputParameters](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L121>)
-
-```go
-func (workflow *ConductorWorkflow) InputParameters(inputParameters ...string) *ConductorWorkflow
-```
-
-InputParameters List of the input parameters to the workflow. Used ONLY for the documentation purpose.
-
-<a name="ConductorWorkflow.InputTemplate"></a>
-### func \(\*ConductorWorkflow\) [InputTemplate](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L108>)
-
-```go
-func (workflow *ConductorWorkflow) InputTemplate(inputTemplate interface{}) *ConductorWorkflow
-```
-
-InputTemplate template input to the workflow. Can have combination of variables \(e.g. $\{workflow.input.abc\}\) and static values
-
-<a name="ConductorWorkflow.Name"></a>
-### func \(\*ConductorWorkflow\) [Name](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L53>)
-
-```go
-func (workflow *ConductorWorkflow) Name(name string) *ConductorWorkflow
-```
-
-
-
-<a name="ConductorWorkflow.OutputParameters"></a>
-### func \(\*ConductorWorkflow\) [OutputParameters](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L101>)
-
-```go
-func (workflow *ConductorWorkflow) OutputParameters(outputParameters interface{}) *ConductorWorkflow
-```
-
-OutputParameters Workflow outputs. Workflow output follows similar structure as task inputs See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for more details
-
-<a name="ConductorWorkflow.OwnerEmail"></a>
-### func \(\*ConductorWorkflow\) [OwnerEmail](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L126>)
-
-```go
-func (workflow *ConductorWorkflow) OwnerEmail(ownerEmail string) *ConductorWorkflow
-```
-
-
-
-<a name="ConductorWorkflow.Register"></a>
-### func \(\*ConductorWorkflow\) [Register](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L150>)
-
-```go
-func (workflow *ConductorWorkflow) Register(overwrite bool) error
-```
-
-Register the workflow definition with the server. If overwrite is set, the definition on the server will be overwritten. When not set, the call fails if there is any change in the workflow definition between the server and what is being registered.
-
-<a name="ConductorWorkflow.Restartable"></a>
-### func \(\*ConductorWorkflow\) [Restartable](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L88>)
-
-```go
-func (workflow *ConductorWorkflow) Restartable(restartable bool) *ConductorWorkflow
-```
-
-Restartable if the workflow can be restarted after it has reached terminal state. Set this to false if restarting workflow can have side effects
-
-<a name="ConductorWorkflow.StartWorkflow"></a>
-### func \(\*ConductorWorkflow\) [StartWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L176>)
-
-```go
-func (workflow *ConductorWorkflow) StartWorkflow(startWorkflowRequest *model.StartWorkflowRequest) (workflowId string, err error)
-```
-
-StartWorkflow starts the workflow execution with startWorkflowRequest that allows you to specify more details like task domains, correlationId etc. Returns the ID of the newly created workflow
-
-<a name="ConductorWorkflow.StartWorkflowWithInput"></a>
-### func \(\*ConductorWorkflow\) [StartWorkflowWithInput](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L162>)
-
-```go
-func (workflow *ConductorWorkflow) StartWorkflowWithInput(input interface{}) (workflowId string, err error)
-```
-
-StartWorkflowWithInput ExecuteWorkflowWithInput Execute the workflow with specific input. The input struct MUST be serializable to JSON Returns the workflow Id that can be used to monitor and get the status of the workflow execution
-
-<a name="ConductorWorkflow.StartWorkflowsAndMonitorExecution"></a>
-### func \(\*ConductorWorkflow\) [StartWorkflowsAndMonitorExecution](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L201>)
-
-```go
-func (workflow *ConductorWorkflow) StartWorkflowsAndMonitorExecution(startWorkflowRequest *model.StartWorkflowRequest) (executionChannel executor.WorkflowExecutionChannel, err error)
-```
-
-StartWorkflowsAndMonitorExecution Starts the workflow execution and returns a channel that can be used to monitor the workflow execution This method is useful for short duration workflows that are expected to complete in few seconds. For long\-running workflows use GetStatus APIs to periodically check the status
-
-<a name="ConductorWorkflow.TimeoutPolicy"></a>
-### func \(\*ConductorWorkflow\) [TimeoutPolicy](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L68>)
-
-```go
-func (workflow *ConductorWorkflow) TimeoutPolicy(timeoutPolicy TimeoutPolicy, timeoutSeconds int64) *ConductorWorkflow
-```
-
-
-
-<a name="ConductorWorkflow.TimeoutSeconds"></a>
-### func \(\*ConductorWorkflow\) [TimeoutSeconds](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L74>)
-
-```go
-func (workflow *ConductorWorkflow) TimeoutSeconds(timeoutSeconds int64) *ConductorWorkflow
-```
-
-
-
-<a name="ConductorWorkflow.ToWorkflowDef"></a>
-### func \(\*ConductorWorkflow\) [ToWorkflowDef](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L231>)
-
-```go
-func (workflow *ConductorWorkflow) ToWorkflowDef() *model.WorkflowDef
-```
-
-ToWorkflowDef converts the workflow to the JSON serializable format
-
-<a name="ConductorWorkflow.UnRegister"></a>
-### func \(\*ConductorWorkflow\) [UnRegister](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L156>)
-
-```go
-func (workflow *ConductorWorkflow) UnRegister() error
-```
-
-Register the workflow definition with the server. If overwrite is set, the definition on the server will be overwritten. When not set, the call fails if there is any change in the workflow definition between the server and what is being registered.
-
-<a name="ConductorWorkflow.Variables"></a>
-### func \(\*ConductorWorkflow\) [Variables](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L115>)
-
-```go
-func (workflow *ConductorWorkflow) Variables(variables interface{}) *ConductorWorkflow
-```
-
-Variables Workflow variables are set using SET\_VARIABLE task. Excellent way to maintain business state e.g. Variables can maintain business/user specific states which can be queried and inspected to find out the state of the workflow
-
-<a name="ConductorWorkflow.Version"></a>
-### func \(\*ConductorWorkflow\) [Version](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L58>)
-
-```go
-func (workflow *ConductorWorkflow) Version(version int32) *ConductorWorkflow
-```
-
-
-
-<a name="ConductorWorkflow.WorkflowStatusListenerEnabled"></a>
-### func \(\*ConductorWorkflow\) [WorkflowStatusListenerEnabled](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L94>)
-
-```go
-func (workflow *ConductorWorkflow) WorkflowStatusListenerEnabled(workflowStatusListenerEnabled bool) *ConductorWorkflow
-```
-
-WorkflowStatusListenerEnabled if the workflow status listener need to be enabled.
+WaitForWorkflowCompletionUntilTimeout Helper method to wait on the channel until the timeout for the workflow execution to complete
 
 <a name="DoWhileTask"></a>
 ## type [DoWhileTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/do_while.go#L23-L27>)
@@ -423,7 +232,7 @@ DoWhileTask Do...While task
 
 ```go
 type DoWhileTask struct {
-    Task
+    WorkflowTaskEx
     // contains filtered or unexported fields
 }
 ```
@@ -432,7 +241,7 @@ type DoWhileTask struct {
 ### func [NewDoWhileTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/do_while.go#L31>)
 
 ```go
-func NewDoWhileTask(taskRefName string, terminationCondition string, tasks ...TaskInterface) *DoWhileTask
+func NewDoWhileTask(taskRefName string, terminationCondition string, tasks ...WorkflowTaskInterface) *DoWhileTask
 ```
 
 NewDoWhileTask DoWhileTask Crate a new DoWhile task. terminationCondition is a Javascript expression that evaluates to True or False
@@ -441,7 +250,7 @@ NewDoWhileTask DoWhileTask Crate a new DoWhile task. terminationCondition is a J
 ### func [NewLoopTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/do_while.go#L45>)
 
 ```go
-func NewLoopTask(taskRefName string, iterations int32, tasks ...TaskInterface) *DoWhileTask
+func NewLoopTask(taskRefName string, iterations int32, tasks ...WorkflowTaskInterface) *DoWhileTask
 ```
 
 NewLoopTask Loop over N times when N is specified as iterations
@@ -505,7 +314,7 @@ type DynamicForkInput struct {
 
 ```go
 type DynamicForkTask struct {
-    Task
+    WorkflowTaskEx
     // contains filtered or unexported fields
 }
 ```
@@ -514,7 +323,7 @@ type DynamicForkTask struct {
 ### func [NewDynamicForkTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/fork_join_dynamic.go#L27>)
 
 ```go
-func NewDynamicForkTask(taskRefName string, forkPrepareTask TaskInterface) *DynamicForkTask
+func NewDynamicForkTask(taskRefName string, forkPrepareTask WorkflowTaskInterface) *DynamicForkTask
 ```
 
 
@@ -532,7 +341,7 @@ func NewDynamicForkTaskWithoutPrepareTask(taskRefName string) *DynamicForkTask
 ### func [NewDynamicForkWithJoinTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/fork_join_dynamic.go#L55>)
 
 ```go
-func NewDynamicForkWithJoinTask(taskRefName string, forkPrepareTask TaskInterface, join JoinTask) *DynamicForkTask
+func NewDynamicForkWithJoinTask(taskRefName string, forkPrepareTask WorkflowTaskInterface, join JoinTask) *DynamicForkTask
 ```
 
 
@@ -580,7 +389,7 @@ Optional if set to true, the task will not fail the workflow if the task fails
 
 ```go
 type DynamicTask struct {
-    Task
+    WorkflowTaskEx
 }
 ```
 
@@ -639,7 +448,7 @@ EventTask Task to publish Events to external queuing systems like SQS, NATS, AMQ
 
 ```go
 type EventTask struct {
-    Task
+    WorkflowTaskEx
     // contains filtered or unexported fields
 }
 ```
@@ -705,7 +514,7 @@ Optional if set to true, the task will not fail the workflow if the task fails
 
 ```go
 type ForkTask struct {
-    Task
+    WorkflowTaskEx
     // contains filtered or unexported fields
 }
 ```
@@ -714,7 +523,7 @@ type ForkTask struct {
 ### func [NewForkTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/fork_join.go#L47>)
 
 ```go
-func NewForkTask(taskRefName string, forkedTask ...[]TaskInterface) *ForkTask
+func NewForkTask(taskRefName string, forkedTask ...[]WorkflowTaskInterface) *ForkTask
 ```
 
 NewForkTask creates a new fork task that executes the given tasks in parallel \*
@@ -741,7 +550,7 @@ NewForkTask creates a new fork task that executes the given tasks in parallel \*
 ### func [NewForkTaskWithJoin](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/fork_join.go#L61>)
 
 ```go
-func NewForkTaskWithJoin(taskRefName string, join *JoinTask, forkedTask ...[]TaskInterface) *ForkTask
+func NewForkTaskWithJoin(taskRefName string, join *JoinTask, forkedTask ...[]WorkflowTaskInterface) *ForkTask
 ```
 
 
@@ -829,7 +638,7 @@ const (
 
 ```go
 type HttpTask struct {
-    Task
+    WorkflowTaskEx
 }
 ```
 
@@ -885,7 +694,7 @@ Optional if set to true, the task will not fail the workflow if the task fails
 
 ```go
 type HumanTask struct {
-    Task
+    WorkflowTaskEx
 }
 ```
 
@@ -941,7 +750,7 @@ Optional if set to true, the task will not fail the workflow if the task fails
 
 ```go
 type InlineTask struct {
-    Task
+    WorkflowTaskEx
 }
 ```
 
@@ -1006,7 +815,7 @@ Optional if set to true, the task will not fail the workflow if the task fails
 
 ```go
 type JQTask struct {
-    Task
+    WorkflowTaskEx
 }
 ```
 
@@ -1062,7 +871,7 @@ Optional if set to true, the task will not fail the workflow if the task fails
 
 ```go
 type JoinTask struct {
-    Task
+    WorkflowTaskEx
     // contains filtered or unexported fields
 }
 ```
@@ -1101,7 +910,7 @@ Optional if set to true, the task will not fail the workflow if the task fails
 
 ```go
 type KafkaPublishTask struct {
-    Task
+    WorkflowTaskEx
 }
 ```
 
@@ -1168,6 +977,47 @@ type KafkaPublishTaskInput struct {
 }
 ```
 
+<a name="RunningWorkflow"></a>
+## type [RunningWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/running_workflow.go#L21-L26>)
+
+
+
+```go
+type RunningWorkflow struct {
+    WorkflowId             string
+    RunningWorkflowChannel RunningWorkflowChannel
+    Err                    error
+    CompletedWorkflow      *model.Workflow
+}
+```
+
+<a name="NewRunningWorkflow"></a>
+### func [NewRunningWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/running_workflow.go#L28>)
+
+```go
+func NewRunningWorkflow(workflowId string, runningWorkflowChannel RunningWorkflowChannel, err error) *RunningWorkflow
+```
+
+
+
+<a name="RunningWorkflow.WaitForCompletionUntilTimeout"></a>
+### func \(\*RunningWorkflow\) [WaitForCompletionUntilTimeout](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/running_workflow.go#L37>)
+
+```go
+func (rw *RunningWorkflow) WaitForCompletionUntilTimeout(timeout time.Duration) (workflow *model.Workflow, err error)
+```
+
+
+
+<a name="RunningWorkflowChannel"></a>
+## type [RunningWorkflowChannel](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/running_workflow.go#L19>)
+
+
+
+```go
+type RunningWorkflowChannel chan *model.Workflow
+```
+
 <a name="SetVariableTask"></a>
 ## type [SetVariableTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/set_variable.go#L12-L14>)
 
@@ -1175,7 +1025,7 @@ type KafkaPublishTaskInput struct {
 
 ```go
 type SetVariableTask struct {
-    Task
+    WorkflowTaskEx
 }
 ```
 
@@ -1231,7 +1081,7 @@ Optional if set to true, the task will not fail the workflow if the task fails
 
 ```go
 type SimpleTask struct {
-    Task
+    WorkflowTaskEx
 }
 ```
 
@@ -1287,7 +1137,7 @@ Optional if set to true, the task will not fail the workflow if the task fails
 
 ```go
 type StartWorkflowTask struct {
-    Task
+    WorkflowTaskEx
 }
 ```
 
@@ -1343,7 +1193,7 @@ Optional if set to true, the task will not fail the workflow if the task fails
 
 ```go
 type SubWorkflowTask struct {
-    Task
+    WorkflowTaskEx
     // contains filtered or unexported fields
 }
 ```
@@ -1352,7 +1202,7 @@ type SubWorkflowTask struct {
 ### func [NewSubWorkflowInlineTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/sub_workflow.go#L39>)
 
 ```go
-func NewSubWorkflowInlineTask(taskRefName string, workflow *ConductorWorkflow) *SubWorkflowTask
+func NewSubWorkflowInlineTask(taskRefName string, workflow *WorkflowDefEx) *SubWorkflowTask
 ```
 
 
@@ -1418,8 +1268,8 @@ func (task *SubWorkflowTask) TaskToDomain(taskToDomainMap map[string]string) *Su
 
 ```go
 type SwitchTask struct {
-    Task
-    DecisionCases map[string][]TaskInterface
+    WorkflowTaskEx
+    DecisionCases map[string][]WorkflowTaskInterface
     // contains filtered or unexported fields
 }
 ```
@@ -1437,7 +1287,7 @@ func NewSwitchTask(taskRefName string, caseExpression string) *SwitchTask
 ### func \(\*SwitchTask\) [DefaultCase](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/switch.go#L47>)
 
 ```go
-func (task *SwitchTask) DefaultCase(tasks ...TaskInterface) *SwitchTask
+func (task *SwitchTask) DefaultCase(tasks ...WorkflowTaskInterface) *SwitchTask
 ```
 
 
@@ -1482,7 +1332,7 @@ Optional if set to true, the task will not fail the workflow if the task fails
 ### func \(\*SwitchTask\) [SwitchCase](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/switch.go#L43>)
 
 ```go
-func (task *SwitchTask) SwitchCase(caseName string, tasks ...TaskInterface) *SwitchTask
+func (task *SwitchTask) SwitchCase(caseName string, tasks ...WorkflowTaskInterface) *SwitchTask
 ```
 
 
@@ -1496,95 +1346,8 @@ func (task *SwitchTask) UseJavascript(use bool) *SwitchTask
 
 UseJavascript If set to to true, the caseExpression parameter is treated as a Javascript. If set to false, the caseExpression follows the regular task input mapping format as described in https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html
 
-<a name="Task"></a>
-## type [Task](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/task.go#L47-L54>)
-
-
-
-```go
-type Task struct {
-    // contains filtered or unexported fields
-}
-```
-
-<a name="Task.Description"></a>
-### func \(\*Task\) [Description](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/task.go#L106>)
-
-```go
-func (task *Task) Description(description string) *Task
-```
-
-Description of the task
-
-<a name="Task.Input"></a>
-### func \(\*Task\) [Input](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/task.go#L92>)
-
-```go
-func (task *Task) Input(key string, value interface{}) *Task
-```
-
-Input to the task. See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
-
-<a name="Task.InputMap"></a>
-### func \(\*Task\) [InputMap](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/task.go#L98>)
-
-```go
-func (task *Task) InputMap(inputMap map[string]interface{}) *Task
-```
-
-InputMap to the task. See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
-
-<a name="Task.Optional"></a>
-### func \(\*Task\) [Optional](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/task.go#L112>)
-
-```go
-func (task *Task) Optional(optional bool) *Task
-```
-
-Optional if set to true, the task will not fail the workflow if the task fails
-
-<a name="Task.OutputRef"></a>
-### func \(\*Task\) [OutputRef](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/task.go#L79>)
-
-```go
-func (task *Task) OutputRef(path string) string
-```
-
-
-
-<a name="Task.ReferenceName"></a>
-### func \(\*Task\) [ReferenceName](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/task.go#L76>)
-
-```go
-func (task *Task) ReferenceName() string
-```
-
-
-
-<a name="Task.ToTaskDef"></a>
-### func \(\*Task\) [ToTaskDef](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/task.go#L69>)
-
-```go
-func (task *Task) ToTaskDef() *model.TaskDef
-```
-
-
-
-<a name="TaskInterface"></a>
-## type [TaskInterface](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/task.go#L41-L45>)
-
-
-
-```go
-type TaskInterface interface {
-    OutputRef(path string) string
-    ToTaskDef() *model.TaskDef
-    // contains filtered or unexported methods
-}
-```
-
 <a name="TaskType"></a>
-## type [TaskType](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/task.go#L18>)
+## type [TaskType](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_task_ex.go#L18>)
 
 
 
@@ -1624,7 +1387,7 @@ const (
 
 ```go
 type TerminateTask struct {
-    Task
+    WorkflowTaskEx
 }
 ```
 
@@ -1689,7 +1452,7 @@ const (
 
 ```go
 type WaitTask struct {
-    Task
+    WorkflowTaskEx
 }
 ```
 
@@ -1755,5 +1518,618 @@ func (task *WaitTask) Optional(optional bool) *WaitTask
 ```
 
 Optional if set to true, the task will not fail the workflow if the task fails
+
+<a name="WorkflowDefEx"></a>
+## type [WorkflowDefEx](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L27-L43>)
+
+
+
+```go
+type WorkflowDefEx struct {
+    // contains filtered or unexported fields
+}
+```
+
+<a name="NewWorkflowDefEx"></a>
+### func [NewWorkflowDefEx](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L45>)
+
+```go
+func NewWorkflowDefEx(manager *WorkflowManager) *WorkflowDefEx
+```
+
+
+
+<a name="WorkflowDefEx.Add"></a>
+### func \(\*WorkflowDefEx\) [Add](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L143>)
+
+```go
+func (workflow *WorkflowDefEx) Add(task WorkflowTaskInterface) *WorkflowDefEx
+```
+
+
+
+<a name="WorkflowDefEx.Description"></a>
+### func \(\*WorkflowDefEx\) [Description](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L63>)
+
+```go
+func (workflow *WorkflowDefEx) Description(description string) *WorkflowDefEx
+```
+
+
+
+<a name="WorkflowDefEx.FailureWorkflow"></a>
+### func \(\*WorkflowDefEx\) [FailureWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L81>)
+
+```go
+func (workflow *WorkflowDefEx) FailureWorkflow(failureWorkflow string) *WorkflowDefEx
+```
+
+FailureWorkflow name of the workflow to execute when this workflow fails. Failure workflows can be used for handling compensation logic
+
+<a name="WorkflowDefEx.GetName"></a>
+### func \(\*WorkflowDefEx\) [GetName](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L131>)
+
+```go
+func (workflow *WorkflowDefEx) GetName() (name string)
+```
+
+
+
+<a name="WorkflowDefEx.GetOutputParameters"></a>
+### func \(\*WorkflowDefEx\) [GetOutputParameters](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L135>)
+
+```go
+func (workflow *WorkflowDefEx) GetOutputParameters() (outputParameters map[string]interface{})
+```
+
+
+
+<a name="WorkflowDefEx.GetVersion"></a>
+### func \(\*WorkflowDefEx\) [GetVersion](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L139>)
+
+```go
+func (workflow *WorkflowDefEx) GetVersion() (version int32)
+```
+
+
+
+<a name="WorkflowDefEx.InputParameters"></a>
+### func \(\*WorkflowDefEx\) [InputParameters](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L121>)
+
+```go
+func (workflow *WorkflowDefEx) InputParameters(inputParameters ...string) *WorkflowDefEx
+```
+
+InputParameters List of the input parameters to the workflow. Used ONLY for the documentation purpose.
+
+<a name="WorkflowDefEx.InputTemplate"></a>
+### func \(\*WorkflowDefEx\) [InputTemplate](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L108>)
+
+```go
+func (workflow *WorkflowDefEx) InputTemplate(inputTemplate interface{}) *WorkflowDefEx
+```
+
+InputTemplate template input to the workflow. Can have combination of variables \(e.g. $\{workflow.input.abc\}\) and static values
+
+<a name="WorkflowDefEx.Name"></a>
+### func \(\*WorkflowDefEx\) [Name](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L53>)
+
+```go
+func (workflow *WorkflowDefEx) Name(name string) *WorkflowDefEx
+```
+
+
+
+<a name="WorkflowDefEx.OutputParameters"></a>
+### func \(\*WorkflowDefEx\) [OutputParameters](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L101>)
+
+```go
+func (workflow *WorkflowDefEx) OutputParameters(outputParameters interface{}) *WorkflowDefEx
+```
+
+OutputParameters Workflow outputs. Workflow output follows similar structure as task inputs See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for more details
+
+<a name="WorkflowDefEx.OwnerEmail"></a>
+### func \(\*WorkflowDefEx\) [OwnerEmail](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L126>)
+
+```go
+func (workflow *WorkflowDefEx) OwnerEmail(ownerEmail string) *WorkflowDefEx
+```
+
+
+
+<a name="WorkflowDefEx.Register"></a>
+### func \(\*WorkflowDefEx\) [Register](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L150>)
+
+```go
+func (workflow *WorkflowDefEx) Register(overwrite bool) error
+```
+
+Register the workflow definition with the server. If overwrite is set, the definition on the server will be overwritten. When not set, the call fails if there is any change in the workflow definition between the server and what is being registered.
+
+<a name="WorkflowDefEx.Restartable"></a>
+### func \(\*WorkflowDefEx\) [Restartable](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L88>)
+
+```go
+func (workflow *WorkflowDefEx) Restartable(restartable bool) *WorkflowDefEx
+```
+
+Restartable if the workflow can be restarted after it has reached terminal state. Set this to false if restarting workflow can have side effects
+
+<a name="WorkflowDefEx.RunWorkflowWithInput"></a>
+### func \(\*WorkflowDefEx\) [RunWorkflowWithInput](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L186>)
+
+```go
+func (workflow *WorkflowDefEx) RunWorkflowWithInput(input interface{}, waitUntilTask string) (worfklowRun *model.WorkflowRun, err error)
+```
+
+RunWorkflowWithInput Execute the workflow with specific input and wait for the workflow to complete or until the task specified as waitUntil is completed. waitUntilTask Reference name of the task which MUST be completed before returning the output. if specified as empty string, then the call waits until the workflow completes or reaches the timeout \(as specified on the server\) The input struct MUST be serializable to JSON Returns the workflow output
+
+<a name="WorkflowDefEx.StartWorkflow"></a>
+### func \(\*WorkflowDefEx\) [StartWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L176>)
+
+```go
+func (workflow *WorkflowDefEx) StartWorkflow(startWorkflowRequest *model.StartWorkflowRequest) (workflowId string, err error)
+```
+
+StartWorkflow starts the workflow execution with startWorkflowRequest that allows you to specify more details like task domains, correlationId etc. Returns the ID of the newly created workflow
+
+<a name="WorkflowDefEx.StartWorkflowWithInput"></a>
+### func \(\*WorkflowDefEx\) [StartWorkflowWithInput](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L162>)
+
+```go
+func (workflow *WorkflowDefEx) StartWorkflowWithInput(input interface{}) (workflowId string, err error)
+```
+
+StartWorkflowWithInput RunWorkflowWithInput Execute the workflow with specific input. The input struct MUST be serializable to JSON Returns the workflow Id that can be used to monitor and get the status of the workflow execution
+
+<a name="WorkflowDefEx.StartWorkflowsAndMonitorExecution"></a>
+### func \(\*WorkflowDefEx\) [StartWorkflowsAndMonitorExecution](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L201>)
+
+```go
+func (workflow *WorkflowDefEx) StartWorkflowsAndMonitorExecution(startWorkflowRequest *model.StartWorkflowRequest) (runningChannel RunningWorkflowChannel, err error)
+```
+
+StartWorkflowsAndMonitorExecution Starts the workflow execution and returns a channel that can be used to monitor the workflow execution This method is useful for short duration workflows that are expected to complete in few seconds. For long\-running workflows use GetStatus APIs to periodically check the status
+
+<a name="WorkflowDefEx.TimeoutPolicy"></a>
+### func \(\*WorkflowDefEx\) [TimeoutPolicy](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L68>)
+
+```go
+func (workflow *WorkflowDefEx) TimeoutPolicy(timeoutPolicy TimeoutPolicy, timeoutSeconds int64) *WorkflowDefEx
+```
+
+
+
+<a name="WorkflowDefEx.TimeoutSeconds"></a>
+### func \(\*WorkflowDefEx\) [TimeoutSeconds](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L74>)
+
+```go
+func (workflow *WorkflowDefEx) TimeoutSeconds(timeoutSeconds int64) *WorkflowDefEx
+```
+
+
+
+<a name="WorkflowDefEx.ToWorkflowDef"></a>
+### func \(\*WorkflowDefEx\) [ToWorkflowDef](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L234>)
+
+```go
+func (workflow *WorkflowDefEx) ToWorkflowDef() *model.WorkflowDef
+```
+
+ToWorkflowDef converts the workflow to the JSON serializable format
+
+<a name="WorkflowDefEx.UnRegister"></a>
+### func \(\*WorkflowDefEx\) [UnRegister](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L156>)
+
+```go
+func (workflow *WorkflowDefEx) UnRegister() error
+```
+
+Register the workflow definition with the server. If overwrite is set, the definition on the server will be overwritten. When not set, the call fails if there is any change in the workflow definition between the server and what is being registered.
+
+<a name="WorkflowDefEx.Variables"></a>
+### func \(\*WorkflowDefEx\) [Variables](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L115>)
+
+```go
+func (workflow *WorkflowDefEx) Variables(variables interface{}) *WorkflowDefEx
+```
+
+Variables Workflow variables are set using SET\_VARIABLE task. Excellent way to maintain business state e.g. Variables can maintain business/user specific states which can be queried and inspected to find out the state of the workflow
+
+<a name="WorkflowDefEx.Version"></a>
+### func \(\*WorkflowDefEx\) [Version](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L58>)
+
+```go
+func (workflow *WorkflowDefEx) Version(version int32) *WorkflowDefEx
+```
+
+
+
+<a name="WorkflowDefEx.WorkflowStatusListenerEnabled"></a>
+### func \(\*WorkflowDefEx\) [WorkflowStatusListenerEnabled](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L94>)
+
+```go
+func (workflow *WorkflowDefEx) WorkflowStatusListenerEnabled(workflowStatusListenerEnabled bool) *WorkflowDefEx
+```
+
+WorkflowStatusListenerEnabled if the workflow status listener need to be enabled.
+
+<a name="WorkflowManager"></a>
+## type [WorkflowManager](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L33-L43>)
+
+
+
+```go
+type WorkflowManager struct {
+    // contains filtered or unexported fields
+}
+```
+
+<a name="NewWorkflowManager"></a>
+### func [NewWorkflowManager](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L51>)
+
+```go
+func NewWorkflowManager(apiClient *client.APIClient) *WorkflowManager
+```
+
+NewWorkflowManager Create a new workflow manager
+
+<a name="WorkflowManager.DeleteQueueConfiguration"></a>
+### func \(\*WorkflowManager\) [DeleteQueueConfiguration](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L478>)
+
+```go
+func (e *WorkflowManager) DeleteQueueConfiguration(queueConfiguration queue.QueueConfiguration) (*http.Response, error)
+```
+
+DeleteQueueConfiguration Delete queue configuration permanently from the system Returns nil if no error occurred
+
+<a name="WorkflowManager.GetByCorrelationIds"></a>
+### func \(\*WorkflowManager\) [GetByCorrelationIds](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L249>)
+
+```go
+func (e *WorkflowManager) GetByCorrelationIds(workflowName string, includeClosed bool, includeTasks bool, correlationIds ...string) (map[string][]model.Workflow, error)
+```
+
+GetByCorrelationIds Given the list of correlation ids, find and return workflows Returns a map with key as correlationId and value as a list of Workflows When IncludeClosed is set to true, the return value also includes workflows that are completed otherwise only running workflows are returned
+
+<a name="WorkflowManager.GetByCorrelationIdsAndNames"></a>
+### func \(\*WorkflowManager\) [GetByCorrelationIdsAndNames](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L267>)
+
+```go
+func (e *WorkflowManager) GetByCorrelationIdsAndNames(includeClosed bool, includeTasks bool, correlationIds []string, workflowNames []string) (map[string][]model.Workflow, error)
+```
+
+GetByCorrelationIdsAndNames Given the list of correlation ids and list of workflow names, find and return workflows Returns a map with key as correlationId and value as a list of Workflows When IncludeClosed is set to true, the return value also includes workflows that are completed otherwise only running workflows are returned
+
+<a name="WorkflowManager.GetQueueConfiguration"></a>
+### func \(\*WorkflowManager\) [GetQueueConfiguration](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L484>)
+
+```go
+func (e *WorkflowManager) GetQueueConfiguration(queueConfiguration queue.QueueConfiguration) (map[string]interface{}, *http.Response, error)
+```
+
+GetQueueConfiguration Get queue configuration if present Returns queue configuration if present
+
+<a name="WorkflowManager.GetTask"></a>
+### func \(\*WorkflowManager\) [GetTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L452>)
+
+```go
+func (e *WorkflowManager) GetTask(taskId string) (task *model.WorkerTask, err error)
+```
+
+GetTask by task Id returns nil if no such task is found by the id
+
+<a name="WorkflowManager.GetWorkflow"></a>
+### func \(\*WorkflowManager\) [GetWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L205>)
+
+```go
+func (e *WorkflowManager) GetWorkflow(workflowId string, includeTasks bool) (*model.Workflow, error)
+```
+
+GetWorkflow Get workflow execution by workflow Id. If includeTasks is set, also fetches all the task details. Returns nil if no workflow is found by the id
+
+<a name="WorkflowManager.GetWorkflowStatus"></a>
+### func \(\*WorkflowManager\) [GetWorkflowStatus](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L238>)
+
+```go
+func (e *WorkflowManager) GetWorkflowStatus(workflowId string, includeOutput bool, includeVariables bool) (*model.WorkflowState, error)
+```
+
+GetWorkflowStatus Get the status of the workflow execution. This is a lightweight method that returns only overall state of the workflow
+
+<a name="WorkflowManager.MonitorExecution"></a>
+### func \(\*WorkflowManager\) [MonitorExecution](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L132>)
+
+```go
+func (e *WorkflowManager) MonitorExecution(workflowId string) (workflowMonitor RunningWorkflowChannel, err error)
+```
+
+MonitorExecution monitors the workflow execution Returns the channel with the execution result of the workflow Note: Channels will continue to grow if the workflows do not complete and/or are not taken out
+
+<a name="WorkflowManager.Pause"></a>
+### func \(\*WorkflowManager\) [Pause](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L314>)
+
+```go
+func (e *WorkflowManager) Pause(workflowId string) error
+```
+
+Pause the execution of a running workflow. Any tasks that are currently running will finish but no new tasks are scheduled until the workflow is resumed
+
+<a name="WorkflowManager.PutQueueConfiguration"></a>
+### func \(\*WorkflowManager\) [PutQueueConfiguration](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L490>)
+
+```go
+func (e *WorkflowManager) PutQueueConfiguration(queueConfiguration queue.QueueConfiguration) (*http.Response, error)
+```
+
+GetQueueConfiguration Create or update a queue configuration Returns nil if no error occurred
+
+<a name="WorkflowManager.ReRun"></a>
+### func \(\*WorkflowManager\) [ReRun](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L397>)
+
+```go
+func (e *WorkflowManager) ReRun(workflowId string, reRunRequest model.RerunWorkflowRequest) (id string, error error)
+```
+
+ReRun a completed workflow from a specific task \(ReRunFromTaskId\) and optionally change the input Also update the completed tasks with new input \(ReRunFromTaskId\) if required
+
+<a name="WorkflowManager.RegisterWorkflow"></a>
+### func \(\*WorkflowManager\) [RegisterWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L88>)
+
+```go
+func (e *WorkflowManager) RegisterWorkflow(overwrite bool, workflow *model.WorkflowDef) error
+```
+
+RegisterWorkflow Registers the workflow on the server. Overwrites if the flag is set. If the 'overwrite' flag is not set and the workflow definition differs from the one on the server, the call will fail with response code 409
+
+<a name="WorkflowManager.RemoveWorkflow"></a>
+### func \(\*WorkflowManager\) [RemoveWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L465>)
+
+```go
+func (e *WorkflowManager) RemoveWorkflow(workflowId string) error
+```
+
+RemoveWorkflow Remove workflow execution permanently from the system Returns nil if no workflow is found by the id
+
+<a name="WorkflowManager.Restart"></a>
+### func \(\*WorkflowManager\) [Restart](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L365>)
+
+```go
+func (e *WorkflowManager) Restart(workflowId string, useLatestDefinition bool) error
+```
+
+Restart a workflow execution from the beginning with the same input. When called on a workflow that is not in a terminal status, this operation has no effect If useLatestDefinition is set, the restarted workflow fetches the latest definition from the metadata store
+
+<a name="WorkflowManager.Resume"></a>
+### func \(\*WorkflowManager\) [Resume](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L323>)
+
+```go
+func (e *WorkflowManager) Resume(workflowId string) error
+```
+
+Resume the execution of a workflow that is paused. If the workflow is not paused, this method has no effect
+
+<a name="WorkflowManager.Retry"></a>
+### func \(\*WorkflowManager\) [Retry](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L381>)
+
+```go
+func (e *WorkflowManager) Retry(workflowId string, resumeSubworkflowTasks bool) error
+```
+
+Retry a failed workflow from the last task that failed. When called the task in the failed state is scheduled again and workflow moves to RUNNING status. If resumeSubworkflowTasks is set and the last failed task was a sub\-workflow the server restarts the subworkflow from the failed task. If set to false, the sub\-workflow is re\-executed.
+
+<a name="WorkflowManager.RunWorkflow"></a>
+### func \(\*WorkflowManager\) [RunWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L119>)
+
+```go
+func (e *WorkflowManager) RunWorkflow(startWorkflowRequest *model.StartWorkflowRequest, waitUntilTask string) (run *model.WorkflowRun, err error)
+```
+
+RunWorkflow start a workflow and wait until the workflow completes or the waitUntilTask completes Returns the output of the workflow
+
+<a name="WorkflowManager.Search"></a>
+### func \(\*WorkflowManager\) [Search](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L296>)
+
+```go
+func (e *WorkflowManager) Search(start int32, size int32, query string, freeText string) ([]model.WorkflowSummary, error)
+```
+
+Search searches for workflows
+
+\- Start: Start index \- used for pagination
+
+\- Size: Number of results to return
+
+- Query: Query expression. In the format FIELD = 'VALUE' or FIELD IN \(value1, value2\) Only AND operations are supported. e.g. workflowId IN \('a', 'b', 'c'\) ADN workflowType ='test\_workflow' AND startTime BETWEEN 1000 and 2000 Supported fields for Query are:workflowId,workflowType,status,startTime
+- FreeText: Full text search. All the workflow input, output and task outputs upto certain limit \(check with your admins to find the size limit\) are full text indexed and can be used to search
+
+<a name="WorkflowManager.SkipTasksFromWorkflow"></a>
+### func \(\*WorkflowManager\) [SkipTasksFromWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L411>)
+
+```go
+func (e *WorkflowManager) SkipTasksFromWorkflow(workflowId string, taskReferenceName string, skipTaskRequest model.SkipTaskRequest) error
+```
+
+SkipTasksFromWorkflow Skips a given task execution from a current running workflow. When skipped the task's input and outputs are updated from skipTaskRequest parameter.
+
+<a name="WorkflowManager.StartWorkflow"></a>
+### func \(\*WorkflowManager\) [StartWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L138>)
+
+```go
+func (e *WorkflowManager) StartWorkflow(startWorkflowRequest *model.StartWorkflowRequest) (workflowId string, err error)
+```
+
+StartWorkflow Start workflows Returns the id of the newly created workflow
+
+<a name="WorkflowManager.StartWorkflows"></a>
+### func \(\*WorkflowManager\) [StartWorkflows](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L152>)
+
+```go
+func (e *WorkflowManager) StartWorkflows(monitorExecution bool, startWorkflowRequests ...*model.StartWorkflowRequest) []*RunningWorkflow
+```
+
+StartWorkflows Start workflows in bulk Returns RunningWorkflow struct that contains the workflowId, Err \(if failed to start\) and an execution channel which can be used to monitor the completion of the workflow execution. The channel is available if monitorExecution is set
+
+<a name="WorkflowManager.Terminate"></a>
+### func \(\*WorkflowManager\) [Terminate](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L332>)
+
+```go
+func (e *WorkflowManager) Terminate(workflowId string, reason string) error
+```
+
+Terminate a running workflow. Reason must be provided that is captured as the termination resaon for the workflow
+
+<a name="WorkflowManager.TerminateWithFailure"></a>
+### func \(\*WorkflowManager\) [TerminateWithFailure](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L347>)
+
+```go
+func (e *WorkflowManager) TerminateWithFailure(workflowId string, reason string, triggerFailureWorkflow bool) error
+```
+
+
+
+<a name="WorkflowManager.UnRegisterWorkflow"></a>
+### func \(\*WorkflowManager\) [UnRegisterWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L104>)
+
+```go
+func (e *WorkflowManager) UnRegisterWorkflow(name string, version int32) error
+```
+
+UnRegisterWorkflow Un\-registers the workflow on the server.
+
+<a name="WorkflowManager.UpdateTask"></a>
+### func \(\*WorkflowManager\) [UpdateTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L425>)
+
+```go
+func (e *WorkflowManager) UpdateTask(taskId string, workflowInstanceId string, status model.TaskResultStatus, output interface{}) error
+```
+
+UpdateTask update the task with output and status.
+
+<a name="WorkflowManager.UpdateTaskByRefName"></a>
+### func \(\*WorkflowManager\) [UpdateTaskByRefName](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L436>)
+
+```go
+func (e *WorkflowManager) UpdateTaskByRefName(taskRefName string, workflowInstanceId string, status model.TaskResultStatus, output interface{}) error
+```
+
+UpdateTaskByRefName Update the execution status and output of the task and status
+
+<a name="WorkflowManager.WaitForRunningWorkflowsUntilTimeout"></a>
+### func \(\*WorkflowManager\) [WaitForRunningWorkflowsUntilTimeout](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_manager.go#L187>)
+
+```go
+func (e *WorkflowManager) WaitForRunningWorkflowsUntilTimeout(timeout time.Duration, runningWorkflows ...*RunningWorkflow)
+```
+
+WaitForRunningWorkflowUntilTimeout Helper method to wait for running workflows until the timeout for the workflow execution to complete
+
+<a name="WorkflowMonitor"></a>
+## type [WorkflowMonitor](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_monitor.go#L27-L32>)
+
+
+
+```go
+type WorkflowMonitor struct {
+    // contains filtered or unexported fields
+}
+```
+
+<a name="NewWorkflowMonitor"></a>
+### func [NewWorkflowMonitor](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_monitor.go#L38>)
+
+```go
+func NewWorkflowMonitor(workflowClient *client.WorkflowResourceApiService) *WorkflowMonitor
+```
+
+
+
+<a name="WorkflowTaskEx"></a>
+## type [WorkflowTaskEx](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_task_ex.go#L47-L54>)
+
+
+
+```go
+type WorkflowTaskEx struct {
+    // contains filtered or unexported fields
+}
+```
+
+<a name="WorkflowTaskEx.Description"></a>
+### func \(\*WorkflowTaskEx\) [Description](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_task_ex.go#L107>)
+
+```go
+func (task *WorkflowTaskEx) Description(description string) *WorkflowTaskEx
+```
+
+Description of the task
+
+<a name="WorkflowTaskEx.Input"></a>
+### func \(\*WorkflowTaskEx\) [Input](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_task_ex.go#L93>)
+
+```go
+func (task *WorkflowTaskEx) Input(key string, value interface{}) *WorkflowTaskEx
+```
+
+Input to the task. See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
+
+<a name="WorkflowTaskEx.InputMap"></a>
+### func \(\*WorkflowTaskEx\) [InputMap](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_task_ex.go#L99>)
+
+```go
+func (task *WorkflowTaskEx) InputMap(inputMap map[string]interface{}) *WorkflowTaskEx
+```
+
+InputMap to the task. See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
+
+<a name="WorkflowTaskEx.Optional"></a>
+### func \(\*WorkflowTaskEx\) [Optional](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_task_ex.go#L113>)
+
+```go
+func (task *WorkflowTaskEx) Optional(optional bool) *WorkflowTaskEx
+```
+
+Optional if set to true, the task will not fail the workflow if the task fails
+
+<a name="WorkflowTaskEx.OutputRef"></a>
+### func \(\*WorkflowTaskEx\) [OutputRef](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_task_ex.go#L76>)
+
+```go
+func (task *WorkflowTaskEx) OutputRef(path string) string
+```
+
+
+
+<a name="WorkflowTaskEx.ReferenceName"></a>
+### func \(\*WorkflowTaskEx\) [ReferenceName](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_task_ex.go#L88>)
+
+```go
+func (task *WorkflowTaskEx) ReferenceName() string
+```
+
+
+
+<a name="WorkflowTaskEx.ToTaskDef"></a>
+### func \(\*WorkflowTaskEx\) [ToTaskDef](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_task_ex.go#L69>)
+
+```go
+func (task *WorkflowTaskEx) ToTaskDef() *model.TaskDef
+```
+
+
+
+<a name="WorkflowTaskInterface"></a>
+## type [WorkflowTaskInterface](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_task_ex.go#L41-L45>)
+
+
+
+```go
+type WorkflowTaskInterface interface {
+    ToTaskDef() *model.TaskDef
+    OutputRef(path string) string
+    // contains filtered or unexported methods
+}
+```
 
 Generated by [gomarkdoc](<https://github.com/princjef/gomarkdoc>)

@@ -13,14 +13,13 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/swift-conductor/conductor-client-golang/sdk/model"
-	"github.com/swift-conductor/conductor-client-golang/sdk/workflow"
-	"github.com/swift-conductor/conductor-client-golang/sdk/workflow/executor"
+	"swiftconductor.com/swift-conductor-client/sdk/model"
+	"swiftconductor.com/swift-conductor-client/sdk/workflow"
 )
 
-func NewKitchenSinkWorkflow(executor *executor.WorkflowExecutor) *workflow.ConductorWorkflow {
+func NewKitchenSinkWorkflowDefEx(manager *workflow.WorkflowManager) *workflow.WorkflowDefEx {
 	task := workflow.NewSimpleTask("simple_task", "simple_task_0")
-	simpleWorkflow := workflow.NewConductorWorkflow(executor).
+	simpleWorkflow := workflow.NewWorkflowDefEx(manager).
 		Name("inline_sub").
 		OwnerEmail("test@test.com").
 		Add(
@@ -51,11 +50,11 @@ func NewKitchenSinkWorkflow(executor *executor.WorkflowExecutor) *workflow.Condu
 		Optional(true)
 	fork := workflow.NewForkTask(
 		"fork",
-		[]workflow.TaskInterface{
+		[]workflow.WorkflowTaskInterface{
 			doWhile,
 			subWorkflowInline,
 		},
-		[]workflow.TaskInterface{
+		[]workflow.WorkflowTaskInterface{
 			workflow.NewSimpleTask("simple_task", "simple_task_5"),
 		},
 	)
@@ -64,10 +63,10 @@ func NewKitchenSinkWorkflow(executor *executor.WorkflowExecutor) *workflow.Condu
 		"param1": "value",
 	})
 	forkWithJoin := workflow.NewForkTaskWithJoin("fork_with_join_fork_ref", join,
-		[]workflow.TaskInterface{
+		[]workflow.WorkflowTaskInterface{
 			workflow.NewSimpleTask("simple_task", "simple_task_fork_ref1"),
 			workflow.NewSimpleTask("simple_task", "simple_task_fork_ref2"),
-		}, []workflow.TaskInterface{
+		}, []workflow.WorkflowTaskInterface{
 			workflow.NewSimpleTask("simple_task", "simple_task_fork_ref3"),
 			workflow.NewSimpleTask("simple_task", "simple_task_fork_ref4"),
 		})
@@ -93,7 +92,7 @@ func NewKitchenSinkWorkflow(executor *executor.WorkflowExecutor) *workflow.Condu
 	graalTask.Input("value1", "value-1")
 	graalTask.Input("value2", 23.4)
 
-	workflow := workflow.NewConductorWorkflow(executor).
+	workflow := workflow.NewWorkflowDefEx(manager).
 		Name("sdk_kitchen_sink2").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -115,8 +114,9 @@ type WorkflowTask struct {
 	Type              string `json:"type,omitempty"`
 }
 
-func DynamicForkWorker(t *model.Task) (output interface{}, err error) {
+func DynamicForkWorker(t *model.WorkerTask) (output interface{}, err error) {
 	taskResult := model.NewTaskResultFromTask(t)
+
 	tasks := []WorkflowTask{
 		{
 			Name:              "simple_task",
@@ -134,6 +134,7 @@ func DynamicForkWorker(t *model.Task) (output interface{}, err error) {
 			Type:              "SIMPLE",
 		},
 	}
+
 	inputs := map[string]interface{}{
 		"simple_task_6": map[string]interface{}{
 			"key1": "value1",
@@ -153,15 +154,18 @@ func DynamicForkWorker(t *model.Task) (output interface{}, err error) {
 		"forkedTasks":       tasks,
 		"forkedTasksInputs": inputs,
 	}
+
 	taskResult.Status = model.CompletedTask
+
 	err = nil
 	return taskResult, err
 }
 
-func GetWorkflowWithComplexSwitchTask() *workflow.ConductorWorkflow {
+func GetWorkflowDefExWithComplexSwitchTask() *workflow.WorkflowDefEx {
 	task := workflow.NewSwitchTask("complex_switch_task", "${workflow.input.value}")
+
 	for i := 0; i < 3; i += 1 {
-		var subtasks []workflow.TaskInterface
+		var subtasks []workflow.WorkflowTaskInterface
 		for j := 0; j <= i; j += 1 {
 			httpTask := workflow.NewHttpTask(
 				fmt.Sprintf("ComplexSwitchTaskGoSDK-%d-%d", i, j),
@@ -171,9 +175,11 @@ func GetWorkflowWithComplexSwitchTask() *workflow.ConductorWorkflow {
 			)
 			subtasks = append(subtasks, httpTask)
 		}
+
 		task.SwitchCase(strconv.Itoa(i), subtasks...)
 	}
-	return workflow.NewConductorWorkflow(WorkflowExecutor).
+
+	return workflow.NewWorkflowDefEx(WorkflowManager).
 		Name("ComplexSwitchWorkflowGoSDK").
 		OwnerEmail("test@test.com").
 		Version(1).
