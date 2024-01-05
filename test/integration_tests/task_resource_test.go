@@ -14,10 +14,10 @@ import (
 	"testing"
 	"time"
 
-	"swiftconductor.com/swift-conductor-client/internal/testdata"
-	"swiftconductor.com/swift-conductor-client/sdk/model"
-	"swiftconductor.com/swift-conductor-client/sdk/workflow"
-	"swiftconductor.com/swift-conductor-client/test/common"
+	"github.com/swift-conductor/conductor-client-golang/internal/testdata"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/workflow"
+	"github.com/swift-conductor/conductor-client-golang/test/common"
 )
 
 func TestUpdateTaskRefByName(t *testing.T) {

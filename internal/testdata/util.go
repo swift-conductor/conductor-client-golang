@@ -16,11 +16,11 @@ import (
 	"reflect"
 	"time"
 
-	"swiftconductor.com/swift-conductor-client/sdk/client"
-	"swiftconductor.com/swift-conductor-client/sdk/model"
-	"swiftconductor.com/swift-conductor-client/sdk/settings"
-	"swiftconductor.com/swift-conductor-client/sdk/worker"
-	"swiftconductor.com/swift-conductor-client/sdk/workflow"
+	"github.com/swift-conductor/conductor-client-golang/sdk/client"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
+	"github.com/swift-conductor/conductor-client-golang/sdk/worker"
+	"github.com/swift-conductor/conductor-client-golang/sdk/workflow"
 
 	log "github.com/sirupsen/logrus"
 )

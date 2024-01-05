@@ -3,7 +3,7 @@
 # worker
 
 ```go
-import "swiftconductor.com/swift-conductor-client/sdk/worker"
+import "github.com/swift-conductor/conductor-client-golang/sdk/worker"
 ```
 
 ## Index

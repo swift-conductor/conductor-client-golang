@@ -3,7 +3,7 @@
 # settings
 
 ```go
-import "swiftconductor.com/swift-conductor-client/sdk/settings"
+import "github.com/swift-conductor/conductor-client-golang/sdk/settings"
 ```
 
 ## Index

@@ -10,7 +10,7 @@
 package workflow
 
 import (
-	"swiftconductor.com/swift-conductor-client/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 )
 
 // DynamicForkInput struct that represents the output of the dynamic fork preparatory task

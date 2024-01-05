@@ -15,9 +15,9 @@ import (
 	"reflect"
 	"testing"
 
-	"swiftconductor.com/swift-conductor-client/internal/testdata"
-	"swiftconductor.com/swift-conductor-client/sdk/event/queue"
-	"swiftconductor.com/swift-conductor-client/sdk/event/queue/kafka"
+	"github.com/swift-conductor/conductor-client-golang/internal/testdata"
+	"github.com/swift-conductor/conductor-client-golang/sdk/event/queue"
+	"github.com/swift-conductor/conductor-client-golang/sdk/event/queue/kafka"
 )
 
 var (

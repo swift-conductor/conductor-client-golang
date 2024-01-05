@@ -15,7 +15,7 @@ import (
 	"net/url"
 	"strings"
 
-	"swiftconductor.com/swift-conductor-client/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 )
 
 // Linger please

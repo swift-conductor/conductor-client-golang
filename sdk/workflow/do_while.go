@@ -12,7 +12,7 @@ package workflow
 import (
 	"fmt"
 
-	"swiftconductor.com/swift-conductor-client/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 )
 
 const (

@@ -16,7 +16,7 @@ import (
 	"time"
 
 	log "github.com/sirupsen/logrus"
-	"swiftconductor.com/swift-conductor-client/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 )
 
 const (

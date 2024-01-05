@@ -17,11 +17,11 @@ import (
 	"sync"
 	"time"
 
-	"swiftconductor.com/swift-conductor-client/sdk/client"
-	"swiftconductor.com/swift-conductor-client/sdk/concurrency"
-	"swiftconductor.com/swift-conductor-client/sdk/metrics"
-	"swiftconductor.com/swift-conductor-client/sdk/model"
-	"swiftconductor.com/swift-conductor-client/sdk/settings"
+	"github.com/swift-conductor/conductor-client-golang/sdk/client"
+	"github.com/swift-conductor/conductor-client-golang/sdk/concurrency"
+	"github.com/swift-conductor/conductor-client-golang/sdk/metrics"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
 
 	"github.com/antihax/optional"
 	log "github.com/sirupsen/logrus"

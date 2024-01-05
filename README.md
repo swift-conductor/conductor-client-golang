@@ -3,7 +3,7 @@
 ### Install Swift Conductor Client Go Package​
 
 ```sh
-go get swiftconductor.com/swift-conductor-client
+go get github.com/swift-conductor/conductor-client-golang
 ```
 
 ## Configuration

@@ -14,10 +14,10 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"swiftconductor.com/swift-conductor-client/sdk/client"
-	"swiftconductor.com/swift-conductor-client/sdk/model"
-	"swiftconductor.com/swift-conductor-client/sdk/settings"
-	"swiftconductor.com/swift-conductor-client/sdk/worker"
+	"github.com/swift-conductor/conductor-client-golang/sdk/client"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
+	"github.com/swift-conductor/conductor-client-golang/sdk/worker"
 )
 
 func TestSimpleWorkerRunner(t *testing.T) {

@@ -13,7 +13,7 @@ import (
 	"runtime/debug"
 
 	log "github.com/sirupsen/logrus"
-	"swiftconductor.com/swift-conductor-client/sdk/metrics"
+	"github.com/swift-conductor/conductor-client-golang/sdk/metrics"
 )
 
 func HandlePanicError(message string) {

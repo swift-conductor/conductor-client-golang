@@ -19,7 +19,7 @@ import (
 	"sync"
 
 	"github.com/antihax/optional"
-	"swiftconductor.com/swift-conductor-client/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 )
 
 var hostname string

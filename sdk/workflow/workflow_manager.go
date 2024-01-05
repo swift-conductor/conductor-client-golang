@@ -22,10 +22,10 @@ import (
 
 	"github.com/antihax/optional"
 
-	"swiftconductor.com/swift-conductor-client/sdk/client"
-	"swiftconductor.com/swift-conductor-client/sdk/concurrency"
-	"swiftconductor.com/swift-conductor-client/sdk/event/queue"
-	"swiftconductor.com/swift-conductor-client/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/client"
+	"github.com/swift-conductor/conductor-client-golang/sdk/concurrency"
+	"github.com/swift-conductor/conductor-client-golang/sdk/event/queue"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 
 	log "github.com/sirupsen/logrus"
 )

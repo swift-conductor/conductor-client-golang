@@ -20,7 +20,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"swiftconductor.com/swift-conductor-client/sdk/settings"
+	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
 )
 
 type HttpRequester struct {

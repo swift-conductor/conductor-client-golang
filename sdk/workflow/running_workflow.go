@@ -13,7 +13,7 @@ import (
 	"fmt"
 	"time"
 
-	"swiftconductor.com/swift-conductor-client/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 )
 
 type RunningWorkflowChannel chan *model.Workflow

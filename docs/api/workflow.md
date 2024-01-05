@@ -3,7 +3,7 @@
 # workflow
 
 ```go
-import "swiftconductor.com/swift-conductor-client/sdk/workflow"
+import "github.com/swift-conductor/conductor-client-golang/sdk/workflow"
 ```
 
 ## Index

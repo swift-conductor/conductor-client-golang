@@ -3,8 +3,8 @@ package common
 import (
 	"time"
 
-	"swiftconductor.com/swift-conductor-client/sdk/model"
-	"swiftconductor.com/swift-conductor-client/sdk/workflow"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
+	"github.com/swift-conductor/conductor-client-golang/sdk/workflow"
 )
 
 const (

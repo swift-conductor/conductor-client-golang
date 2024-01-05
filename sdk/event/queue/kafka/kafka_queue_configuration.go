@@ -9,7 +9,7 @@
 
 package kafka
 
-import "swiftconductor.com/swift-conductor-client/sdk/event/queue"
+import "github.com/swift-conductor/conductor-client-golang/sdk/event/queue"
 
 var (
 	queueName = "kafka"
