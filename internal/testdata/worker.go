@@ -15,8 +15,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 	log "github.com/sirupsen/logrus"
+	"github.com/swift-conductor/conductor-client-golang/sdk/model"
 )
 
 const (
@@ -36,7 +36,7 @@ func init() {
 	log.SetLevel(log.ErrorLevel)
 }
 
-func ExampleWorker(t *model.Task) (interface{}, error) {
+func ExampleWorker(t *model.WorkerTask) (interface{}, error) {
 	taskResult := model.NewTaskResultFromTask(t)
 	taskResult.OutputData = map[string]interface{}{
 		"key0": nil,
@@ -54,7 +54,7 @@ func ExampleWorker(t *model.Task) (interface{}, error) {
 	return taskResult, nil
 }
 
-func SimpleWorker(t *model.Task) (interface{}, error) {
+func SimpleWorker(t *model.WorkerTask) (interface{}, error) {
 	taskResult := model.NewTaskResultFromTask(t)
 	taskResult.OutputData = map[string]interface{}{
 		"key":  "value",
@@ -69,16 +69,16 @@ func TestWorkers(t *testing.T) {
 	outputData := map[string]interface{}{
 		"key": "value",
 	}
-	workerWithTaskResultOutput := func(t *model.Task) (interface{}, error) {
+	workerWithTaskResultOutput := func(t *model.WorkerTask) (interface{}, error) {
 		taskResult := model.NewTaskResultFromTask(t)
 		taskResult.OutputData = outputData
 		taskResult.Status = model.CompletedTask
 		return taskResult, nil
 	}
-	workerWithGenericOutput := func(t *model.Task) (interface{}, error) {
+	workerWithGenericOutput := func(t *model.WorkerTask) (interface{}, error) {
 		return outputData, nil
 	}
-	workers := []model.ExecuteTaskFunction{
+	workers := []model.WorkerTaskFunction{
 		workerWithTaskResultOutput,
 		workerWithGenericOutput,
 	}
@@ -90,7 +90,7 @@ func TestWorkers(t *testing.T) {
 	}
 }
 
-func validateWorker(worker model.ExecuteTaskFunction, expectedOutput map[string]interface{}) error {
+func validateWorker(worker model.WorkerTaskFunction, expectedOutput map[string]interface{}) error {
 	workflowIdList, err := StartWorkflows(
 		WorkflowExecutionQty,
 		WorkflowName,
@@ -98,7 +98,7 @@ func validateWorker(worker model.ExecuteTaskFunction, expectedOutput map[string]
 	if err != nil {
 		return err
 	}
-	err = TaskRunner.StartWorker(
+	err = WorkerRunner.StartWorker(
 		TaskName,
 		worker,
 		WorkerQty,
@@ -124,13 +124,13 @@ func validateWorker(worker model.ExecuteTaskFunction, expectedOutput map[string]
 			return err
 		}
 	}
-	return TaskRunner.DecreaseBatchSize(
+	return WorkerRunner.DecreaseBatchSize(
 		TaskName,
 		WorkerQty,
 	)
 }
 
-func FaultyWorker(task *model.Task) (interface{}, error) {
+func FaultyWorker(task *model.WorkerTask) (interface{}, error) {
 	taskResult := model.NewTaskResultFromTask(task)
 	taskResult.Status = model.FailedWithTerminalErrorTask
 	taskResult.OutputData = map[string]interface{}{
@@ -139,6 +139,6 @@ func FaultyWorker(task *model.Task) (interface{}, error) {
 	return taskResult, fmt.Errorf("random error")
 }
 
-func WorkerWithNonRetryableError(task *model.Task) (interface{}, error) {
+func WorkerWithNonRetryableError(task *model.WorkerTask) (interface{}, error) {
 	return nil, model.NewNonRetryableError(fmt.Errorf("testing out some error stuff"))
 }

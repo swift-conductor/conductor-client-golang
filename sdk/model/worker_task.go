@@ -9,7 +9,7 @@
 
 package model
 
-type Task struct {
+type WorkerTask struct {
 	TaskType                         string                 `json:"taskType,omitempty"`
 	Status                           TaskResultStatus       `json:"status,omitempty"`
 	InputData                        map[string]interface{} `json:"inputData,omitempty"`

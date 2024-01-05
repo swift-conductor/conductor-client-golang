@@ -27,19 +27,19 @@ var (
 
 func TestKafkaQueueConfiguration(t *testing.T) {
 	kafkaQueueConfiguration := getKafkaQueueConfiguration()
-	_, err := testdata.WorkflowExecutor.DeleteQueueConfiguration(*kafkaQueueConfiguration)
+	_, err := testdata.WorkflowManager.DeleteQueueConfiguration(*kafkaQueueConfiguration)
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, response, err := testdata.WorkflowExecutor.GetQueueConfiguration(*kafkaQueueConfiguration)
+	_, response, err := testdata.WorkflowManager.GetQueueConfiguration(*kafkaQueueConfiguration)
 	if response.StatusCode != 404 {
 		t.Fatal("no queue configuration could be found", response.StatusCode, err)
 	}
-	_, err = testdata.WorkflowExecutor.PutQueueConfiguration(*kafkaQueueConfiguration)
+	_, err = testdata.WorkflowManager.PutQueueConfiguration(*kafkaQueueConfiguration)
 	if err != nil {
 		t.Fatal(err)
 	}
-	receivedQueueConfig, _, err := testdata.WorkflowExecutor.GetQueueConfiguration(*kafkaQueueConfiguration)
+	receivedQueueConfig, _, err := testdata.WorkflowManager.GetQueueConfiguration(*kafkaQueueConfiguration)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -52,7 +52,7 @@ func TestKafkaQueueConfiguration(t *testing.T) {
 	if !reflect.DeepEqual(receivedQueueConfig, expectedConfig) {
 		t.Fatal(fmt.Errorf("received config differs from expected config"))
 	}
-	_, err = testdata.WorkflowExecutor.DeleteQueueConfiguration(*kafkaQueueConfiguration)
+	_, err = testdata.WorkflowManager.DeleteQueueConfiguration(*kafkaQueueConfiguration)
 	if err != nil {
 		t.Fatal(err)
 	}

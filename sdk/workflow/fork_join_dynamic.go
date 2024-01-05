@@ -14,8 +14,8 @@ import (
 )
 
 type DynamicForkTask struct {
-	Task
-	preForkTask *TaskInterface
+	WorkflowTaskEx
+	preForkTask *WorkflowTaskInterface
 	join        JoinTask
 }
 
@@ -24,9 +24,9 @@ const (
 	forkedTasksInputs = "forkedTasksInputs"
 )
 
-func NewDynamicForkTask(taskRefName string, forkPrepareTask TaskInterface) *DynamicForkTask {
+func NewDynamicForkTask(taskRefName string, forkPrepareTask WorkflowTaskInterface) *DynamicForkTask {
 	return &DynamicForkTask{
-		Task: Task{
+		WorkflowTaskEx: WorkflowTaskEx{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -40,7 +40,7 @@ func NewDynamicForkTask(taskRefName string, forkPrepareTask TaskInterface) *Dyna
 
 func NewDynamicForkTaskWithoutPrepareTask(taskRefName string) *DynamicForkTask {
 	return &DynamicForkTask{
-		Task: Task{
+		WorkflowTaskEx: WorkflowTaskEx{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -52,9 +52,9 @@ func NewDynamicForkTaskWithoutPrepareTask(taskRefName string) *DynamicForkTask {
 	}
 }
 
-func NewDynamicForkWithJoinTask(taskRefName string, forkPrepareTask TaskInterface, join JoinTask) *DynamicForkTask {
+func NewDynamicForkWithJoinTask(taskRefName string, forkPrepareTask WorkflowTaskInterface, join JoinTask) *DynamicForkTask {
 	return &DynamicForkTask{
-		Task: Task{
+		WorkflowTaskEx: WorkflowTaskEx{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -68,7 +68,7 @@ func NewDynamicForkWithJoinTask(taskRefName string, forkPrepareTask TaskInterfac
 }
 
 func (task *DynamicForkTask) toWorkflowTask() []model.WorkflowTask {
-	forkWorkflowTask := task.Task.toWorkflowTask()[0]
+	forkWorkflowTask := task.WorkflowTaskEx.toWorkflowTask()[0]
 	forkWorkflowTask.DynamicForkTasksParam = forkedTasks
 	forkWorkflowTask.DynamicForkTasksInputParamName = forkedTasksInputs
 	if task.preForkTask != nil {
@@ -91,7 +91,7 @@ func (task *DynamicForkTask) getJoinTask() model.WorkflowTask {
 
 // Input to the task
 func (task *DynamicForkTask) Input(key string, value interface{}) *DynamicForkTask {
-	task.Task.Input(key, value)
+	task.WorkflowTaskEx.Input(key, value)
 	return task
 }
 
@@ -105,12 +105,12 @@ func (task *DynamicForkTask) InputMap(inputMap map[string]interface{}) *DynamicF
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *DynamicForkTask) Optional(optional bool) *DynamicForkTask {
-	task.Task.Optional(optional)
+	task.WorkflowTaskEx.Optional(optional)
 	return task
 }
 
 // Description of the task
 func (task *DynamicForkTask) Description(description string) *DynamicForkTask {
-	task.Task.Description(description)
+	task.WorkflowTaskEx.Description(description)
 	return task
 }

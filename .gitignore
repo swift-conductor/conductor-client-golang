@@ -14,3 +14,7 @@
 .idea/
 pkg/
 go.sum
+
+.go-version
+
+vendor/

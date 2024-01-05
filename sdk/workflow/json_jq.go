@@ -10,12 +10,12 @@
 package workflow
 
 type JQTask struct {
-	Task
+	WorkflowTaskEx
 }
 
 func NewJQTask(name string, script string) *JQTask {
 	return &JQTask{
-		Task{
+		WorkflowTaskEx{
 			name:              name,
 			taskReferenceName: name,
 			taskType:          JSON_JQ_TRANSFORM,
@@ -28,7 +28,7 @@ func NewJQTask(name string, script string) *JQTask {
 
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *JQTask) Input(key string, value interface{}) *JQTask {
-	task.Task.Input(key, value)
+	task.WorkflowTaskEx.Input(key, value)
 	return task
 }
 
@@ -42,12 +42,12 @@ func (task *JQTask) InputMap(inputMap map[string]interface{}) *JQTask {
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *JQTask) Optional(optional bool) *JQTask {
-	task.Task.Optional(optional)
+	task.WorkflowTaskEx.Optional(optional)
 	return task
 }
 
 // Description of the task
 func (task *JQTask) Description(description string) *JQTask {
-	task.Task.Description(description)
+	task.WorkflowTaskEx.Description(description)
 	return task
 }

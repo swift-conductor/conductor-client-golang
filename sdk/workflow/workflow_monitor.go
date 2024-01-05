@@ -7,14 +7,15 @@
 //  an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
 //  specific language governing permissions and limitations under the License.
 
-package executor
+package workflow
 
 import (
 	"context"
 	"fmt"
-	"github.com/antihax/optional"
 	"sync"
 	"time"
+
+	"github.com/antihax/optional"
 
 	"github.com/swift-conductor/conductor-client-golang/sdk/client"
 	"github.com/swift-conductor/conductor-client-golang/sdk/concurrency"
@@ -26,7 +27,7 @@ import (
 type WorkflowMonitor struct {
 	mutex                        sync.Mutex
 	refreshInterval              time.Duration
-	executionChannelByWorkflowId map[string]WorkflowExecutionChannel
+	executionChannelByWorkflowId map[string]RunningWorkflowChannel
 	workflowClient               *client.WorkflowResourceApiService
 }
 
@@ -37,15 +38,15 @@ const (
 func NewWorkflowMonitor(workflowClient *client.WorkflowResourceApiService) *WorkflowMonitor {
 	workflowMonitor := &WorkflowMonitor{
 		refreshInterval:              defaultMonitorRunningWorkflowsRefreshInterval,
-		executionChannelByWorkflowId: make(map[string]WorkflowExecutionChannel),
+		executionChannelByWorkflowId: make(map[string]RunningWorkflowChannel),
 		workflowClient:               workflowClient,
 	}
 	go workflowMonitor.monitorRunningWorkflowsDaemon()
 	return workflowMonitor
 }
 
-func (w *WorkflowMonitor) generateWorkflowExecutionChannel(workflowId string) (WorkflowExecutionChannel, error) {
-	channel := make(WorkflowExecutionChannel, 1)
+func (w *WorkflowMonitor) generateRunningWorkflowChannel(workflowId string) (RunningWorkflowChannel, error) {
+	channel := make(RunningWorkflowChannel, 1)
 	err := w.addWorkflowExecutionChannel(workflowId, channel)
 	if err != nil {
 		return nil, err
@@ -109,10 +110,10 @@ func (w *WorkflowMonitor) getWorkflowsInTerminalState() ([]*model.Workflow, erro
 	return workflowsInTerminalState, nil
 }
 
-func (w *WorkflowMonitor) addWorkflowExecutionChannel(workflowId string, executionChannel WorkflowExecutionChannel) error {
+func (w *WorkflowMonitor) addWorkflowExecutionChannel(workflowId string, runningChannel RunningWorkflowChannel) error {
 	w.mutex.Lock()
 	defer w.mutex.Unlock()
-	w.executionChannelByWorkflowId[workflowId] = executionChannel
+	w.executionChannelByWorkflowId[workflowId] = runningChannel
 	log.Debug(
 		fmt.Sprint(
 			"Added workflow execution channel",
@@ -138,13 +139,13 @@ func (w *WorkflowMonitor) notifyFinishedWorkflow(workflowId string, workflow *mo
 	w.mutex.Lock()
 	defer w.mutex.Unlock()
 	log.Debug(fmt.Sprintf("Notifying finished workflowId: %s", workflowId))
-	executionChannel, ok := w.executionChannelByWorkflowId[workflowId]
+	runningChannel, ok := w.executionChannelByWorkflowId[workflowId]
 	if !ok {
 		return fmt.Errorf("execution channel not found for workflowId: %s", workflowId)
 	}
-	executionChannel <- workflow
+	runningChannel <- workflow
 	log.Debug("Sent finished workflow through channel")
-	close(executionChannel)
+	close(runningChannel)
 	log.Debug("Closed client workflow execution channel")
 	delete(w.executionChannelByWorkflowId, workflowId)
 	log.Debug("Deleted workflow execution channel")

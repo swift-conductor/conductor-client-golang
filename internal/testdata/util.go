@@ -21,7 +21,6 @@ import (
 	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
 	"github.com/swift-conductor/conductor-client-golang/sdk/worker"
 	"github.com/swift-conductor/conductor-client-golang/sdk/workflow"
-	"github.com/swift-conductor/conductor-client-golang/sdk/workflow/executor"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -49,9 +48,8 @@ var (
 	}
 )
 
-var TaskRunner = worker.NewTaskRunnerWithApiClient(apiClient)
-
-var WorkflowExecutor = executor.NewWorkflowExecutor(apiClient)
+var WorkflowManager = workflow.NewWorkflowManager(apiClient)
+var WorkerRunner = worker.NewWorkerRunnerWithApiClient(apiClient)
 
 func init() {
 	log.SetFormatter(&log.JSONFormatter{})
@@ -95,12 +93,12 @@ func getApiClient() *client.APIClient {
 
 func getHttpSettings() *settings.HttpSettings {
 	var base_url = os.Getenv(BASE_URL)
-	// if (base_url == nil)
-	// 	base_url := "http://localhost:8080/api"
 
-	return settings.NewHttpSettings(
-		base_url,
-	)
+	if base_url != "" {
+		return settings.NewHttpSettings(base_url)
+	}
+
+	return settings.NewHttpSettings("http://localhost:8080/api")
 }
 
 func StartWorkflows(workflowQty int, workflowName string) ([]string, error) {
@@ -125,7 +123,7 @@ func StartWorkflows(workflowQty int, workflowName string) ([]string, error) {
 	return workflowIdList, nil
 }
 
-func ValidateWorkflow(conductorWorkflow *workflow.ConductorWorkflow, timeout time.Duration, expectedStatus model.WorkflowStatus) error {
+func ValidateWorkflow(conductorWorkflow *workflow.WorkflowDefEx, timeout time.Duration, expectedStatus model.WorkflowStatus) error {
 	err := ValidateWorkflowRegistration(conductorWorkflow)
 	if err != nil {
 		return err
@@ -135,12 +133,12 @@ func ValidateWorkflow(conductorWorkflow *workflow.ConductorWorkflow, timeout tim
 		return err
 	}
 	log.Debug("Started workflowId: ", workflowId)
-	workflowExecutionChannel, err := WorkflowExecutor.MonitorExecution(workflowId)
+	workflowExecutionChannel, err := WorkflowManager.MonitorExecution(workflowId)
 	if err != nil {
 		return err
 	}
 	log.Debug("Generated workflowExecutionChannel for workflowId: ", workflowId)
-	workflow, err := executor.WaitForWorkflowCompletionUntilTimeout(
+	workflow, err := workflow.WaitForWorkflowCompletionUntilTimeout(
 		workflowExecutionChannel,
 		timeout,
 	)
@@ -154,7 +152,7 @@ func ValidateWorkflow(conductorWorkflow *workflow.ConductorWorkflow, timeout tim
 	return nil
 }
 
-func ValidateWorkflowBulk(conductorWorkflow *workflow.ConductorWorkflow, timeout time.Duration, amount int) error {
+func ValidateWorkflowBulk(conductorWorkflow *workflow.WorkflowDefEx, timeout time.Duration, amount int) error {
 	err := ValidateWorkflowRegistration(conductorWorkflow)
 	if err != nil {
 		return err
@@ -169,8 +167,8 @@ func ValidateWorkflowBulk(conductorWorkflow *workflow.ConductorWorkflow, timeout
 			make(map[string]interface{}),
 		)
 	}
-	runningWorkflows := WorkflowExecutor.StartWorkflows(true, startWorkflowRequests...)
-	WorkflowExecutor.WaitForRunningWorkflowsUntilTimeout(timeout, runningWorkflows...)
+	runningWorkflows := WorkflowManager.StartWorkflows(true, startWorkflowRequests...)
+	WorkflowManager.WaitForRunningWorkflowsUntilTimeout(timeout, runningWorkflows...)
 	for _, runningWorkflow := range runningWorkflows {
 		if runningWorkflow.Err != nil {
 			return err
@@ -200,7 +198,7 @@ func ValidateTaskRegistration(taskDefs ...model.TaskDef) error {
 	return nil
 }
 
-func ValidateWorkflowRegistration(workflow *workflow.ConductorWorkflow) error {
+func ValidateWorkflowRegistration(workflow *workflow.WorkflowDefEx) error {
 	for attempt := 0; attempt < 5; attempt += 1 {
 		err := workflow.Register(true)
 		if err != nil {
@@ -213,7 +211,7 @@ func ValidateWorkflowRegistration(workflow *workflow.ConductorWorkflow) error {
 	return fmt.Errorf("exhausted retries")
 }
 
-func ValidateWorkflowDeletion(workflow *workflow.ConductorWorkflow) error {
+func ValidateWorkflowDeletion(workflow *workflow.WorkflowDefEx) error {
 	for attempt := 0; attempt < 5; attempt += 1 {
 		err := workflow.UnRegister()
 		if err != nil {

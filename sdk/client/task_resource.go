@@ -221,13 +221,13 @@ type TaskResourceApiBatchPollOpts struct {
 	Timeout  optional.Int32
 }
 
-func (a *TaskResourceApiService) BatchPoll(ctx context.Context, tasktype string, localVarOptionals *TaskResourceApiBatchPollOpts) ([]model.Task, *http.Response, error) {
+func (a *TaskResourceApiService) BatchPoll(ctx context.Context, tasktype string, localVarOptionals *TaskResourceApiBatchPollOpts) ([]model.WorkerTask, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue []model.Task
+		localVarReturnValue []model.WorkerTask
 	)
 
 	// create path and map variables
@@ -297,7 +297,7 @@ func (a *TaskResourceApiService) BatchPoll(ctx context.Context, tasktype string,
 			error: string(localVarBody),
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v []model.Task
+			var v []model.WorkerTask
 			err = a.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -579,13 +579,13 @@ TaskResourceApiService Get task by Id
 
 @return Task
 */
-func (a *TaskResourceApiService) GetTask(ctx context.Context, taskId string) (model.Task, *http.Response, error) {
+func (a *TaskResourceApiService) GetTask(ctx context.Context, taskId string) (model.WorkerTask, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue model.Task
+		localVarReturnValue model.WorkerTask
 	)
 
 	// create path and map variables
@@ -643,7 +643,7 @@ func (a *TaskResourceApiService) GetTask(ctx context.Context, taskId string) (mo
 			error: string(localVarBody),
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v model.Task
+			var v model.WorkerTask
 			err = a.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -827,13 +827,13 @@ type TaskResourceApiPollOpts struct {
 	Domain   optional.String
 }
 
-func (a *TaskResourceApiService) Poll(ctx context.Context, tasktype string, localVarOptionals *TaskResourceApiPollOpts) (model.Task, *http.Response, error) {
+func (a *TaskResourceApiService) Poll(ctx context.Context, tasktype string, localVarOptionals *TaskResourceApiPollOpts) (model.WorkerTask, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue model.Task
+		localVarReturnValue model.WorkerTask
 	)
 
 	// create path and map variables
@@ -897,7 +897,7 @@ func (a *TaskResourceApiService) Poll(ctx context.Context, tasktype string, loca
 			error: string(localVarBody),
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v model.Task
+			var v model.WorkerTask
 			err = a.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

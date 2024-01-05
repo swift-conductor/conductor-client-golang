@@ -21,7 +21,7 @@ import (
 )
 
 func TestUpdateTaskRefByName(t *testing.T) {
-	simpleTaskWorkflow := workflow.NewConductorWorkflow(testdata.WorkflowExecutor).
+	simpleTaskWorkflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_UPDATE_TASK").
 		Version(1).
 		OwnerEmail("test@test.com").

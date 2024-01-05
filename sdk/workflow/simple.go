@@ -10,12 +10,12 @@
 package workflow
 
 type SimpleTask struct {
-	Task
+	WorkflowTaskEx
 }
 
 func NewSimpleTask(taskType string, taskRefName string) *SimpleTask {
 	return &SimpleTask{
-		Task{
+		WorkflowTaskEx{
 			name:              taskType,
 			taskReferenceName: taskRefName,
 			taskType:          SIMPLE,
@@ -26,7 +26,7 @@ func NewSimpleTask(taskType string, taskRefName string) *SimpleTask {
 
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *SimpleTask) Input(key string, value interface{}) *SimpleTask {
-	task.Task.Input(key, value)
+	task.WorkflowTaskEx.Input(key, value)
 	return task
 }
 
@@ -40,12 +40,12 @@ func (task *SimpleTask) InputMap(inputMap map[string]interface{}) *SimpleTask {
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *SimpleTask) Optional(optional bool) *SimpleTask {
-	task.Task.Optional(optional)
+	task.WorkflowTaskEx.Optional(optional)
 	return task
 }
 
 // Description of the task
 func (task *SimpleTask) Description(description string) *SimpleTask {
-	task.Task.Description(description)
+	task.WorkflowTaskEx.Description(description)
 	return task
 }

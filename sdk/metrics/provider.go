@@ -13,8 +13,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
 	log "github.com/sirupsen/logrus"
+	"github.com/swift-conductor/conductor-client-golang/sdk/settings"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -40,7 +40,7 @@ func ProvideMetrics(metricsSettings *settings.MetricsSettings) {
 		prometheus.MustRegister(gaugeByName[metricName])
 	}
 	collectionEnabled = true
-	
+
 	http.Handle(
 		metricsSettings.ApiEndpoint,
 		promhttp.HandlerFor(

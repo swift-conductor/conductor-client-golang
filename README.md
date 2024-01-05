@@ -1,42 +1,21 @@
 # Swift Conductor Client SDK for Go
 
-The `conductor-client-golang` repository provides the client SDKs to build task workers in Go.
+### Install Swift Conductor Client Go Package​
 
-Building the task workers in Go mainly consists of the following steps:
-
-1. Setup conductor-client-golang package
-2. Create and run task workers
-3. Create workflows using code
-4. [API Documentation](https://github.com/swift-conductor/conductor-client-golang/tree/main/docs)
-   
-### Setup Conductor Go Package​
-
-* Create a folder to build your package
-```shell
-mkdir quickstart/
-cd quickstart/
-go mod init quickstart
-```
-
-* Get Conductor Go SDK
-
-```shell
+```sh
 go get github.com/swift-conductor/conductor-client-golang
 ```
-## Configurations
 
-### Configure API Client
+## Configuration
+
+### API Client
+
 ```go
-
-apiClient := client.NewAPIClient(
-    settings.NewHttpSettings(
-        "http://localhost:8080/api",
-    ),
-)
-	
+apiClient := client.NewAPIClient(settings.NewHttpSettings("http://localhost:8080/api",))
 ```
 
 ### Setup Logging
+
 SDK uses [logrus](https://github.com/sirupsen/logrus) for logging.
 
 ```go
@@ -47,4 +26,14 @@ func init() {
 }
 ```
 
-### Next: [Create and run task workers](workers_sdk.md)
+## Create and run task workers 
+
+[Create and run task workers](docs/readme/workers.md)
+
+## Create and Execute Workflows
+
+[Create and Execute Workflows](docs/readme/workflows.md)
+
+## API Documentation
+
+[API Documentation](https://github.com/swift-conductor/conductor-client-golang/tree/main/docs/api)

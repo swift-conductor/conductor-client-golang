@@ -14,9 +14,9 @@ import (
 )
 
 type SwitchTask struct {
-	Task
-	DecisionCases map[string][]TaskInterface
-	defaultCase   []TaskInterface
+	WorkflowTaskEx
+	DecisionCases map[string][]WorkflowTaskInterface
+	defaultCase   []WorkflowTaskInterface
 	expression    string
 	useJavascript bool
 	evaluatorType string
@@ -24,7 +24,7 @@ type SwitchTask struct {
 
 func NewSwitchTask(taskRefName string, caseExpression string) *SwitchTask {
 	return &SwitchTask{
-		Task: Task{
+		WorkflowTaskEx: WorkflowTaskEx{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -32,19 +32,19 @@ func NewSwitchTask(taskRefName string, caseExpression string) *SwitchTask {
 			optional:          false,
 			inputParameters:   map[string]interface{}{},
 		},
-		DecisionCases: make(map[string][]TaskInterface),
-		defaultCase:   make([]TaskInterface, 0),
+		DecisionCases: make(map[string][]WorkflowTaskInterface),
+		defaultCase:   make([]WorkflowTaskInterface, 0),
 		expression:    caseExpression,
 		useJavascript: false,
 		evaluatorType: "value-param",
 	}
 }
 
-func (task *SwitchTask) SwitchCase(caseName string, tasks ...TaskInterface) *SwitchTask {
+func (task *SwitchTask) SwitchCase(caseName string, tasks ...WorkflowTaskInterface) *SwitchTask {
 	task.DecisionCases[caseName] = tasks
 	return task
 }
-func (task *SwitchTask) DefaultCase(tasks ...TaskInterface) *SwitchTask {
+func (task *SwitchTask) DefaultCase(tasks ...WorkflowTaskInterface) *SwitchTask {
 	task.defaultCase = tasks
 	return task
 }
@@ -54,7 +54,7 @@ func (task *SwitchTask) toWorkflowTask() []model.WorkflowTask {
 		task.evaluatorType = "javascript"
 	} else {
 		task.evaluatorType = "value-param"
-		task.Task.inputParameters["switchCaseValue"] = task.expression
+		task.WorkflowTaskEx.inputParameters["switchCaseValue"] = task.expression
 		task.expression = "switchCaseValue"
 	}
 	var DecisionCases = map[string][]model.WorkflowTask{}
@@ -71,7 +71,7 @@ func (task *SwitchTask) toWorkflowTask() []model.WorkflowTask {
 			defaultCase = append(defaultCase, defaultTask)
 		}
 	}
-	workflowTasks := task.Task.toWorkflowTask()
+	workflowTasks := task.WorkflowTaskEx.toWorkflowTask()
 	workflowTasks[0].DecisionCases = DecisionCases
 	workflowTasks[0].DefaultCase = defaultCase
 	workflowTasks[0].EvaluatorType = task.evaluatorType
@@ -81,7 +81,7 @@ func (task *SwitchTask) toWorkflowTask() []model.WorkflowTask {
 
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *SwitchTask) Input(key string, value interface{}) *SwitchTask {
-	task.Task.Input(key, value)
+	task.WorkflowTaskEx.Input(key, value)
 	return task
 }
 
@@ -95,13 +95,13 @@ func (task *SwitchTask) InputMap(inputMap map[string]interface{}) *SwitchTask {
 
 // Description of the task
 func (task *SwitchTask) Description(description string) *SwitchTask {
-	task.Task.Description(description)
+	task.WorkflowTaskEx.Description(description)
 	return task
 }
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *SwitchTask) Optional(optional bool) *SwitchTask {
-	task.Task.Optional(optional)
+	task.WorkflowTaskEx.Optional(optional)
 	return task
 }
 

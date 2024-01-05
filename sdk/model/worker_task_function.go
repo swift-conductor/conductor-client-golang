@@ -20,11 +20,11 @@ import (
 var hostname string
 var once sync.Once
 
-type ExecuteTaskFunction func(t *Task) (interface{}, error)
+type WorkerTaskFunction func(t *WorkerTask) (interface{}, error)
 
 type ValidateWorkflowFunction func(w *Workflow) (bool, error)
 
-func NewTaskResultFromTask(task *Task) *TaskResult {
+func NewTaskResultFromTask(task *WorkerTask) *TaskResult {
 	return &TaskResult{
 		TaskId:             task.TaskId,
 		WorkflowInstanceId: task.WorkflowInstanceId,
@@ -32,7 +32,7 @@ func NewTaskResultFromTask(task *Task) *TaskResult {
 	}
 }
 
-func NewTaskResultFromTaskWithError(t *Task, err error) *TaskResult {
+func NewTaskResultFromTaskWithError(t *WorkerTask, err error) *TaskResult {
 	taskResult := NewTaskResultFromTask(t)
 	taskResult.ReasonForIncompletion = err.Error()
 	switch err.(type) {
@@ -53,7 +53,7 @@ func NewTaskResult(taskId string, workflowInstanceId string) *TaskResult {
 
 }
 
-func GetTaskResultFromTaskExecutionOutput(t *Task, taskExecutionOutput interface{}) (*TaskResult, error) {
+func GetTaskResultFromTaskExecutionOutput(t *WorkerTask, taskExecutionOutput interface{}) (*TaskResult, error) {
 	taskResult, ok := taskExecutionOutput.(*TaskResult)
 	if !ok {
 		taskResult = NewTaskResultFromTask(t)

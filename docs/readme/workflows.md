@@ -5,16 +5,13 @@
 ```go
 
 //API client instance with server address
-apiClient := client.NewAPIClient(
-    settings.NewHttpSettings(
-        "http://localhost:8080/api",
-    ))
+apiClient := client.NewAPIClient(settings.NewHttpSettings("http://localhost:8080/api"))
 
-//Create new workflow executor
-executor := executor.NewWorkflowExecutor(apiClient)
+//Create new workflow manager
+manager := manager.NewWorkflowManager(apiClient)
 
-//Create a new ConductorWorkflow instance
-conductorWorkflow := workflow.NewConductorWorkflow(executor).
+//Create a new WorkflowDefEx instance
+conductorWorkflow := workflow.NewWorkflowDefEx(manager).
     Name("my_first_workflow").
     Version(1).
     OwnerEmail("hello@swiftsoftwaregroup.com")
@@ -35,7 +32,7 @@ conductorWorkflow.Register(true)        //Overwrite the existing definition with
 //Input can be either a map or a struct that is serializable to a JSON map
 workflowInput := map[string]interface{}{}
 
-workflowId, err := executor.StartWorkflow(&model.StartWorkflowRequest{
+workflowId, err := manager.StartWorkflow(&model.StartWorkflowRequest{
     Name:  conductorWorkflow.GetName(),
     Input: workflowInput,
 })
@@ -47,7 +44,7 @@ workflowId, err := executor.StartWorkflow(&model.StartWorkflowRequest{
 //Input can be either a map or a struct that is serializable to a JSON map
 workflowInput := map[string]interface{}{}
 
-workflowRun, err := executor.ExecuteWorkflow(&model.StartWorkflowRequest{Name: wf.GetName(), Version: &version, Input: workflowInput}, "")
+workflowRun, err := manager.RunWorkflow(&model.StartWorkflowRequest{Name: wf.GetName(), Version: &version, Input: workflowInput}, "")
 //workfowRun is a struct that contains the output of the workflow execution
 type WorkflowRun struct {
     CorrelationId string                 `json:"correlationId,omitempty"`
@@ -73,7 +70,7 @@ type WorkflowInput struct {
     Address []string
 }
 //...
-workflowId, err := executor.StartWorkflow(&model.StartWorkflowRequest{
+workflowId, err := manager.StartWorkflow(&model.StartWorkflowRequest{
   Name:  conductorWorkflow.GetName(),
   Input: &WorkflowInput{
   Name: "John Doe",
@@ -82,9 +79,7 @@ workflowId, err := executor.StartWorkflow(&model.StartWorkflowRequest{
 })
 ```
 ### Workflow Management APIs
-See [Docs](docs/executor.md) for APIs to start, pause, resume, terminate, search and get workflow execution status.
 
-### More Examples
-You can find more examples at the following GitHub repository:
+See [Docs](docs/workflow.md) for APIs to start, pause, resume, terminate, search and get workflow execution status.
 
-https://github.com/swift-conductor/conductor-examples/tree/main/go-samples
+

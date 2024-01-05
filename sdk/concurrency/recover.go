@@ -10,9 +10,10 @@
 package concurrency
 
 import (
-	"github.com/swift-conductor/conductor-client-golang/sdk/metrics"
-	log "github.com/sirupsen/logrus"
 	"runtime/debug"
+
+	log "github.com/sirupsen/logrus"
+	"github.com/swift-conductor/conductor-client-golang/sdk/metrics"
 )
 
 func HandlePanicError(message string) {
