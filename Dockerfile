@@ -9,10 +9,6 @@ RUN go build -v ./...
 
 FROM build as test
 COPY /test /package/test
-ARG KEY
-ARG SECRET
 ARG CONDUCTOR_SERVER_URL
-ENV KEY=${KEY}
-ENV SECRET=${SECRET}
 ENV CONDUCTOR_SERVER_URL=${CONDUCTOR_SERVER_URL}
 RUN go test -v ./...
