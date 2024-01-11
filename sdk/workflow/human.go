@@ -10,12 +10,12 @@
 package workflow
 
 type HumanTask struct {
-	WorkflowTaskEx
+	WorkflowTaskBuilder
 }
 
 func NewHumanTask(taskRefName string) *HumanTask {
 	return &HumanTask{
-		WorkflowTaskEx{
+		WorkflowTaskBuilder{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			taskType:          HUMAN,
@@ -26,7 +26,7 @@ func NewHumanTask(taskRefName string) *HumanTask {
 
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *HumanTask) Input(key string, value interface{}) *HumanTask {
-	task.WorkflowTaskEx.Input(key, value)
+	task.WorkflowTaskBuilder.Input(key, value)
 	return task
 }
 
@@ -40,12 +40,12 @@ func (task *HumanTask) InputMap(inputMap map[string]interface{}) *HumanTask {
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *HumanTask) Optional(optional bool) *HumanTask {
-	task.WorkflowTaskEx.Optional(optional)
+	task.WorkflowTaskBuilder.Optional(optional)
 	return task
 }
 
 // Description of the task
 func (task *HumanTask) Description(description string) *HumanTask {
-	task.WorkflowTaskEx.Description(description)
+	task.WorkflowTaskBuilder.Description(description)
 	return task
 }

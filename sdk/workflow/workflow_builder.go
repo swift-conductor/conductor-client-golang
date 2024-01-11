@@ -18,7 +18,7 @@ import (
 type TaskType string
 
 const (
-	SIMPLE            TaskType = "SIMPLE"
+	CUSTOM            TaskType = "CUSTOM"
 	DYNAMIC           TaskType = "DYNAMIC"
 	FORK_JOIN         TaskType = "FORK_JOIN"
 	FORK_JOIN_DYNAMIC TaskType = "FORK_JOIN_DYNAMIC"
@@ -44,7 +44,7 @@ type WorkflowTaskInterface interface {
 	OutputRef(path string) string
 }
 
-type WorkflowTaskEx struct {
+type WorkflowTaskBuilder struct {
 	name              string
 	taskReferenceName string
 	description       string
@@ -53,31 +53,31 @@ type WorkflowTaskEx struct {
 	inputParameters   map[string]interface{}
 }
 
-func (task *WorkflowTaskEx) toWorkflowTask() []model.WorkflowTask {
+func (builder *WorkflowTaskBuilder) toWorkflowTask() []model.WorkflowTask {
 	return []model.WorkflowTask{
 		{
-			Name:              task.name,
-			TaskReferenceName: task.taskReferenceName,
-			Description:       task.description,
-			InputParameters:   task.inputParameters,
-			Optional:          task.optional,
-			Type_:             string(task.taskType),
+			Name:              builder.name,
+			TaskReferenceName: builder.taskReferenceName,
+			Description:       builder.description,
+			InputParameters:   builder.inputParameters,
+			Optional:          builder.optional,
+			Type_:             string(builder.taskType),
 		},
 	}
 }
 
-func (task *WorkflowTaskEx) ToTaskDef() *model.TaskDef {
+func (builder *WorkflowTaskBuilder) ToTaskDef() *model.TaskDef {
 	return &model.TaskDef{
-		Name:        task.name,
-		Description: task.description,
+		Name:        builder.name,
+		Description: builder.description,
 	}
 }
 
-func (task *WorkflowTaskEx) OutputRef(path string) string {
+func (builder *WorkflowTaskBuilder) OutputRef(path string) string {
 	if path == "" {
-		return fmt.Sprintf("${%s.output}", task.taskReferenceName)
+		return fmt.Sprintf("${%s.output}", builder.taskReferenceName)
 	}
-	return fmt.Sprintf("${%s.output.%s}", task.taskReferenceName, path)
+	return fmt.Sprintf("${%s.output.%s}", builder.taskReferenceName, path)
 }
 
 //Note: All the below method should be implemented by the
@@ -85,32 +85,32 @@ func (task *WorkflowTaskEx) OutputRef(path string) string {
 //If not, the return type is a Task which makes it impossible to use fluent interface
 //For the tasks like Switch which has other methods too - quirks with Golang!
 
-func (task *WorkflowTaskEx) ReferenceName() string {
-	return task.taskReferenceName
+func (builder *WorkflowTaskBuilder) ReferenceName() string {
+	return builder.taskReferenceName
 }
 
-// Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
-func (task *WorkflowTaskEx) Input(key string, value interface{}) *WorkflowTaskEx {
-	task.inputParameters[key] = value
-	return task
+// Input to the builder.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
+func (builder *WorkflowTaskBuilder) Input(key string, value interface{}) *WorkflowTaskBuilder {
+	builder.inputParameters[key] = value
+	return builder
 }
 
-// InputMap to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
-func (task *WorkflowTaskEx) InputMap(inputMap map[string]interface{}) *WorkflowTaskEx {
+// InputMap to the builder.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
+func (builder *WorkflowTaskBuilder) InputMap(inputMap map[string]interface{}) *WorkflowTaskBuilder {
 	for k, v := range inputMap {
-		task.inputParameters[k] = v
+		builder.inputParameters[k] = v
 	}
-	return task
+	return builder
 }
 
 // Description of the task
-func (task *WorkflowTaskEx) Description(description string) *WorkflowTaskEx {
-	task.description = description
-	return task
+func (builder *WorkflowTaskBuilder) Description(description string) *WorkflowTaskBuilder {
+	builder.description = description
+	return builder
 }
 
 // Optional if set to true, the task will not fail the workflow if the task fails
-func (task *WorkflowTaskEx) Optional(optional bool) *WorkflowTaskEx {
-	task.optional = optional
-	return task
+func (builder *WorkflowTaskBuilder) Optional(optional bool) *WorkflowTaskBuilder {
+	builder.optional = optional
+	return builder
 }

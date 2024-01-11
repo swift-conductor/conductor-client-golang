@@ -17,13 +17,13 @@ import (
 	"github.com/swift-conductor/conductor-client-golang/sdk/workflow"
 )
 
-func NewKitchenSinkWorkflowDefEx(manager *workflow.WorkflowManager) *workflow.WorkflowDefEx {
-	task := workflow.NewSimpleTask("simple_task", "simple_task_0")
-	simpleWorkflow := workflow.NewWorkflowDefEx(manager).
+func NewKitchenSinkWorkflowBuilder(manager *workflow.WorkflowManager) *workflow.WorkflowBuilder {
+	task := workflow.NewCustomTask("custom_task", "custom_task_0")
+	simpleWorkflow := workflow.NewWorkflowBuilder(manager).
 		Name("inline_sub").
 		OwnerEmail("test@test.com").
 		Add(
-			workflow.NewSimpleTask("simple_task", "simple_task_1"),
+			workflow.NewCustomTask("custom_task", "custom_task_1"),
 		)
 	subWorkflowInline := workflow.NewSubWorkflowInlineTask(
 		"sub_flow_inline",
@@ -31,12 +31,12 @@ func NewKitchenSinkWorkflowDefEx(manager *workflow.WorkflowManager) *workflow.Wo
 	)
 	decide := workflow.NewSwitchTask("fact_length", "$.number < 15 ? 'LONG':'LONG'").
 		Description("Fail if the fact is too short").
-		Input("number", "${simple_task_0.output.key2}").
+		Input("number", "${custom_task_0.output.key2}").
 		UseJavascript(true).
 		SwitchCase(
 			"LONG",
-			workflow.NewSimpleTask("simple_task", "simple_task_2"),
-			workflow.NewSimpleTask("simple_task", "simple_task_3"),
+			workflow.NewCustomTask("custom_task", "custom_task_2"),
+			workflow.NewCustomTask("custom_task", "custom_task_3"),
 		).
 		SwitchCase(
 			"SHORT",
@@ -55,24 +55,24 @@ func NewKitchenSinkWorkflowDefEx(manager *workflow.WorkflowManager) *workflow.Wo
 			subWorkflowInline,
 		},
 		[]workflow.WorkflowTaskInterface{
-			workflow.NewSimpleTask("simple_task", "simple_task_5"),
+			workflow.NewCustomTask("custom_task", "custom_task_5"),
 		},
 	)
-	join := workflow.NewJoinTask("new_join_ref", "simple_task_fork_ref2", "simple_task_fork_ref4")
+	join := workflow.NewJoinTask("new_join_ref", "custom_task_fork_ref2", "custom_task_fork_ref4")
 	join.InputMap(map[string]interface{}{
 		"param1": "value",
 	})
 	forkWithJoin := workflow.NewForkTaskWithJoin("fork_with_join_fork_ref", join,
 		[]workflow.WorkflowTaskInterface{
-			workflow.NewSimpleTask("simple_task", "simple_task_fork_ref1"),
-			workflow.NewSimpleTask("simple_task", "simple_task_fork_ref2"),
+			workflow.NewCustomTask("custom_task", "custom_task_fork_ref1"),
+			workflow.NewCustomTask("custom_task", "custom_task_fork_ref2"),
 		}, []workflow.WorkflowTaskInterface{
-			workflow.NewSimpleTask("simple_task", "simple_task_fork_ref3"),
-			workflow.NewSimpleTask("simple_task", "simple_task_fork_ref4"),
+			workflow.NewCustomTask("custom_task", "custom_task_fork_ref3"),
+			workflow.NewCustomTask("custom_task", "custom_task_fork_ref4"),
 		})
 	dynamicFork := workflow.NewDynamicForkTask(
 		"dynamic_fork",
-		workflow.NewSimpleTask("dynamic_fork_prep", "dynamic_fork_prep"),
+		workflow.NewCustomTask("dynamic_fork_prep", "dynamic_fork_prep"),
 	)
 	setVariable := workflow.NewSetVariableTask("set_state").
 		Input("call_made", true).
@@ -92,7 +92,7 @@ func NewKitchenSinkWorkflowDefEx(manager *workflow.WorkflowManager) *workflow.Wo
 	graalTask.Input("value1", "value-1")
 	graalTask.Input("value2", 23.4)
 
-	workflow := workflow.NewWorkflowDefEx(manager).
+	workflow := workflow.NewWorkflowBuilder(manager).
 		Name("sdk_kitchen_sink2").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -119,32 +119,32 @@ func DynamicForkWorker(t *model.WorkerTask) (output interface{}, err error) {
 
 	tasks := []WorkflowTask{
 		{
-			Name:              "simple_task",
-			TaskReferenceName: "simple_task_6",
-			Type:              "SIMPLE",
+			Name:              "custom_task",
+			TaskReferenceName: "custom_task_6",
+			Type:              "CUSTOM",
 		},
 		{
-			Name:              "simple_task",
-			TaskReferenceName: "simple_task_7",
-			Type:              "SIMPLE",
+			Name:              "custom_task",
+			TaskReferenceName: "custom_task_7",
+			Type:              "CUSTOM",
 		},
 		{
-			Name:              "simple_task",
-			TaskReferenceName: "simple_task_8",
-			Type:              "SIMPLE",
+			Name:              "custom_task",
+			TaskReferenceName: "custom_task_8",
+			Type:              "CUSTOM",
 		},
 	}
 
 	inputs := map[string]interface{}{
-		"simple_task_6": map[string]interface{}{
+		"custom_task_6": map[string]interface{}{
 			"key1": "value1",
 			"key2": 121,
 		},
-		"simple_task_7": map[string]interface{}{
+		"custom_task_7": map[string]interface{}{
 			"key1": "value2",
 			"key2": 122,
 		},
-		"simple_task_8": map[string]interface{}{
+		"custom_task_8": map[string]interface{}{
 			"key1": "value3",
 			"key2": 123,
 		},
@@ -161,7 +161,7 @@ func DynamicForkWorker(t *model.WorkerTask) (output interface{}, err error) {
 	return taskResult, err
 }
 
-func GetWorkflowDefExWithComplexSwitchTask() *workflow.WorkflowDefEx {
+func GetWorkflowBuilderWithComplexSwitchTask() *workflow.WorkflowBuilder {
 	task := workflow.NewSwitchTask("complex_switch_task", "${workflow.input.value}")
 
 	for i := 0; i < 3; i += 1 {
@@ -179,7 +179,7 @@ func GetWorkflowDefExWithComplexSwitchTask() *workflow.WorkflowDefEx {
 		task.SwitchCase(strconv.Itoa(i), subtasks...)
 	}
 
-	return workflow.NewWorkflowDefEx(WorkflowManager).
+	return workflow.NewWorkflowBuilder(WorkflowManager).
 		Name("ComplexSwitchWorkflowGoSDK").
 		OwnerEmail("test@test.com").
 		Version(1).

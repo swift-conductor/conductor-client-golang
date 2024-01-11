@@ -9,29 +9,29 @@
 
 package workflow
 
-type SimpleTask struct {
-	WorkflowTaskEx
+type CustomTask struct {
+	WorkflowTaskBuilder
 }
 
-func NewSimpleTask(taskType string, taskRefName string) *SimpleTask {
-	return &SimpleTask{
-		WorkflowTaskEx{
+func NewCustomTask(taskType string, taskRefName string) *CustomTask {
+	return &CustomTask{
+		WorkflowTaskBuilder{
 			name:              taskType,
 			taskReferenceName: taskRefName,
-			taskType:          SIMPLE,
+			taskType:          CUSTOM,
 			inputParameters:   map[string]interface{}{},
 		},
 	}
 }
 
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
-func (task *SimpleTask) Input(key string, value interface{}) *SimpleTask {
-	task.WorkflowTaskEx.Input(key, value)
+func (task *CustomTask) Input(key string, value interface{}) *CustomTask {
+	task.WorkflowTaskBuilder.Input(key, value)
 	return task
 }
 
 // InputMap to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
-func (task *SimpleTask) InputMap(inputMap map[string]interface{}) *SimpleTask {
+func (task *CustomTask) InputMap(inputMap map[string]interface{}) *CustomTask {
 	for k, v := range inputMap {
 		task.inputParameters[k] = v
 	}
@@ -39,13 +39,13 @@ func (task *SimpleTask) InputMap(inputMap map[string]interface{}) *SimpleTask {
 }
 
 // Optional if set to true, the task will not fail the workflow if the task fails
-func (task *SimpleTask) Optional(optional bool) *SimpleTask {
-	task.WorkflowTaskEx.Optional(optional)
+func (task *CustomTask) Optional(optional bool) *CustomTask {
+	task.WorkflowTaskBuilder.Optional(optional)
 	return task
 }
 
 // Description of the task
-func (task *SimpleTask) Description(description string) *SimpleTask {
-	task.WorkflowTaskEx.Description(description)
+func (task *CustomTask) Description(description string) *CustomTask {
+	task.WorkflowTaskBuilder.Description(description)
 	return task
 }

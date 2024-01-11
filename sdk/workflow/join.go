@@ -14,13 +14,13 @@ import (
 )
 
 type JoinTask struct {
-	WorkflowTaskEx
+	WorkflowTaskBuilder
 	joinOn []string
 }
 
 func NewJoinTask(taskRefName string, joinOn ...string) *JoinTask {
 	return &JoinTask{
-		WorkflowTaskEx: WorkflowTaskEx{
+		WorkflowTaskBuilder: WorkflowTaskBuilder{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -33,19 +33,19 @@ func NewJoinTask(taskRefName string, joinOn ...string) *JoinTask {
 }
 
 func (task *JoinTask) toWorkflowTask() []model.WorkflowTask {
-	workflowTasks := task.WorkflowTaskEx.toWorkflowTask()
+	workflowTasks := task.WorkflowTaskBuilder.toWorkflowTask()
 	workflowTasks[0].JoinOn = task.joinOn
 	return workflowTasks
 }
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *JoinTask) Optional(optional bool) *JoinTask {
-	task.WorkflowTaskEx.Optional(optional)
+	task.WorkflowTaskBuilder.Optional(optional)
 	return task
 }
 
 // Description of the task
 func (task *JoinTask) Description(description string) *JoinTask {
-	task.WorkflowTaskEx.Description(description)
+	task.WorkflowTaskBuilder.Description(description)
 	return task
 }

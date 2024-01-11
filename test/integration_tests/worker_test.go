@@ -21,15 +21,15 @@ import (
 )
 
 func TestWorkerBatchSize(t *testing.T) {
-	simpleTaskWorkflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
-		Name("TEST_GO_WORKFLOW_SIMPLE").
+	customTaskWorkflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+		Name("TEST_GO_WORKFLOW_CUSTOM").
 		Version(1).
 		OwnerEmail("test@test.com").
-		Add(common.TestSimpleTask)
+		Add(common.TestCustomTask)
 
-	err := testdata.WorkerRunner.StartWorker(
-		common.TestSimpleTask.ReferenceName(),
-		testdata.SimpleWorker,
+	err := testdata.WorkerHost.StartWorker(
+		common.TestCustomTask.ReferenceName(),
+		testdata.CustomWorker,
 		5,
 		testdata.WorkerPollInterval,
 	)
@@ -39,17 +39,17 @@ func TestWorkerBatchSize(t *testing.T) {
 
 	time.Sleep(1 * time.Second)
 
-	if testdata.WorkerRunner.GetBatchSizeForTask(common.TestSimpleTask.ReferenceName()) != 5 {
+	if testdata.WorkerHost.GetBatchSizeForTask(common.TestCustomTask.ReferenceName()) != 5 {
 		t.Fatal("unexpected batch size")
 	}
 
-	err = testdata.ValidateWorkflowBulk(simpleTaskWorkflow, common.WorkflowValidationTimeout, common.WorkflowBulkQty)
+	err = testdata.ValidateWorkflowBulk(customTaskWorkflow, common.WorkflowValidationTimeout, common.WorkflowBulkQty)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = testdata.WorkerRunner.SetBatchSize(
-		common.TestSimpleTask.ReferenceName(),
+	err = testdata.WorkerHost.SetBatchSize(
+		common.TestCustomTask.ReferenceName(),
 		0,
 	)
 	if err != nil {
@@ -58,12 +58,12 @@ func TestWorkerBatchSize(t *testing.T) {
 
 	time.Sleep(1 * time.Second)
 
-	if testdata.WorkerRunner.GetBatchSizeForTask(common.TestSimpleTask.ReferenceName()) != 0 {
+	if testdata.WorkerHost.GetBatchSizeForTask(common.TestCustomTask.ReferenceName()) != 0 {
 		t.Fatal("unexpected batch size")
 	}
 
-	err = testdata.WorkerRunner.SetBatchSize(
-		common.TestSimpleTask.ReferenceName(),
+	err = testdata.WorkerHost.SetBatchSize(
+		common.TestCustomTask.ReferenceName(),
 		8,
 	)
 	if err != nil {
@@ -72,11 +72,11 @@ func TestWorkerBatchSize(t *testing.T) {
 
 	time.Sleep(1 * time.Second)
 
-	if testdata.WorkerRunner.GetBatchSizeForTask(common.TestSimpleTask.ReferenceName()) != 8 {
+	if testdata.WorkerHost.GetBatchSizeForTask(common.TestCustomTask.ReferenceName()) != 8 {
 		t.Fatal("unexpected batch size")
 	}
 
-	err = testdata.ValidateWorkflowBulk(simpleTaskWorkflow, common.WorkflowValidationTimeout, common.WorkflowBulkQty)
+	err = testdata.ValidateWorkflowBulk(customTaskWorkflow, common.WorkflowValidationTimeout, common.WorkflowBulkQty)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -85,16 +85,16 @@ func TestWorkerBatchSize(t *testing.T) {
 func TestFaultyWorker(t *testing.T) {
 	logrus.SetLevel(logrus.ErrorLevel)
 	taskName := "TEST_GO_FAULTY_TASK"
-	wf := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
+	wf := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
 		Name("TEST_GO_FAULTY_WORKFLOW").
 		Version(1).
 		OwnerEmail("test@test.com").
-		Add(workflow.NewSimpleTask(taskName, taskName))
+		Add(workflow.NewCustomTask(taskName, taskName))
 	err := wf.Register(true)
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.WorkerRunner.StartWorker(
+	err = testdata.WorkerHost.StartWorker(
 		taskName,
 		testdata.FaultyWorker,
 		5,
@@ -111,25 +111,25 @@ func TestFaultyWorker(t *testing.T) {
 
 func TestWorkerWithNonRetryableError(t *testing.T) {
 	logrus.SetLevel(logrus.ErrorLevel)
+
 	taskName := "TEST_GO_NON_RETRYABLE_ERROR_TASK"
-	wf := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
+
+	wf := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
 		Name("TEST_GO_NON_RETRYABLE_ERROR_WF").
 		Version(1).
 		OwnerEmail("test@test.com").
-		Add(workflow.NewSimpleTask(taskName, taskName))
+		Add(workflow.NewCustomTask(taskName, taskName))
+
 	err := wf.Register(true)
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.WorkerRunner.StartWorker(
-		taskName,
-		testdata.FaultyWorker,
-		5,
-		testdata.WorkerPollInterval,
-	)
+
+	err = testdata.WorkerHost.StartWorker(taskName, testdata.FaultyWorker, 5, testdata.WorkerPollInterval)
 	if err != nil {
 		t.Fatal(err)
 	}
+
 	err = testdata.ValidateWorkflow(wf, 5*time.Second, model.FailedWorkflow)
 	if err != nil {
 		t.Fatal(err)

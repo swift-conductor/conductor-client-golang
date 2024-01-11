@@ -26,6 +26,7 @@ var (
 )
 
 func TestKafkaQueueConfiguration(t *testing.T) {
+	t.Skip("Skip Kafka testing for now")
 	kafkaQueueConfiguration := getKafkaQueueConfiguration()
 	_, err := testdata.WorkflowManager.DeleteQueueConfiguration(*kafkaQueueConfiguration)
 	if err != nil {

@@ -20,40 +20,38 @@ import (
 	"github.com/swift-conductor/conductor-client-golang/sdk/worker"
 )
 
-func TestSimpleWorkerRunner(t *testing.T) {
-	taskRunner := worker.NewWorkerRunner(settings.NewHttpDefaultSettings())
-	if taskRunner == nil {
+func TestSimpleWorkerHost(t *testing.T) {
+	httpSettings := settings.NewHttpDefaultSettings()
+
+	workerHost := worker.NewWorkerHost(httpSettings)
+	if workerHost == nil {
 		t.Fail()
 	}
 }
 
-func TestWorkerRunner(t *testing.T) {
-	apiClient := client.NewAPIClient(
-		settings.NewHttpDefaultSettings(),
-	)
+func TestWorkerHost(t *testing.T) {
+	httpSettings := settings.NewHttpDefaultSettings()
+	apiClient := client.NewAPIClient(httpSettings)
 
-	taskRunner := worker.NewWorkerRunnerWithApiClient(
-		apiClient,
-	)
+	workerHost := worker.NewWorkerHostWithApiClient(apiClient)
 
-	if taskRunner == nil {
+	if workerHost == nil {
 		t.Fail()
 	}
 }
 
 func TestPauseResume(t *testing.T) {
-	apiClient := client.NewAPIClient(
-		settings.NewHttpDefaultSettings(),
-	)
-	taskRunner := worker.NewWorkerRunnerWithApiClient(
-		apiClient,
-	)
-	taskRunner.StartWorker("test", TaskWorker, 21, time.Second)
-	taskRunner.Pause("test")
-	assert.Equal(t, 21, taskRunner.GetBatchSizeForTask("test"))
-	taskRunner.Resume("test")
-	assert.Equal(t, 21, taskRunner.GetBatchSizeForTask("test"))
+	httpSettings := settings.NewHttpDefaultSettings()
+	apiClient := client.NewAPIClient(httpSettings)
 
+	workerHost := worker.NewWorkerHostWithApiClient(apiClient)
+
+	workerHost.StartWorker("test", TaskWorker, 21, time.Second)
+	workerHost.Pause("test")
+	assert.Equal(t, 21, workerHost.GetBatchSizeForTask("test"))
+
+	workerHost.Resume("test")
+	assert.Equal(t, 21, workerHost.GetBatchSizeForTask("test"))
 }
 
 func TaskWorker(task *model.WorkerTask) (interface{}, error) {

@@ -1238,7 +1238,7 @@ WorkflowResourceApiService Reruns the workflow from a specific task
 func (a *WorkflowResourceApiService) ResetWorkflow(ctx context.Context, workflowId string) (*http.Response, error)
 ```
 
-WorkflowResourceApiService Resets callback times of all non\-terminal SIMPLE tasks to 0
+WorkflowResourceApiService Resets callback times of all non\-terminal CUSTOM tasks to 0
 
 - @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
 - @param workflowId

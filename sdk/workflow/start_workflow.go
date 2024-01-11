@@ -14,12 +14,12 @@ import (
 )
 
 type StartWorkflowTask struct {
-	WorkflowTaskEx
+	WorkflowTaskBuilder
 }
 
 func NewStartWorkflowTask(taskRefName string, workflowName string, version *int32, startWorkflowRequest *model.StartWorkflowRequest) *StartWorkflowTask {
 	return &StartWorkflowTask{
-		WorkflowTaskEx: WorkflowTaskEx{
+		WorkflowTaskBuilder: WorkflowTaskBuilder{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -38,25 +38,25 @@ func NewStartWorkflowTask(taskRefName string, workflowName string, version *int3
 }
 
 func (task *StartWorkflowTask) toWorkflowTask() []model.WorkflowTask {
-	workflowTasks := task.WorkflowTaskEx.toWorkflowTask()
+	workflowTasks := task.WorkflowTaskBuilder.toWorkflowTask()
 	return workflowTasks
 }
 
 // Description of the task
 func (task *StartWorkflowTask) Description(description string) *StartWorkflowTask {
-	task.WorkflowTaskEx.Description(description)
+	task.WorkflowTaskBuilder.Description(description)
 	return task
 }
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *StartWorkflowTask) Optional(optional bool) *StartWorkflowTask {
-	task.WorkflowTaskEx.Optional(optional)
+	task.WorkflowTaskBuilder.Optional(optional)
 	return task
 }
 
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *StartWorkflowTask) Input(key string, value interface{}) *StartWorkflowTask {
-	task.WorkflowTaskEx.Input(key, value)
+	task.WorkflowTaskBuilder.Input(key, value)
 	return task
 }
 

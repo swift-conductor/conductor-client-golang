@@ -10,7 +10,7 @@
 package workflow
 
 type InlineTask struct {
-	WorkflowTaskEx
+	WorkflowTaskBuilder
 }
 
 const (
@@ -22,7 +22,7 @@ const (
 // Legacy -- please use NewInlineGraalJSTask which provides better performance
 func NewInlineTask(name string, script string) *InlineTask {
 	return &InlineTask{
-		WorkflowTaskEx{
+		WorkflowTaskBuilder{
 			name:              name,
 			taskReferenceName: name,
 			taskType:          INLINE,
@@ -37,7 +37,7 @@ func NewInlineTask(name string, script string) *InlineTask {
 // NewInlineGraalJSTask An inline task with that executes the given javascript.  Uses GraalVM for faster execution
 func NewInlineGraalJSTask(name string, script string) *InlineTask {
 	return &InlineTask{
-		WorkflowTaskEx{
+		WorkflowTaskBuilder{
 			name:              name,
 			taskReferenceName: name,
 			taskType:          INLINE,
@@ -51,7 +51,7 @@ func NewInlineGraalJSTask(name string, script string) *InlineTask {
 
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *InlineTask) Input(key string, value interface{}) *InlineTask {
-	task.WorkflowTaskEx.Input(key, value)
+	task.WorkflowTaskBuilder.Input(key, value)
 	return task
 }
 
@@ -65,12 +65,12 @@ func (task *InlineTask) InputMap(inputMap map[string]interface{}) *InlineTask {
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *InlineTask) Optional(optional bool) *InlineTask {
-	task.WorkflowTaskEx.Optional(optional)
+	task.WorkflowTaskBuilder.Optional(optional)
 	return task
 }
 
 // Description of the task
 func (task *InlineTask) Description(description string) *InlineTask {
-	task.WorkflowTaskEx.Description(description)
+	task.WorkflowTaskBuilder.Description(description)
 	return task
 }

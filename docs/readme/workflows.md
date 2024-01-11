@@ -10,16 +10,16 @@ apiClient := client.NewAPIClient(settings.NewHttpSettings("http://localhost:8080
 //Create new workflow manager
 manager := manager.NewWorkflowManager(apiClient)
 
-//Create a new WorkflowDefEx instance
-conductorWorkflow := workflow.NewWorkflowDefEx(manager).
+//Create a new WorkflowBuilder instance
+conductorWorkflow := workflow.NewWorkflowBuilder(manager).
     Name("my_first_workflow").
     Version(1).
     OwnerEmail("hello@swiftsoftwaregroup.com")
 
-//now, let's add a couple of simple tasks
+//now, let's add a couple of custom tasks
 conductorWorkflow.
-	Add(workflow.NewSimpleTask("simple_task_2", "simple_task_1")).
-    Add(workflow.NewSimpleTask("simple_task_1", "simple_task_2"))
+	Add(workflow.NewCustomTask("custom_task_2", "custom_task_1")).
+    Add(workflow.NewCustomTask("custom_task_1", "custom_task_2"))
 
 //Register the workflow with server
 conductorWorkflow.Register(true)        //Overwrite the existing definition with the new one

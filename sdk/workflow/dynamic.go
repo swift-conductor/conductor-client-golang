@@ -14,7 +14,7 @@ import (
 )
 
 type DynamicTask struct {
-	WorkflowTaskEx
+	WorkflowTaskBuilder
 }
 
 const dynamicTaskNameParameter = "taskToExecute"
@@ -24,7 +24,7 @@ const dynamicTaskNameParameter = "taskToExecute"
 //   - taskNameParameter Parameter that contains the expression for the dynamic task name.  e.g. ${workflow.input.dynamicTask}
 func NewDynamicTask(taskRefName string, taskNameParameter string) *DynamicTask {
 	return &DynamicTask{
-		WorkflowTaskEx: WorkflowTaskEx{
+		WorkflowTaskBuilder: WorkflowTaskBuilder{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -38,14 +38,14 @@ func NewDynamicTask(taskRefName string, taskNameParameter string) *DynamicTask {
 }
 
 func (task *DynamicTask) toWorkflowTask() []model.WorkflowTask {
-	workflowTasks := task.WorkflowTaskEx.toWorkflowTask()
+	workflowTasks := task.WorkflowTaskBuilder.toWorkflowTask()
 	workflowTasks[0].DynamicTaskNameParam = dynamicTaskNameParameter
 	return workflowTasks
 }
 
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *DynamicTask) Input(key string, value interface{}) *DynamicTask {
-	task.WorkflowTaskEx.Input(key, value)
+	task.WorkflowTaskBuilder.Input(key, value)
 	return task
 }
 
@@ -59,12 +59,12 @@ func (task *DynamicTask) InputMap(inputMap map[string]interface{}) *DynamicTask 
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *DynamicTask) Optional(optional bool) *DynamicTask {
-	task.WorkflowTaskEx.Optional(optional)
+	task.WorkflowTaskBuilder.Optional(optional)
 	return task
 }
 
 // Description of the task
 func (task *DynamicTask) Description(description string) *DynamicTask {
-	task.WorkflowTaskEx.Description(description)
+	task.WorkflowTaskBuilder.Description(description)
 	return task
 }

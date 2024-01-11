@@ -36,16 +36,16 @@ var (
 
 var hostname, _ = os.Hostname()
 
-// WorkerRunner implements polling and execution logic for a Conductor worker. Every polling interval, each running
+// WorkerHost implements polling and execution logic for a Conductor worker. Every polling interval, each running
 // task attempts to retrieve a from Conductor. Multiple tasks can be started in parallel. All Goroutines started by this
 // worker cannot be stopped, only paused and resumed.
 //
-// Conductor tasks are tracked by name separately. Each WorkerRunner tracks a separate poll interval and batch size for
+// Conductor tasks are tracked by name separately. Each WorkerHost tracks a separate poll interval and batch size for
 // each task, which is shared by all workers running that task. For instance, if task "foo" is running with a batch size
 // of n, and k workers, the average number of tasks retrieved during each polling interval is n*k.
 //
-// All methods on WorkerRunner are thread-safe.
-type WorkerRunner struct {
+// All methods on WorkerHost are thread-safe.
+type WorkerHost struct {
 	conductorTaskResourceClient *client.TaskResourceApiService
 
 	workerWaitGroup sync.WaitGroup
@@ -63,20 +63,18 @@ type WorkerRunner struct {
 	pausedWorkers      map[string]bool
 }
 
-// NewWorkerRunner returns a new WorkerRunner using the provided settings.
-func NewWorkerRunner(httpSettings *settings.HttpSettings) *WorkerRunner {
+// NewWorkerHost returns a new WorkerHost using the provided settings.
+func NewWorkerHost(httpSettings *settings.HttpSettings) *WorkerHost {
 	apiClient := client.NewAPIClient(
 		httpSettings,
 	)
-	return NewWorkerRunnerWithApiClient(apiClient)
+	return NewWorkerHostWithApiClient(apiClient)
 }
 
-// NewWorkerRunnerWithApiClient creates a new WorkerRunner which uses the provided client.APIClient to communicate with
+// NewWorkerHostWithApiClient creates a new WorkerHost which uses the provided client.APIClient to communicate with
 // Conductor.
-func NewWorkerRunnerWithApiClient(
-	apiClient *client.APIClient,
-) *WorkerRunner {
-	return &WorkerRunner{
+func NewWorkerHostWithApiClient(apiClient *client.APIClient) *WorkerHost {
+	return &WorkerHost{
 		conductorTaskResourceClient: &client.TaskResourceApiService{
 			APIClient: apiClient,
 		},
@@ -90,7 +88,7 @@ func NewWorkerRunnerWithApiClient(
 // SetSleepOnGenericError Sets the time for which to wait before continuing to poll/execute when there is an error
 // Default is 200 millis, and this function can be used to increase/decrease the duration of the wait time
 // Useful to avoid excessive logs in the worker when there are intermittent issues
-func (c *WorkerRunner) SetSleepOnGenericError(duration time.Duration) {
+func (c *WorkerHost) SetSleepOnGenericError(duration time.Duration) {
 	sleepForOnGenericError = duration
 }
 
@@ -98,7 +96,7 @@ func (c *WorkerRunner) SetSleepOnGenericError(duration time.Duration) {
 // domain. Equivalent to:
 //
 //	StartWorkerWithDomain(taskName, executeFunction, batchSize, pollInterval, "")
-func (c *WorkerRunner) StartWorkerWithDomain(taskName string, executeFunction model.WorkerTaskFunction, batchSize int, pollInterval time.Duration, domain string) error {
+func (c *WorkerHost) StartWorkerWithDomain(taskName string, executeFunction model.WorkerTaskFunction, batchSize int, pollInterval time.Duration, domain string) error {
 	return c.startWorker(taskName, executeFunction, batchSize, pollInterval, domain)
 }
 
@@ -106,14 +104,14 @@ func (c *WorkerRunner) StartWorkerWithDomain(taskName string, executeFunction mo
 // taskName and, if any are available, uses executeFunction to run them on a separate goroutine. Each call to
 // StartWorker starts a new goroutine which performs batch polling to retrieve as many
 // tasks from Conductor as are available, up to the batchSize set for the task. This func additionally sets the
-// pollInterval and increases the batch size for the task, which applies to all tasks shared by this WorkerRunner with the
+// pollInterval and increases the batch size for the task, which applies to all tasks shared by this WorkerHost with the
 // same taskName.
-func (c *WorkerRunner) StartWorker(taskName string, executeFunction model.WorkerTaskFunction, batchSize int, pollInterval time.Duration) error {
+func (c *WorkerHost) StartWorker(taskName string, executeFunction model.WorkerTaskFunction, batchSize int, pollInterval time.Duration) error {
 	return c.startWorker(taskName, executeFunction, batchSize, pollInterval, "")
 }
 
 // SetBatchSize can be used to set the batch size for all workers running the provided task.
-func (c *WorkerRunner) SetBatchSize(taskName string, batchSize int) error {
+func (c *WorkerHost) SetBatchSize(taskName string, batchSize int) error {
 	if batchSize < 0 {
 		return fmt.Errorf("batchSize can not be negative")
 	}
@@ -138,7 +136,7 @@ func (c *WorkerRunner) SetBatchSize(taskName string, batchSize int) error {
 }
 
 // IncreaseBatchSize increases the batch size used for all workers running the provided task.
-func (c *WorkerRunner) IncreaseBatchSize(taskName string, batchSize int) error {
+func (c *WorkerHost) IncreaseBatchSize(taskName string, batchSize int) error {
 	if batchSize < 1 {
 		return fmt.Errorf("batchSize value must be positive")
 	}
@@ -161,7 +159,7 @@ func (c *WorkerRunner) IncreaseBatchSize(taskName string, batchSize int) error {
 }
 
 // DecreaseBatchSize decreases the batch size used for all workers running the provided task.
-func (c *WorkerRunner) DecreaseBatchSize(taskName string, batchSize int) error {
+func (c *WorkerHost) DecreaseBatchSize(taskName string, batchSize int) error {
 	if batchSize < 1 {
 		return fmt.Errorf("batchSize value must be positive")
 	}
@@ -186,8 +184,8 @@ func (c *WorkerRunner) DecreaseBatchSize(taskName string, batchSize int) error {
 
 // Pause pauses all workers running the provided task. When paused, workers will not poll for new tasks and no new
 // goroutines are started. However it does not stop any goroutines running. Workers must be resumed at a later time
-// using Resume. Failing to call `Resume()` on a WorkerRunner running one or more workers can result in a goroutine leak.
-func (c *WorkerRunner) Pause(taskName string) {
+// using Resume. Failing to call `Resume()` on a WorkerHost running one or more workers can result in a goroutine leak.
+func (c *WorkerHost) Pause(taskName string) {
 	c.pausedWorkersMutex.Lock()
 	defer c.pausedWorkersMutex.Unlock()
 	c.pausedWorkers[taskName] = true
@@ -195,25 +193,25 @@ func (c *WorkerRunner) Pause(taskName string) {
 
 // Resume all running workers for the provided taskName. If workers for the provided task are not paused, calling this
 // method has no impact.
-func (c *WorkerRunner) Resume(taskName string) {
+func (c *WorkerHost) Resume(taskName string) {
 	c.pausedWorkersMutex.Lock()
 	defer c.pausedWorkersMutex.Unlock()
 	c.pausedWorkers[taskName] = false
 }
 
-func (c *WorkerRunner) isPaused(taskName string) bool {
+func (c *WorkerHost) isPaused(taskName string) bool {
 	c.pausedWorkersMutex.RLock()
 	defer c.pausedWorkersMutex.RUnlock()
 	return c.pausedWorkers[taskName]
 }
 
-// WaitWorkers uses an internal waitgroup to block the calling thread until all workers started by this WorkerRunner have
+// WaitWorkers uses an internal waitgroup to block the calling thread until all workers started by this WorkerHost have
 // been stopped.
-func (c *WorkerRunner) WaitWorkers() {
+func (c *WorkerHost) WaitWorkers() {
 	c.workerWaitGroup.Wait()
 }
 
-func (c *WorkerRunner) startWorker(taskName string, executeFunction model.WorkerTaskFunction, batchSize int, pollInterval time.Duration, taskDomain string) error {
+func (c *WorkerHost) startWorker(taskName string, executeFunction model.WorkerTaskFunction, batchSize int, pollInterval time.Duration, taskDomain string) error {
 	c.SetPollIntervalForTask(taskName, pollInterval)
 	c.Resume(taskName)
 	previousMaxAllowedWorkers, err := c.getMaxAllowedWorkers(taskName)
@@ -239,7 +237,7 @@ func (c *WorkerRunner) startWorker(taskName string, executeFunction model.Worker
 	return nil
 }
 
-func (c *WorkerRunner) work4ever(taskName string, executeFunction model.WorkerTaskFunction, domain string) {
+func (c *WorkerHost) work4ever(taskName string, executeFunction model.WorkerTaskFunction, domain string) {
 	defer c.workerWaitGroup.Done()
 	defer concurrency.HandlePanicError("poll_and_execute")
 	for c.isWorkerRegistered(taskName) {
@@ -247,7 +245,7 @@ func (c *WorkerRunner) work4ever(taskName string, executeFunction model.WorkerTa
 	}
 }
 
-func (c *WorkerRunner) workOnce(taskName string, executeFunction model.WorkerTaskFunction, domain string) {
+func (c *WorkerHost) workOnce(taskName string, executeFunction model.WorkerTaskFunction, domain string) {
 	if c.isPaused(taskName) {
 		pauseOnGenericError(taskName, domain, fmt.Errorf("worker is paused"))
 		return
@@ -291,7 +289,7 @@ func (c *WorkerRunner) workOnce(taskName string, executeFunction model.WorkerTas
 	}
 }
 
-func (c *WorkerRunner) executeAndUpdateTask(taskName string, task model.WorkerTask, executeFunction model.WorkerTaskFunction) {
+func (c *WorkerHost) executeAndUpdateTask(taskName string, task model.WorkerTask, executeFunction model.WorkerTaskFunction) {
 	defer c.runningWorkerDone(taskName)
 	defer concurrency.HandlePanicError("execute_and_update_task " + string(task.TaskId) + ": " + string(task.Status))
 	taskResult := c.executeTask(&task, executeFunction)
@@ -301,7 +299,7 @@ func (c *WorkerRunner) executeAndUpdateTask(taskName string, task model.WorkerTa
 	}
 }
 
-func (c *WorkerRunner) batchPoll(taskName string, count int, domain string) ([]model.WorkerTask, error) {
+func (c *WorkerHost) batchPoll(taskName string, count int, domain string) ([]model.WorkerTask, error) {
 	timeout, err := c.GetPollIntervalForTask(taskName)
 	if err != nil {
 		return nil, err
@@ -344,7 +342,7 @@ func (c *WorkerRunner) batchPoll(taskName string, count int, domain string) ([]m
 	return tasks, nil
 }
 
-func (c *WorkerRunner) executeTask(t *model.WorkerTask, executeFunction model.WorkerTaskFunction) *model.TaskResult {
+func (c *WorkerHost) executeTask(t *model.WorkerTask, executeFunction model.WorkerTaskFunction) *model.TaskResult {
 	log.Trace(
 		"Executing task of type: ", t.TaskDefName,
 		", taskId: ", t.TaskId,
@@ -389,7 +387,7 @@ func (c *WorkerRunner) executeTask(t *model.WorkerTask, executeFunction model.Wo
 	return taskResult
 }
 
-func (c *WorkerRunner) updateTaskWithRetry(taskName string, taskResult *model.TaskResult) error {
+func (c *WorkerHost) updateTaskWithRetry(taskName string, taskResult *model.TaskResult) error {
 	log.Debug(
 		"Updating task of type: ", taskName,
 		", taskId: ", taskResult.TaskId,
@@ -417,7 +415,7 @@ func (c *WorkerRunner) updateTaskWithRetry(taskName string, taskResult *model.Ta
 	return fmt.Errorf("failed to update task %s after %d attempts. %s", taskName, taskUpdateRetryAttemptsLimit, lastError)
 }
 
-func (c *WorkerRunner) updateTask(taskName string, taskResult *model.TaskResult) (*http.Response, error) {
+func (c *WorkerHost) updateTask(taskName string, taskResult *model.TaskResult) (*http.Response, error) {
 	startTime := time.Now()
 	_, response, err := c.conductorTaskResourceClient.UpdateTask(context.Background(), taskResult)
 	spentTime := time.Since(startTime).Milliseconds()
@@ -425,7 +423,7 @@ func (c *WorkerRunner) updateTask(taskName string, taskResult *model.TaskResult)
 	return response, err
 }
 
-func (c *WorkerRunner) getAvailableWorkerAmount(taskName string) (int, error) {
+func (c *WorkerHost) getAvailableWorkerAmount(taskName string) (int, error) {
 	allowed, err := c.getMaxAllowedWorkers(taskName)
 	if err != nil {
 		return -1, err
@@ -437,7 +435,7 @@ func (c *WorkerRunner) getAvailableWorkerAmount(taskName string) (int, error) {
 	return allowed - running, nil
 }
 
-func (c *WorkerRunner) getMaxAllowedWorkers(taskName string) (int, error) {
+func (c *WorkerHost) getMaxAllowedWorkers(taskName string) (int, error) {
 	c.batchSizeByTaskNameMutex.RLock()
 	defer c.batchSizeByTaskNameMutex.RUnlock()
 	amount, ok := c.batchSizeByTaskName[taskName]
@@ -447,7 +445,7 @@ func (c *WorkerRunner) getMaxAllowedWorkers(taskName string) (int, error) {
 	return amount, nil
 }
 
-func (c *WorkerRunner) getRunningWorkers(taskName string) (int, error) {
+func (c *WorkerHost) getRunningWorkers(taskName string) (int, error) {
 	c.runningWorkersByTaskNameMutex.RLock()
 	defer c.runningWorkersByTaskNameMutex.RUnlock()
 	amount, ok := c.runningWorkersByTaskName[taskName]
@@ -457,14 +455,14 @@ func (c *WorkerRunner) getRunningWorkers(taskName string) (int, error) {
 	return amount, nil
 }
 
-func (c *WorkerRunner) isWorkerRegistered(taskName string) bool {
+func (c *WorkerHost) isWorkerRegistered(taskName string) bool {
 	c.batchSizeByTaskNameMutex.RLock()
 	defer c.batchSizeByTaskNameMutex.RUnlock()
 	_, ok := c.batchSizeByTaskName[taskName]
 	return ok
 }
 
-func (c *WorkerRunner) increaseRunningWorkers(taskName string) error {
+func (c *WorkerHost) increaseRunningWorkers(taskName string) error {
 	c.runningWorkersByTaskNameMutex.Lock()
 	defer c.runningWorkersByTaskNameMutex.Unlock()
 	c.runningWorkersByTaskName[taskName] += 1
@@ -472,7 +470,7 @@ func (c *WorkerRunner) increaseRunningWorkers(taskName string) error {
 	return nil
 }
 
-func (c *WorkerRunner) runningWorkerDone(taskName string) error {
+func (c *WorkerHost) runningWorkerDone(taskName string) error {
 	c.runningWorkersByTaskNameMutex.Lock()
 	defer c.runningWorkersByTaskNameMutex.Unlock()
 	c.runningWorkersByTaskName[taskName] -= 1
@@ -480,7 +478,7 @@ func (c *WorkerRunner) runningWorkerDone(taskName string) error {
 	return nil
 }
 
-func (c *WorkerRunner) increaseMaxAllowedWorkers(taskName string, batchSize int) error {
+func (c *WorkerHost) increaseMaxAllowedWorkers(taskName string, batchSize int) error {
 	c.batchSizeByTaskNameMutex.Lock()
 	defer c.batchSizeByTaskNameMutex.Unlock()
 	c.batchSizeByTaskName[taskName] += batchSize
@@ -489,7 +487,7 @@ func (c *WorkerRunner) increaseMaxAllowedWorkers(taskName string, batchSize int)
 }
 
 // SetPollIntervalForTask sets the pollInterval for all workers running the task with the provided taskName.
-func (c *WorkerRunner) SetPollIntervalForTask(taskName string, pollInterval time.Duration) error {
+func (c *WorkerHost) SetPollIntervalForTask(taskName string, pollInterval time.Duration) error {
 	c.pollIntervalByTaskNameMutex.Lock()
 	defer c.pollIntervalByTaskNameMutex.Unlock()
 	c.pollIntervalByTaskName[taskName] = pollInterval
@@ -499,7 +497,7 @@ func (c *WorkerRunner) SetPollIntervalForTask(taskName string, pollInterval time
 
 // GetPollIntervalForTask retrieves the poll interval for all tasks running the provided taskName. An error is returned
 // if no pollInterval has been registered for the provided task.
-func (c *WorkerRunner) GetPollIntervalForTask(taskName string) (pollInterval time.Duration, err error) {
+func (c *WorkerHost) GetPollIntervalForTask(taskName string) (pollInterval time.Duration, err error) {
 	c.pollIntervalByTaskNameMutex.RLock()
 	defer c.pollIntervalByTaskNameMutex.RUnlock()
 	pollInterval, ok := c.pollIntervalByTaskName[taskName]
@@ -510,8 +508,8 @@ func (c *WorkerRunner) GetPollIntervalForTask(taskName string) (pollInterval tim
 }
 
 // GetBatchSizeForAll returns a map from taskName to batch size for all batch sizes currently registered with this
-// WorkerRunner.
-func (c *WorkerRunner) GetBatchSizeForAll() (batchSizeByTaskName map[string]int) {
+// WorkerHost.
+func (c *WorkerHost) GetBatchSizeForAll() (batchSizeByTaskName map[string]int) {
 	c.batchSizeByTaskNameMutex.RLock()
 	defer c.batchSizeByTaskNameMutex.RUnlock()
 	batchSizeByTaskName = make(map[string]int)
@@ -522,7 +520,7 @@ func (c *WorkerRunner) GetBatchSizeForAll() (batchSizeByTaskName map[string]int)
 }
 
 // GetBatchSizeForTask retrieves the current batch size for the provided task.
-func (c *WorkerRunner) GetBatchSizeForTask(taskName string) (batchSize int) {
+func (c *WorkerHost) GetBatchSizeForTask(taskName string) (batchSize int) {
 	c.batchSizeByTaskNameMutex.RLock()
 	defer c.batchSizeByTaskNameMutex.RUnlock()
 	batchSize, ok := c.batchSizeByTaskName[taskName]

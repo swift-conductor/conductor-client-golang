@@ -21,7 +21,7 @@ const (
 
 // DoWhileTask Do...While task
 type DoWhileTask struct {
-	WorkflowTaskEx
+	WorkflowTaskBuilder
 	loopCondition string
 	loopOver      []WorkflowTaskInterface
 }
@@ -30,7 +30,7 @@ type DoWhileTask struct {
 // terminationCondition is a Javascript expression that evaluates to True or False
 func NewDoWhileTask(taskRefName string, terminationCondition string, tasks ...WorkflowTaskInterface) *DoWhileTask {
 	return &DoWhileTask{
-		WorkflowTaskEx: WorkflowTaskEx{
+		WorkflowTaskBuilder: WorkflowTaskBuilder{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			taskType:          DO_WHILE,
@@ -44,7 +44,7 @@ func NewDoWhileTask(taskRefName string, terminationCondition string, tasks ...Wo
 // NewLoopTask Loop over N times when N is specified as iterations
 func NewLoopTask(taskRefName string, iterations int32, tasks ...WorkflowTaskInterface) *DoWhileTask {
 	return &DoWhileTask{
-		WorkflowTaskEx: WorkflowTaskEx{
+		WorkflowTaskBuilder: WorkflowTaskBuilder{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			taskType:          DO_WHILE,
@@ -58,7 +58,7 @@ func NewLoopTask(taskRefName string, iterations int32, tasks ...WorkflowTaskInte
 }
 
 func (task *DoWhileTask) toWorkflowTask() []model.WorkflowTask {
-	workflowTasks := task.WorkflowTaskEx.toWorkflowTask()
+	workflowTasks := task.WorkflowTaskBuilder.toWorkflowTask()
 	workflowTasks[0].LoopCondition = task.loopCondition
 	workflowTasks[0].LoopOver = []model.WorkflowTask{}
 	for _, loopTask := range task.loopOver {
@@ -78,13 +78,13 @@ func getForLoopCondition(loopValue string, taskReferenceName string) string {
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *DoWhileTask) Optional(optional bool) *DoWhileTask {
-	task.WorkflowTaskEx.Optional(optional)
+	task.WorkflowTaskBuilder.Optional(optional)
 	return task
 }
 
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *DoWhileTask) Input(key string, value interface{}) *DoWhileTask {
-	task.WorkflowTaskEx.Input(key, value)
+	task.WorkflowTaskBuilder.Input(key, value)
 	return task
 }
 
@@ -98,6 +98,6 @@ func (task *DoWhileTask) InputMap(inputMap map[string]interface{}) *DoWhileTask 
 
 // Description of the task
 func (task *DoWhileTask) Description(description string) *DoWhileTask {
-	task.WorkflowTaskEx.Description(description)
+	task.WorkflowTaskBuilder.Description(description)
 	return task
 }

@@ -19,7 +19,7 @@ import (
 const retryLimit = 5
 
 func TestWorkflowCreation(t *testing.T) {
-	workflow := testdata.NewKitchenSinkWorkflowDefEx(testdata.WorkflowManager)
+	workflow := testdata.NewKitchenSinkWorkflowBuilder(testdata.WorkflowManager)
 	err := workflow.Register(true)
 	if err != nil {
 		t.Fatalf("Failed to register workflow: %s, reason: %s", workflow.GetName(), err.Error())
@@ -43,7 +43,7 @@ func TestWorkflowCreation(t *testing.T) {
 
 func TestRemoveWorkflow(t *testing.T) {
 	manager := testdata.WorkflowManager
-	wf := workflow.NewWorkflowDefEx(manager)
+	wf := workflow.NewWorkflowBuilder(manager)
 	wf.Name("temp_wf_" + strconv.Itoa(time.Now().Nanosecond())).Version(1)
 	wf = wf.Add(workflow.NewSetVariableTask("set_var").Input("var_value", 42))
 	err := wf.Register(true)
@@ -74,15 +74,18 @@ func TestRemoveWorkflow(t *testing.T) {
 
 func TestRunWorkflow(t *testing.T) {
 	manager := testdata.WorkflowManager
-	wf := workflow.NewWorkflowDefEx(manager).
+	wf := workflow.NewWorkflowBuilder(manager).
 		Name("temp_wf_2_" + strconv.Itoa(time.Now().Nanosecond())).
 		Version(1).
-		OwnerEmail("hello@swiftsoftwaregroup.com")
+		OwnerEmail("test@test.com")
+
 	wf = wf.Add(workflow.NewSetVariableTask("set_var").Input("var_value", 42))
+
 	wf.OutputParameters(map[string]interface{}{
 		"param1": "Test",
 		"param2": 123,
 	})
+
 	err := wf.Register(true)
 
 	assert.NoError(t, err, "Failed to register workflow")
@@ -113,12 +116,12 @@ func TestRunWorkflowWithCorrelationIds(t *testing.T) {
 	correlationId1 := "correlationId1-" + uuid.New().String()
 	correlationId2 := "correlationId2-" + uuid.New().String()
 
-	httpTaskWorkflow1 := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
+	httpTaskWorkflow1 := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_HTTP" + correlationId1).
 		OwnerEmail("test@test.com").
 		Version(1).
 		Add(common.TestHttpTask)
-	httpTaskWorkflow2 := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
+	httpTaskWorkflow2 := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_HTTP" + correlationId2).
 		OwnerEmail("test@test.com").
 		Version(1).
@@ -148,7 +151,7 @@ func TestRunWorkflowWithCorrelationIds(t *testing.T) {
 func TestTerminateWorkflowWithFailure(t *testing.T) {
 
 	manager := testdata.WorkflowManager
-	wf := workflow.NewWorkflowDefEx(manager).
+	wf := workflow.NewWorkflowBuilder(manager).
 		Name("TEST_GO_SET_VAR_USED_AS_FAILURE").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -158,7 +161,7 @@ func TestTerminateWorkflowWithFailure(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	workflowWait := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
+	workflowWait := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_WAIT_CONDUCTOR").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -186,7 +189,7 @@ func TestTerminateWorkflowWithFailure(t *testing.T) {
 
 func TestRunWorkflowSync(t *testing.T) {
 	manager := testdata.WorkflowManager
-	wf := workflow.NewWorkflowDefEx(manager).
+	wf := workflow.NewWorkflowBuilder(manager).
 		Name("temp_wf_3_" + strconv.Itoa(time.Now().Nanosecond())).
 		Version(1).
 		OwnerEmail("test@test.com")
@@ -221,11 +224,11 @@ func TestRunWorkflowSync(t *testing.T) {
 }
 
 func startWorkers() {
-	testdata.WorkerRunner.StartWorker("simple_task", testdata.SimpleWorker, 10, 100*time.Millisecond)
-	testdata.WorkerRunner.StartWorker("dynamic_fork_prep", testdata.DynamicForkWorker, 3, 100*time.Millisecond)
+	testdata.WorkerHost.StartWorker("custom_task", testdata.CustomWorker, 10, 100*time.Millisecond)
+	testdata.WorkerHost.StartWorker("dynamic_fork_prep", testdata.DynamicForkWorker, 3, 100*time.Millisecond)
 }
 
-func executeWorkflowWithRetries(wf *workflow.WorkflowDefEx, workflowInput interface{}) (*model.WorkflowRun, error) {
+func executeWorkflowWithRetries(wf *workflow.WorkflowBuilder, workflowInput interface{}) (*model.WorkflowRun, error) {
 	for attempt := 0; attempt < retryLimit; attempt += 1 {
 		workflowRun, err := wf.RunWorkflowWithInput(workflowInput, "")
 		if err != nil {

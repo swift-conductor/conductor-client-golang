@@ -30,7 +30,7 @@ func init() {
 }
 
 func TestHttpTask(t *testing.T) {
-	httpTaskWorkflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
+	httpTaskWorkflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_HTTP").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -53,42 +53,42 @@ func TestHttpTask(t *testing.T) {
 	}
 }
 
-func SimpleTask(t *testing.T) {
-	err := testdata.ValidateTaskRegistration(*common.TestSimpleTask.ToTaskDef())
+func CustomTask(t *testing.T) {
+	err := testdata.ValidateTaskRegistration(*common.TestCustomTask.ToTaskDef())
 	if err != nil {
 		t.Fatal(err)
 	}
-	simpleTaskWorkflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
-		Name("TEST_GO_WORKFLOW_SIMPLE").
+	customTaskWorkflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+		Name("TEST_GO_WORKFLOW_CUSTOM").
 		Version(1).
 		OwnerEmail("test@test.com").
-		Add(common.TestSimpleTask)
-	err = testdata.WorkerRunner.StartWorker(
-		common.TestSimpleTask.ReferenceName(),
-		testdata.SimpleWorker,
+		Add(common.TestCustomTask)
+	err = testdata.WorkerHost.StartWorker(
+		common.TestCustomTask.ReferenceName(),
+		testdata.CustomWorker,
 		testdata.WorkerQty,
 		testdata.WorkerPollInterval,
 	)
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.ValidateWorkflow(simpleTaskWorkflow, common.WorkflowValidationTimeout, model.CompletedWorkflow)
+	err = testdata.ValidateWorkflow(customTaskWorkflow, common.WorkflowValidationTimeout, model.CompletedWorkflow)
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.ValidateWorkflowBulk(simpleTaskWorkflow, common.WorkflowValidationTimeout, common.WorkflowBulkQty)
+	err = testdata.ValidateWorkflowBulk(customTaskWorkflow, common.WorkflowValidationTimeout, common.WorkflowBulkQty)
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.WorkerRunner.DecreaseBatchSize(
-		common.TestSimpleTask.ReferenceName(),
+	err = testdata.WorkerHost.DecreaseBatchSize(
+		common.TestCustomTask.ReferenceName(),
 		testdata.WorkerQty,
 	)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = testdata.ValidateWorkflowDeletion(simpleTaskWorkflow)
+	err = testdata.ValidateWorkflowDeletion(customTaskWorkflow)
 	if err != nil {
 		t.Fatal(
 			"Failed to delete workflow. Reason: ", err.Error(),
@@ -96,44 +96,44 @@ func SimpleTask(t *testing.T) {
 	}
 }
 
-func SimpleTaskWithoutRetryCount(t *testing.T) {
-	taskToRegister := common.TestSimpleTask.ToTaskDef()
+func CustomTaskWithoutRetryCount(t *testing.T) {
+	taskToRegister := common.TestCustomTask.ToTaskDef()
 	taskToRegister.RetryCount = 0
 	err := testdata.ValidateTaskRegistration(*taskToRegister)
 	if err != nil {
 		t.Fatal(err)
 	}
-	simpleTaskWorkflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
-		Name("TEST_GO_WORKFLOW_SIMPLE").
+	customTaskWorkflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+		Name("TEST_GO_WORKFLOW_CUSTOM").
 		Version(1).
 		OwnerEmail("test@test.com").
-		Add(common.TestSimpleTask)
-	err = testdata.WorkerRunner.StartWorker(
-		common.TestSimpleTask.ReferenceName(),
-		testdata.SimpleWorker,
+		Add(common.TestCustomTask)
+	err = testdata.WorkerHost.StartWorker(
+		common.TestCustomTask.ReferenceName(),
+		testdata.CustomWorker,
 		testdata.WorkerQty,
 		testdata.WorkerPollInterval,
 	)
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.ValidateWorkflow(simpleTaskWorkflow, common.WorkflowValidationTimeout, model.CompletedWorkflow)
+	err = testdata.ValidateWorkflow(customTaskWorkflow, common.WorkflowValidationTimeout, model.CompletedWorkflow)
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.ValidateWorkflowBulk(simpleTaskWorkflow, common.WorkflowValidationTimeout, common.WorkflowBulkQty)
+	err = testdata.ValidateWorkflowBulk(customTaskWorkflow, common.WorkflowValidationTimeout, common.WorkflowBulkQty)
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.WorkerRunner.DecreaseBatchSize(
-		common.TestSimpleTask.ReferenceName(),
+	err = testdata.WorkerHost.DecreaseBatchSize(
+		common.TestCustomTask.ReferenceName(),
 		testdata.WorkerQty,
 	)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = testdata.ValidateWorkflowDeletion(simpleTaskWorkflow)
+	err = testdata.ValidateWorkflowDeletion(customTaskWorkflow)
 	if err != nil {
 		t.Fatal(
 			"Failed to delete workflow. Reason: ", err.Error(),
@@ -142,7 +142,7 @@ func SimpleTaskWithoutRetryCount(t *testing.T) {
 }
 
 func TestInlineTask(t *testing.T) {
-	inlineTaskWorkflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
+	inlineTaskWorkflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_INLINE_TASK").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -165,7 +165,7 @@ func TestInlineTask(t *testing.T) {
 }
 
 func TestSqsEventTask(t *testing.T) {
-	workflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
+	workflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_EVENT_SQS").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -184,7 +184,7 @@ func TestSqsEventTask(t *testing.T) {
 }
 
 func TestConductorEventTask(t *testing.T) {
-	workflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
+	workflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_EVENT_CONDUCTOR").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -203,7 +203,7 @@ func TestConductorEventTask(t *testing.T) {
 }
 
 func TestKafkaPublishTask(t *testing.T) {
-	workflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
+	workflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_KAFKA_PUBLISH").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -226,7 +226,7 @@ func TestDoWhileTask(t *testing.T) {
 }
 
 func TestTerminateTask(t *testing.T) {
-	workflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
+	workflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_TERMINATE").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -245,7 +245,7 @@ func TestTerminateTask(t *testing.T) {
 }
 
 func TestSwitchTask(t *testing.T) {
-	workflow := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
+	workflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
 		Name("TEST_GO_WORKFLOW_SWITCH").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -264,7 +264,7 @@ func TestSwitchTask(t *testing.T) {
 }
 
 func TestDynamicForkWorkflow(t *testing.T) {
-	wf := workflow.NewWorkflowDefEx(testdata.WorkflowManager).
+	wf := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
 		Name("dynamic_workflow_array_sub_workflow").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -303,7 +303,7 @@ func createDynamicForkTask() *workflow.DynamicForkTask {
 }
 
 func TestComplexSwitchWorkflow(t *testing.T) {
-	wf := testdata.GetWorkflowDefExWithComplexSwitchTask()
+	wf := testdata.GetWorkflowBuilderWithComplexSwitchTask()
 	err := testdata.ValidateWorkflowRegistration(wf)
 	if err != nil {
 		t.Fatal(err)

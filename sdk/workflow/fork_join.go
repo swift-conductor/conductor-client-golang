@@ -14,7 +14,7 @@ import (
 )
 
 type ForkTask struct {
-	WorkflowTaskEx
+	WorkflowTaskBuilder
 	forkedTasks [][]WorkflowTaskInterface
 	join        *JoinTask
 }
@@ -46,7 +46,7 @@ type ForkTask struct {
  */
 func NewForkTask(taskRefName string, forkedTask ...[]WorkflowTaskInterface) *ForkTask {
 	return &ForkTask{
-		WorkflowTaskEx: WorkflowTaskEx{
+		WorkflowTaskBuilder: WorkflowTaskBuilder{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -60,7 +60,7 @@ func NewForkTask(taskRefName string, forkedTask ...[]WorkflowTaskInterface) *For
 
 func NewForkTaskWithJoin(taskRefName string, join *JoinTask, forkedTask ...[]WorkflowTaskInterface) *ForkTask {
 	return &ForkTask{
-		WorkflowTaskEx: WorkflowTaskEx{
+		WorkflowTaskBuilder: WorkflowTaskBuilder{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -74,7 +74,7 @@ func NewForkTaskWithJoin(taskRefName string, join *JoinTask, forkedTask ...[]Wor
 }
 
 func (task *ForkTask) toWorkflowTask() []model.WorkflowTask {
-	forkWorkflowTask := task.WorkflowTaskEx.toWorkflowTask()[0]
+	forkWorkflowTask := task.WorkflowTaskBuilder.toWorkflowTask()[0]
 	forkWorkflowTask.ForkTasks = make([][]model.WorkflowTask, len(task.forkedTasks))
 	for i, forkedTask := range task.forkedTasks {
 		forkWorkflowTask.ForkTasks[i] = make([]model.WorkflowTask, len(forkedTask))
@@ -98,7 +98,7 @@ func (task *ForkTask) getJoinTask() model.WorkflowTask {
 
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *ForkTask) Input(key string, value interface{}) *ForkTask {
-	task.WorkflowTaskEx.Input(key, value)
+	task.WorkflowTaskBuilder.Input(key, value)
 	return task
 }
 
@@ -112,12 +112,12 @@ func (task *ForkTask) InputMap(inputMap map[string]interface{}) *ForkTask {
 
 // Optional if set to true, the task will not fail the workflow if one of the loop task fails
 func (task *ForkTask) Optional(optional bool) *ForkTask {
-	task.WorkflowTaskEx.Optional(optional)
+	task.WorkflowTaskBuilder.Optional(optional)
 	return task
 }
 
 // Description of the task
 func (task *ForkTask) Description(description string) *ForkTask {
-	task.WorkflowTaskEx.Description(description)
+	task.WorkflowTaskBuilder.Description(description)
 	return task
 }

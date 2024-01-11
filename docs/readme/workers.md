@@ -34,9 +34,9 @@ type TaskOutput struct {
     Value   float64
 }
 
-// SimpleWorker function accepts Task as input and returns TaskOutput as result
+// CustomWorker function accepts Task as input and returns TaskOutput as result
 //If there is a failure, error can be returned and the task will be marked as FAILED
-func SimpleWorker(t *model.WorkerTask) (interface{}, error) {
+func CustomWorker(t *model.WorkerTask) (interface{}, error) {
     taskResult := &TaskOutput{
         Keys:    []string{"Key1", "Key2"},
         Message: "Hello World",
@@ -68,7 +68,7 @@ func LongRunningTaskWorker(t *model.WorkerTask) (interface{}, error) {
 
 ## Starting Workers
 
-`WorkerRunner` interface is used to start the workers, which takes care of polling server for the work, executing worker code and updating the results back to the server.
+`WorkerHost` interface is used to start the workers, which takes care of polling server for the work, executing worker code and updating the results back to the server.
 
 ```go
 apiClient := client.NewAPIClient(
@@ -76,16 +76,16 @@ apiClient := client.NewAPIClient(
     "http://localhost:8080/api",
 ))
 
-taskRunner := worker.NewWorkerRunnerWithApiClient(apiClient)
+workerHost := worker.NewWorkerHostWithApiClient(apiClient)
 
-// Start polling for a task by name "simple_task", with a batch size of 1 and 1 second interval
+// Start polling for a task by name "custom_task", with a batch size of 1 and 1 second interval
 // Between polls if there are no tasks available to execute
-taskRunner.StartWorker("simple_task", examples.SimpleWorker, 1, time.Second*1)
+workerHost.StartWorker("custom_task", examples.CustomWorker, 1, time.Second*1)
 
 // Add more StartWorker calls as needed
 
 // Block
-taskRunner.WaitWorkers()
+workerHost.WaitWorkers()
 ```
 
 ## Task Management APIs

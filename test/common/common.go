@@ -20,8 +20,8 @@ var (
 		},
 	)
 
-	TestSimpleTask = workflow.NewSimpleTask(
-		"TEST_GO_TASK_SIMPLE", "TEST_GO_TASK_SIMPLE",
+	TestCustomTask = workflow.NewCustomTask(
+		"TEST_GO_TASK_CUSTOM", "TEST_GO_TASK_CUSTOM",
 	)
 
 	TestTerminateTask = workflow.NewTerminateTask(

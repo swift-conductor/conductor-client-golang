@@ -20,9 +20,9 @@ import (
 )
 
 const (
-	TaskName = "TEST_GO_TASK_SIMPLE"
+	TaskName = "TEST_GO_TASK_CUSTOM"
 
-	WorkflowName              = "TEST_GO_WORKFLOW_SIMPLE"
+	WorkflowName              = "TEST_GO_WORKFLOW_CUSTOM"
 	WorkflowCompletionTimeout = 5 * time.Second
 	WorkflowExecutionQty      = 15
 
@@ -54,7 +54,7 @@ func ExampleWorker(t *model.WorkerTask) (interface{}, error) {
 	return taskResult, nil
 }
 
-func SimpleWorker(t *model.WorkerTask) (interface{}, error) {
+func CustomWorker(t *model.WorkerTask) (interface{}, error) {
 	taskResult := model.NewTaskResultFromTask(t)
 	taskResult.OutputData = map[string]interface{}{
 		"key":  "value",
@@ -98,7 +98,7 @@ func validateWorker(worker model.WorkerTaskFunction, expectedOutput map[string]i
 	if err != nil {
 		return err
 	}
-	err = WorkerRunner.StartWorker(
+	err = WorkerHost.StartWorker(
 		TaskName,
 		worker,
 		WorkerQty,
@@ -124,7 +124,7 @@ func validateWorker(worker model.WorkerTaskFunction, expectedOutput map[string]i
 			return err
 		}
 	}
-	return WorkerRunner.DecreaseBatchSize(
+	return WorkerHost.DecreaseBatchSize(
 		TaskName,
 		WorkerQty,
 	)

@@ -24,7 +24,7 @@ const (
 	AlertOnly       TimeoutPolicy = "ALERT_ONLY"
 )
 
-type WorkflowDefEx struct {
+type WorkflowBuilder struct {
 	manager                       *WorkflowManager
 	name                          string
 	version                       int32
@@ -42,170 +42,170 @@ type WorkflowDefEx struct {
 	workflowStatusListenerEnabled bool
 }
 
-func NewWorkflowDefEx(manager *WorkflowManager) *WorkflowDefEx {
-	return &WorkflowDefEx{
+func NewWorkflowBuilder(manager *WorkflowManager) *WorkflowBuilder {
+	return &WorkflowBuilder{
 		manager:       manager,
 		timeoutPolicy: AlertOnly,
 		restartable:   true,
 	}
 }
 
-func (workflow *WorkflowDefEx) Name(name string) *WorkflowDefEx {
+func (workflow *WorkflowBuilder) Name(name string) *WorkflowBuilder {
 	workflow.name = name
 	return workflow
 }
 
-func (workflow *WorkflowDefEx) Version(version int32) *WorkflowDefEx {
+func (workflow *WorkflowBuilder) Version(version int32) *WorkflowBuilder {
 	workflow.version = version
 	return workflow
 }
 
-func (workflow *WorkflowDefEx) Description(description string) *WorkflowDefEx {
+func (workflow *WorkflowBuilder) Description(description string) *WorkflowBuilder {
 	workflow.description = description
 	return workflow
 }
 
-func (workflow *WorkflowDefEx) TimeoutPolicy(timeoutPolicy TimeoutPolicy, timeoutSeconds int64) *WorkflowDefEx {
+func (workflow *WorkflowBuilder) TimeoutPolicy(timeoutPolicy TimeoutPolicy, timeoutSeconds int64) *WorkflowBuilder {
 	workflow.timeoutPolicy = timeoutPolicy
 	workflow.timeoutSeconds = timeoutSeconds
 	return workflow
 }
 
-func (workflow *WorkflowDefEx) TimeoutSeconds(timeoutSeconds int64) *WorkflowDefEx {
+func (workflow *WorkflowBuilder) TimeoutSeconds(timeoutSeconds int64) *WorkflowBuilder {
 	workflow.timeoutSeconds = timeoutSeconds
 	return workflow
 }
 
 // FailureWorkflow name of the workflow to execute when this workflow fails.
 // Failure workflows can be used for handling compensation logic
-func (workflow *WorkflowDefEx) FailureWorkflow(failureWorkflow string) *WorkflowDefEx {
+func (workflow *WorkflowBuilder) FailureWorkflow(failureWorkflow string) *WorkflowBuilder {
 	workflow.failureWorkflow = failureWorkflow
 	return workflow
 }
 
 // Restartable if the workflow can be restarted after it has reached terminal state.
 // Set this to false if restarting workflow can have side effects
-func (workflow *WorkflowDefEx) Restartable(restartable bool) *WorkflowDefEx {
+func (workflow *WorkflowBuilder) Restartable(restartable bool) *WorkflowBuilder {
 	workflow.restartable = restartable
 	return workflow
 }
 
 // WorkflowStatusListenerEnabled if the workflow status listener need to be enabled.
-func (workflow *WorkflowDefEx) WorkflowStatusListenerEnabled(workflowStatusListenerEnabled bool) *WorkflowDefEx {
+func (workflow *WorkflowBuilder) WorkflowStatusListenerEnabled(workflowStatusListenerEnabled bool) *WorkflowBuilder {
 	workflow.workflowStatusListenerEnabled = workflowStatusListenerEnabled
 	return workflow
 }
 
 // OutputParameters Workflow outputs. Workflow output follows similar structure as task inputs
 // See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for more details
-func (workflow *WorkflowDefEx) OutputParameters(outputParameters interface{}) *WorkflowDefEx {
+func (workflow *WorkflowBuilder) OutputParameters(outputParameters interface{}) *WorkflowBuilder {
 	workflow.outputParameters = getInputAsMap(outputParameters)
 	return workflow
 }
 
 // InputTemplate template input to the workflow.  Can have combination of variables (e.g. ${workflow.input.abc}) and
 // static values
-func (workflow *WorkflowDefEx) InputTemplate(inputTemplate interface{}) *WorkflowDefEx {
+func (workflow *WorkflowBuilder) InputTemplate(inputTemplate interface{}) *WorkflowBuilder {
 	workflow.inputTemplate = getInputAsMap(inputTemplate)
 	return workflow
 }
 
 // Variables Workflow variables are set using SET_VARIABLE task.  Excellent way to maintain business state
 // e.g. Variables can maintain business/user specific states which can be queried and inspected to find out the state of the workflow
-func (workflow *WorkflowDefEx) Variables(variables interface{}) *WorkflowDefEx {
+func (workflow *WorkflowBuilder) Variables(variables interface{}) *WorkflowBuilder {
 	workflow.variables = getInputAsMap(variables)
 	return workflow
 }
 
 // InputParameters List of the input parameters to the workflow.  Used ONLY for the documentation purpose.
-func (workflow *WorkflowDefEx) InputParameters(inputParameters ...string) *WorkflowDefEx {
+func (workflow *WorkflowBuilder) InputParameters(inputParameters ...string) *WorkflowBuilder {
 	workflow.inputParameters = inputParameters
 	return workflow
 }
 
-func (workflow *WorkflowDefEx) OwnerEmail(ownerEmail string) *WorkflowDefEx {
+func (workflow *WorkflowBuilder) OwnerEmail(ownerEmail string) *WorkflowBuilder {
 	workflow.ownerEmail = ownerEmail
 	return workflow
 }
 
-func (workflow *WorkflowDefEx) GetName() (name string) {
+func (workflow *WorkflowBuilder) GetName() (name string) {
 	return workflow.name
 }
 
-func (workflow *WorkflowDefEx) GetOutputParameters() (outputParameters map[string]interface{}) {
+func (workflow *WorkflowBuilder) GetOutputParameters() (outputParameters map[string]interface{}) {
 	return workflow.outputParameters
 }
 
-func (workflow *WorkflowDefEx) GetVersion() (version int32) {
+func (workflow *WorkflowBuilder) GetVersion() (version int32) {
 	return workflow.version
 }
 
-func (workflow *WorkflowDefEx) Add(task WorkflowTaskInterface) *WorkflowDefEx {
+func (workflow *WorkflowBuilder) Add(task WorkflowTaskInterface) *WorkflowBuilder {
 	workflow.tasks = append(workflow.tasks, task)
 	return workflow
 }
 
 // Register the workflow definition with the server. If overwrite is set, the definition on the server will be overwritten.
 // When not set, the call fails if there is any change in the workflow definition between the server and what is being registered.
-func (workflow *WorkflowDefEx) Register(overwrite bool) error {
-	return workflow.manager.RegisterWorkflow(overwrite, workflow.ToWorkflowDef())
-}
+// func (workflow *WorkflowBuilder) Register(overwrite bool) error {
+// 	return workflow.manager.RegisterWorkflow(overwrite, workflow.ToWorkflowDef())
+// }
 
 // Register the workflow definition with the server. If overwrite is set, the definition on the server will be overwritten.
 // When not set, the call fails if there is any change in the workflow definition between the server and what is being registered.
-func (workflow *WorkflowDefEx) UnRegister() error {
-	return workflow.manager.UnRegisterWorkflow(workflow.name, workflow.version)
-}
+// func (workflow *WorkflowBuilder) UnRegister() error {
+// 	return workflow.manager.UnRegisterWorkflow(workflow.name, workflow.version)
+// }
 
 // StartWorkflowWithInput RunWorkflowWithInput Execute the workflow with specific input.  The input struct MUST be serializable to JSON
 // Returns the workflow Id that can be used to monitor and get the status of the workflow execution
-func (workflow *WorkflowDefEx) StartWorkflowWithInput(input interface{}) (workflowId string, err error) {
-	version := workflow.GetVersion()
-	return workflow.manager.StartWorkflow(
-		&model.StartWorkflowRequest{
-			Name:        workflow.GetName(),
-			Version:     version,
-			Input:       getInputAsMap(input),
-			WorkflowDef: workflow.ToWorkflowDef(),
-		},
-	)
-}
+// func (workflow *WorkflowBuilder) StartWorkflowWithInput(input interface{}) (workflowId string, err error) {
+// 	version := workflow.GetVersion()
+// 	return workflow.manager.StartWorkflow(
+// 		&model.StartWorkflowRequest{
+// 			Name:        workflow.GetName(),
+// 			Version:     version,
+// 			Input:       getInputAsMap(input),
+// 			WorkflowDef: workflow.ToWorkflowDef(),
+// 		},
+// 	)
+// }
 
 // StartWorkflow starts the workflow execution with startWorkflowRequest that allows you to specify more details like task domains, correlationId etc.
 // Returns the ID of the newly created workflow
-func (workflow *WorkflowDefEx) StartWorkflow(startWorkflowRequest *model.StartWorkflowRequest) (workflowId string, err error) {
-	startWorkflowRequest.WorkflowDef = workflow.ToWorkflowDef()
-	return workflow.manager.StartWorkflow(startWorkflowRequest)
-}
+// func (workflow *WorkflowBuilder) StartWorkflow(startWorkflowRequest *model.StartWorkflowRequest) (workflowId string, err error) {
+// 	startWorkflowRequest.WorkflowDef = workflow.ToWorkflowDef()
+// 	return workflow.manager.StartWorkflow(startWorkflowRequest)
+// }
 
 // RunWorkflowWithInput Execute the workflow with specific input and wait for the workflow to complete or until the task specified as waitUntil is completed.
 // waitUntilTask Reference name of the task which MUST be completed before returning the output.  if specified as empty string, then the call waits until the
 // workflow completes or reaches the timeout (as specified on the server)
 // The input struct MUST be serializable to JSON
 // Returns the workflow output
-func (workflow *WorkflowDefEx) RunWorkflowWithInput(input interface{}, waitUntilTask string) (worfklowRun *model.WorkflowRun, err error) {
-	version := workflow.GetVersion()
-	return workflow.manager.RunWorkflow(
-		&model.StartWorkflowRequest{
-			Name:        workflow.GetName(),
-			Version:     version,
-			Input:       getInputAsMap(input),
-			WorkflowDef: workflow.ToWorkflowDef(),
-		},
-		waitUntilTask,
-	)
-}
+// func (workflow *WorkflowBuilder) RunWorkflowWithInput(input interface{}, waitUntilTask string) (worfklowRun *model.WorkflowRun, err error) {
+// 	version := workflow.GetVersion()
+// 	return workflow.manager.RunWorkflow(
+// 		&model.StartWorkflowRequest{
+// 			Name:        workflow.GetName(),
+// 			Version:     version,
+// 			Input:       getInputAsMap(input),
+// 			WorkflowDef: workflow.ToWorkflowDef(),
+// 		},
+// 		waitUntilTask,
+// 	)
+// }
 
 // StartWorkflowsAndMonitorExecution Starts the workflow execution and returns a channel that can be used to monitor the workflow execution
 // This method is useful for short duration workflows that are expected to complete in few seconds.  For long-running workflows use GetStatus APIs to periodically check the status
-func (workflow *WorkflowDefEx) StartWorkflowsAndMonitorExecution(startWorkflowRequest *model.StartWorkflowRequest) (runningChannel RunningWorkflowChannel, err error) {
-	workflowId, err := workflow.StartWorkflow(startWorkflowRequest)
-	if err != nil {
-		return nil, err
-	}
+// func (workflow *WorkflowBuilder) StartWorkflowsAndMonitorExecution(startWorkflowRequest *model.StartWorkflowRequest) (runningChannel RunningWorkflowChannel, err error) {
+// 	workflowId, err := workflow.StartWorkflow(startWorkflowRequest)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-	return workflow.manager.MonitorExecution(workflowId)
-}
+// 	return workflow.manager.MonitorExecution(workflowId)
+// }
 
 func getInputAsMap(input interface{}) map[string]interface{} {
 	if input == nil {
@@ -231,7 +231,7 @@ func getInputAsMap(input interface{}) map[string]interface{} {
 }
 
 // ToWorkflowDef converts the workflow to the JSON serializable format
-func (workflow *WorkflowDefEx) ToWorkflowDef() *model.WorkflowDef {
+func (workflow *WorkflowBuilder) ToWorkflowDef() *model.WorkflowDef {
 	return &model.WorkflowDef{
 		Name:                          workflow.name,
 		Description:                   workflow.description,
@@ -251,7 +251,7 @@ func (workflow *WorkflowDefEx) ToWorkflowDef() *model.WorkflowDef {
 	}
 }
 
-func getWorkflowTasksFromConductorWorkflow(workflow *WorkflowDefEx) []model.WorkflowTask {
+func getWorkflowTasksFromConductorWorkflow(workflow *WorkflowBuilder) []model.WorkflowTask {
 	workflowTasks := make([]model.WorkflowTask, 0)
 	for _, task := range workflow.tasks {
 		workflowTasks = append(

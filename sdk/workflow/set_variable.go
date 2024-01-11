@@ -10,12 +10,12 @@
 package workflow
 
 type SetVariableTask struct {
-	WorkflowTaskEx
+	WorkflowTaskBuilder
 }
 
 func NewSetVariableTask(taskRefName string) *SetVariableTask {
 	return &SetVariableTask{
-		WorkflowTaskEx{
+		WorkflowTaskBuilder{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -28,7 +28,7 @@ func NewSetVariableTask(taskRefName string) *SetVariableTask {
 
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *SetVariableTask) Input(key string, value interface{}) *SetVariableTask {
-	task.WorkflowTaskEx.Input(key, value)
+	task.WorkflowTaskBuilder.Input(key, value)
 	return task
 }
 
@@ -42,12 +42,12 @@ func (task *SetVariableTask) InputMap(inputMap map[string]interface{}) *SetVaria
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *SetVariableTask) Optional(optional bool) *SetVariableTask {
-	task.WorkflowTaskEx.Optional(optional)
+	task.WorkflowTaskBuilder.Optional(optional)
 	return task
 }
 
 // Description of the task
 func (task *SetVariableTask) Description(description string) *SetVariableTask {
-	task.WorkflowTaskEx.Description(description)
+	task.WorkflowTaskBuilder.Description(description)
 	return task
 }

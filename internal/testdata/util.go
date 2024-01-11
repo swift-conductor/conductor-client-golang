@@ -49,7 +49,7 @@ var (
 )
 
 var WorkflowManager = workflow.NewWorkflowManager(apiClient)
-var WorkerRunner = worker.NewWorkerRunnerWithApiClient(apiClient)
+var WorkerHost = worker.NewWorkerHostWithApiClient(apiClient)
 
 func init() {
 	log.SetFormatter(&log.JSONFormatter{})
@@ -123,7 +123,7 @@ func StartWorkflows(workflowQty int, workflowName string) ([]string, error) {
 	return workflowIdList, nil
 }
 
-func ValidateWorkflow(conductorWorkflow *workflow.WorkflowDefEx, timeout time.Duration, expectedStatus model.WorkflowStatus) error {
+func ValidateWorkflow(conductorWorkflow *workflow.WorkflowBuilder, timeout time.Duration, expectedStatus model.WorkflowStatus) error {
 	err := ValidateWorkflowRegistration(conductorWorkflow)
 	if err != nil {
 		return err
@@ -152,7 +152,7 @@ func ValidateWorkflow(conductorWorkflow *workflow.WorkflowDefEx, timeout time.Du
 	return nil
 }
 
-func ValidateWorkflowBulk(conductorWorkflow *workflow.WorkflowDefEx, timeout time.Duration, amount int) error {
+func ValidateWorkflowBulk(conductorWorkflow *workflow.WorkflowBuilder, timeout time.Duration, amount int) error {
 	err := ValidateWorkflowRegistration(conductorWorkflow)
 	if err != nil {
 		return err
@@ -198,7 +198,7 @@ func ValidateTaskRegistration(taskDefs ...model.TaskDef) error {
 	return nil
 }
 
-func ValidateWorkflowRegistration(workflow *workflow.WorkflowDefEx) error {
+func ValidateWorkflowRegistration(workflow *workflow.WorkflowBuilder) error {
 	for attempt := 0; attempt < 5; attempt += 1 {
 		err := workflow.Register(true)
 		if err != nil {
@@ -211,7 +211,7 @@ func ValidateWorkflowRegistration(workflow *workflow.WorkflowDefEx) error {
 	return fmt.Errorf("exhausted retries")
 }
 
-func ValidateWorkflowDeletion(workflow *workflow.WorkflowDefEx) error {
+func ValidateWorkflowDeletion(workflow *workflow.WorkflowBuilder) error {
 	for attempt := 0; attempt < 5; attempt += 1 {
 		err := workflow.UnRegister()
 		if err != nil {

@@ -14,7 +14,7 @@ import (
 )
 
 type SwitchTask struct {
-	WorkflowTaskEx
+	WorkflowTaskBuilder
 	DecisionCases map[string][]WorkflowTaskInterface
 	defaultCase   []WorkflowTaskInterface
 	expression    string
@@ -24,7 +24,7 @@ type SwitchTask struct {
 
 func NewSwitchTask(taskRefName string, caseExpression string) *SwitchTask {
 	return &SwitchTask{
-		WorkflowTaskEx: WorkflowTaskEx{
+		WorkflowTaskBuilder: WorkflowTaskBuilder{
 			name:              taskRefName,
 			taskReferenceName: taskRefName,
 			description:       "",
@@ -54,7 +54,7 @@ func (task *SwitchTask) toWorkflowTask() []model.WorkflowTask {
 		task.evaluatorType = "javascript"
 	} else {
 		task.evaluatorType = "value-param"
-		task.WorkflowTaskEx.inputParameters["switchCaseValue"] = task.expression
+		task.WorkflowTaskBuilder.inputParameters["switchCaseValue"] = task.expression
 		task.expression = "switchCaseValue"
 	}
 	var DecisionCases = map[string][]model.WorkflowTask{}
@@ -71,7 +71,7 @@ func (task *SwitchTask) toWorkflowTask() []model.WorkflowTask {
 			defaultCase = append(defaultCase, defaultTask)
 		}
 	}
-	workflowTasks := task.WorkflowTaskEx.toWorkflowTask()
+	workflowTasks := task.WorkflowTaskBuilder.toWorkflowTask()
 	workflowTasks[0].DecisionCases = DecisionCases
 	workflowTasks[0].DefaultCase = defaultCase
 	workflowTasks[0].EvaluatorType = task.evaluatorType
@@ -81,7 +81,7 @@ func (task *SwitchTask) toWorkflowTask() []model.WorkflowTask {
 
 // Input to the task.  See https://swiftconductor.com/devguide/how-tos/Tasks/task-inputs.html for details
 func (task *SwitchTask) Input(key string, value interface{}) *SwitchTask {
-	task.WorkflowTaskEx.Input(key, value)
+	task.WorkflowTaskBuilder.Input(key, value)
 	return task
 }
 
@@ -95,13 +95,13 @@ func (task *SwitchTask) InputMap(inputMap map[string]interface{}) *SwitchTask {
 
 // Description of the task
 func (task *SwitchTask) Description(description string) *SwitchTask {
-	task.WorkflowTaskEx.Description(description)
+	task.WorkflowTaskBuilder.Description(description)
 	return task
 }
 
 // Optional if set to true, the task will not fail the workflow if the task fails
 func (task *SwitchTask) Optional(optional bool) *SwitchTask {
-	task.WorkflowTaskEx.Optional(optional)
+	task.WorkflowTaskBuilder.Optional(optional)
 	return task
 }
 
