@@ -35,7 +35,7 @@ MetadataResourceApiService Create a new workflow definition
   - @param ctx context.Context - for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
 */
-func (a *MetadataResourceApiService) RegisterWorkflowDef(ctx context.Context, overwrite bool, body model.WorkflowDef) (*http.Response, error) {
+func (a *MetadataResourceApiService) RegisterWorkflowDef(ctx context.Context, body model.WorkflowDef) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -47,9 +47,7 @@ func (a *MetadataResourceApiService) RegisterWorkflowDef(ctx context.Context, ov
 	localVarPath := "/metadata/workflow"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{
-		"overwrite": []string{strconv.FormatBool(overwrite)},
-	}
+	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header

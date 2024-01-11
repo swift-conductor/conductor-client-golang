@@ -21,7 +21,7 @@ import (
 )
 
 func TestWorkerBatchSize(t *testing.T) {
-	customTaskWorkflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+	builder := workflow.NewWorkflowBuilder().
 		Name("TEST_GO_WORKFLOW_CUSTOM").
 		Version(1).
 		OwnerEmail("test@test.com").
@@ -43,7 +43,8 @@ func TestWorkerBatchSize(t *testing.T) {
 		t.Fatal("unexpected batch size")
 	}
 
-	err = testdata.ValidateWorkflowBulk(customTaskWorkflow, common.WorkflowValidationTimeout, common.WorkflowBulkQty)
+	workflowDef := builder.ToWorkflowDef()
+	err = testdata.RunWorkflowsBulk(workflowDef, common.WorkflowValidationTimeout, common.WorkflowBulkCount)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -76,7 +77,7 @@ func TestWorkerBatchSize(t *testing.T) {
 		t.Fatal("unexpected batch size")
 	}
 
-	err = testdata.ValidateWorkflowBulk(customTaskWorkflow, common.WorkflowValidationTimeout, common.WorkflowBulkQty)
+	err = testdata.RunWorkflowsBulk(workflowDef, common.WorkflowValidationTimeout, common.WorkflowBulkCount)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -84,16 +85,22 @@ func TestWorkerBatchSize(t *testing.T) {
 
 func TestFaultyWorker(t *testing.T) {
 	logrus.SetLevel(logrus.ErrorLevel)
+
 	taskName := "TEST_GO_FAULTY_TASK"
-	wf := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+
+	builder := workflow.NewWorkflowBuilder().
 		Name("TEST_GO_FAULTY_WORKFLOW").
 		Version(1).
 		OwnerEmail("test@test.com").
 		Add(workflow.NewCustomTask(taskName, taskName))
-	err := wf.Register(true)
+
+	workflowDef := builder.ToWorkflowDef()
+
+	err := testdata.RegisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(err)
 	}
+
 	err = testdata.WorkerHost.StartWorker(
 		taskName,
 		testdata.FaultyWorker,
@@ -103,24 +110,27 @@ func TestFaultyWorker(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.ValidateWorkflow(wf, 5*time.Second, model.FailedWorkflow)
+
+	err = testdata.RunWorkflow(workflowDef, 5*time.Second, model.FailedWorkflow)
 	if err != nil {
 		t.Fatal(err)
 	}
 }
 
-func TestWorkerWithNonRetryableError(t *testing.T) {
+func TestWorkerWithNonRetryError(t *testing.T) {
 	logrus.SetLevel(logrus.ErrorLevel)
 
 	taskName := "TEST_GO_NON_RETRYABLE_ERROR_TASK"
 
-	wf := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+	builder := workflow.NewWorkflowBuilder().
 		Name("TEST_GO_NON_RETRYABLE_ERROR_WF").
 		Version(1).
 		OwnerEmail("test@test.com").
 		Add(workflow.NewCustomTask(taskName, taskName))
 
-	err := wf.Register(true)
+	workflowDef := builder.ToWorkflowDef()
+
+	err := testdata.RegisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -130,7 +140,7 @@ func TestWorkerWithNonRetryableError(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	err = testdata.ValidateWorkflow(wf, 5*time.Second, model.FailedWorkflow)
+	err = testdata.RunWorkflow(workflowDef, 5*time.Second, model.FailedWorkflow)
 	if err != nil {
 		t.Fatal(err)
 	}

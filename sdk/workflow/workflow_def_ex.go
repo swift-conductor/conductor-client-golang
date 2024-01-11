@@ -25,7 +25,6 @@ const (
 )
 
 type WorkflowBuilder struct {
-	manager                       *WorkflowManager
 	name                          string
 	version                       int32
 	description                   string
@@ -42,9 +41,8 @@ type WorkflowBuilder struct {
 	workflowStatusListenerEnabled bool
 }
 
-func NewWorkflowBuilder(manager *WorkflowManager) *WorkflowBuilder {
+func NewWorkflowBuilder() *WorkflowBuilder {
 	return &WorkflowBuilder{
-		manager:       manager,
 		timeoutPolicy: AlertOnly,
 		restartable:   true,
 	}

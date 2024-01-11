@@ -9,7 +9,7 @@ import (
 
 const (
 	WorkflowValidationTimeout = 7 * time.Second
-	WorkflowBulkQty           = 10
+	WorkflowBulkCount         = 10
 )
 
 var (
@@ -35,7 +35,7 @@ var (
 		"switchCaseValue",
 	).
 		Input("switchCaseValue", "${workflow.input.service}").
-		UseJavascript(true).
+		UseJavascript(false).
 		SwitchCase(
 			"REQUEST",
 			TestHttpTask,

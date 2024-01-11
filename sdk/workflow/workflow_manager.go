@@ -85,10 +85,9 @@ func NewWorkflowManager(apiClient *client.APIClient) *WorkflowManager {
 
 // RegisterWorkflow Registers the workflow on the server.  Overwrites if the flag is set.  If the 'overwrite' flag is not set
 // and the workflow definition differs from the one on the server, the call will fail with response code 409
-func (e *WorkflowManager) RegisterWorkflow(overwrite bool, workflow *model.WorkflowDef) error {
+func (e *WorkflowManager) RegisterWorkflow(workflow *model.WorkflowDef) error {
 	response, err := e.metadataClient.RegisterWorkflowDef(
 		context.Background(),
-		overwrite,
 		*workflow,
 	)
 	if err != nil {
@@ -116,14 +115,31 @@ func (e *WorkflowManager) UnRegisterWorkflow(name string, version int32) error {
 
 // RunWorkflow start a workflow and wait until the workflow completes or the waitUntilTask completes
 // Returns the output of the workflow
-func (e *WorkflowManager) RunWorkflow(startWorkflowRequest *model.StartWorkflowRequest, waitUntilTask string) (run *model.WorkflowRun, err error) {
+func (manager *WorkflowManager) RunWorkflow(startWorkflowRequest *model.StartWorkflowRequest, waitUntilTask string) (run *model.WorkflowRun, err error) {
 	requestId := ""
-	version := startWorkflowRequest.Version
-	workflowRun, _, error := e.workflowClient.RunWorkflow(context.Background(), *startWorkflowRequest, requestId, startWorkflowRequest.Name, version, waitUntilTask)
+	workflowRun, _, error := manager.workflowClient.RunWorkflow(context.Background(), *startWorkflowRequest, requestId, startWorkflowRequest.Name, startWorkflowRequest.Version, waitUntilTask)
 	if error != nil {
 		return nil, error
 	}
+
 	return &workflowRun, err
+}
+
+// RunWorkflowWithInput Execute the workflow with specific input and wait for the workflow to complete or until the task specified as waitUntil is completed.
+// waitUntilTask Reference name of the task which MUST be completed before returning the output.  if specified as empty string, then the call waits until the
+// workflow completes or reaches the timeout (as specified on the server)
+// The input struct MUST be serializable to JSON
+// Returns the workflow output
+func (manager *WorkflowManager) RunWorkflowWithInput(workflowDef *model.WorkflowDef, input interface{}, waitUntilTask string) (workflowRun *model.WorkflowRun, err error) {
+	return manager.RunWorkflow(
+		&model.StartWorkflowRequest{
+			Name:        workflowDef.Name,
+			Version:     workflowDef.Version,
+			Input:       getInputAsMap(input),
+			WorkflowDef: workflowDef,
+		},
+		waitUntilTask,
+	)
 }
 
 // MonitorExecution monitors the workflow execution
@@ -144,6 +160,19 @@ func (e *WorkflowManager) StartWorkflow(startWorkflowRequest *model.StartWorkflo
 		return "", err
 	}
 	return id, err
+}
+
+// StartWorkflowWithInput Execute the workflow with specific input.  The input struct MUST be serializable to JSON
+// Returns the workflow Id that can be used to monitor and get the status of the workflow execution
+func (manager *WorkflowManager) StartWorkflowWithInput(workflowDef *model.WorkflowDef, input interface{}) (workflowId string, err error) {
+	return manager.StartWorkflow(
+		&model.StartWorkflowRequest{
+			Name:        workflowDef.Name,
+			Version:     workflowDef.Version,
+			Input:       getInputAsMap(input),
+			WorkflowDef: workflowDef,
+		},
+	)
 }
 
 // StartWorkflows Start workflows in bulk

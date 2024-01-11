@@ -30,22 +30,25 @@ func init() {
 }
 
 func TestHttpTask(t *testing.T) {
-	httpTaskWorkflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+	builder := workflow.NewWorkflowBuilder().
 		Name("TEST_GO_WORKFLOW_HTTP").
 		Version(1).
 		OwnerEmail("test@test.com").
 		WorkflowStatusListenerEnabled(true).
 		Add(common.TestHttpTask)
-	err := testdata.ValidateWorkflow(httpTaskWorkflow, common.WorkflowValidationTimeout, model.CompletedWorkflow)
+
+	workflowDef := builder.ToWorkflowDef()
+
+	err := testdata.RunWorkflow(workflowDef, common.WorkflowValidationTimeout, model.CompletedWorkflow)
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.ValidateWorkflowBulk(httpTaskWorkflow, common.WorkflowValidationTimeout, common.WorkflowBulkQty)
+	err = testdata.RunWorkflowsBulk(workflowDef, common.WorkflowValidationTimeout, common.WorkflowBulkCount)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = testdata.ValidateWorkflowDeletion(httpTaskWorkflow)
+	err = testdata.UnregisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(
 			"Failed to delete workflow. Reason: ", err.Error(),
@@ -54,41 +57,46 @@ func TestHttpTask(t *testing.T) {
 }
 
 func CustomTask(t *testing.T) {
-	err := testdata.ValidateTaskRegistration(*common.TestCustomTask.ToTaskDef())
+	err := testdata.RegisterTasks(*common.TestCustomTask.ToTaskDef())
 	if err != nil {
 		t.Fatal(err)
 	}
-	customTaskWorkflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+
+	builder := workflow.NewWorkflowBuilder().
 		Name("TEST_GO_WORKFLOW_CUSTOM").
 		Version(1).
 		OwnerEmail("test@test.com").
 		Add(common.TestCustomTask)
+
 	err = testdata.WorkerHost.StartWorker(
 		common.TestCustomTask.ReferenceName(),
 		testdata.CustomWorker,
-		testdata.WorkerQty,
+		testdata.WorkerCount,
 		testdata.WorkerPollInterval,
 	)
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.ValidateWorkflow(customTaskWorkflow, common.WorkflowValidationTimeout, model.CompletedWorkflow)
+
+	workflowDef := builder.ToWorkflowDef()
+
+	err = testdata.RunWorkflow(workflowDef, common.WorkflowValidationTimeout, model.CompletedWorkflow)
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.ValidateWorkflowBulk(customTaskWorkflow, common.WorkflowValidationTimeout, common.WorkflowBulkQty)
+	err = testdata.RunWorkflowsBulk(workflowDef, common.WorkflowValidationTimeout, common.WorkflowBulkCount)
 	if err != nil {
 		t.Fatal(err)
 	}
 	err = testdata.WorkerHost.DecreaseBatchSize(
 		common.TestCustomTask.ReferenceName(),
-		testdata.WorkerQty,
+		testdata.WorkerCount,
 	)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = testdata.ValidateWorkflowDeletion(customTaskWorkflow)
+	err = testdata.UnregisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(
 			"Failed to delete workflow. Reason: ", err.Error(),
@@ -99,41 +107,46 @@ func CustomTask(t *testing.T) {
 func CustomTaskWithoutRetryCount(t *testing.T) {
 	taskToRegister := common.TestCustomTask.ToTaskDef()
 	taskToRegister.RetryCount = 0
-	err := testdata.ValidateTaskRegistration(*taskToRegister)
+	err := testdata.RegisterTasks(*taskToRegister)
 	if err != nil {
 		t.Fatal(err)
 	}
-	customTaskWorkflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+
+	builder := workflow.NewWorkflowBuilder().
 		Name("TEST_GO_WORKFLOW_CUSTOM").
 		Version(1).
 		OwnerEmail("test@test.com").
 		Add(common.TestCustomTask)
+
 	err = testdata.WorkerHost.StartWorker(
 		common.TestCustomTask.ReferenceName(),
 		testdata.CustomWorker,
-		testdata.WorkerQty,
+		testdata.WorkerCount,
 		testdata.WorkerPollInterval,
 	)
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.ValidateWorkflow(customTaskWorkflow, common.WorkflowValidationTimeout, model.CompletedWorkflow)
+
+	workflowDef := builder.ToWorkflowDef()
+
+	err = testdata.RunWorkflow(workflowDef, common.WorkflowValidationTimeout, model.CompletedWorkflow)
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.ValidateWorkflowBulk(customTaskWorkflow, common.WorkflowValidationTimeout, common.WorkflowBulkQty)
+	err = testdata.RunWorkflowsBulk(workflowDef, common.WorkflowValidationTimeout, common.WorkflowBulkCount)
 	if err != nil {
 		t.Fatal(err)
 	}
 	err = testdata.WorkerHost.DecreaseBatchSize(
 		common.TestCustomTask.ReferenceName(),
-		testdata.WorkerQty,
+		testdata.WorkerCount,
 	)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = testdata.ValidateWorkflowDeletion(customTaskWorkflow)
+	err = testdata.UnregisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(
 			"Failed to delete workflow. Reason: ", err.Error(),
@@ -142,21 +155,24 @@ func CustomTaskWithoutRetryCount(t *testing.T) {
 }
 
 func TestInlineTask(t *testing.T) {
-	inlineTaskWorkflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+	builder := workflow.NewWorkflowBuilder().
 		Name("TEST_GO_WORKFLOW_INLINE_TASK").
 		Version(1).
 		OwnerEmail("test@test.com").
 		Add(common.TestInlineTask)
-	err := testdata.ValidateWorkflow(inlineTaskWorkflow, common.WorkflowValidationTimeout, model.CompletedWorkflow)
+
+	workflowDef := builder.ToWorkflowDef()
+
+	err := testdata.RunWorkflow(workflowDef, common.WorkflowValidationTimeout, model.CompletedWorkflow)
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = testdata.ValidateWorkflowBulk(inlineTaskWorkflow, common.WorkflowValidationTimeout, common.WorkflowBulkQty)
+	err = testdata.RunWorkflowsBulk(workflowDef, common.WorkflowValidationTimeout, common.WorkflowBulkCount)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = testdata.ValidateWorkflowDeletion(inlineTaskWorkflow)
+	err = testdata.UnregisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(
 			"Failed to delete workflow. Reason: ", err.Error(),
@@ -165,17 +181,20 @@ func TestInlineTask(t *testing.T) {
 }
 
 func TestSqsEventTask(t *testing.T) {
-	workflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+	builder := workflow.NewWorkflowBuilder().
 		Name("TEST_GO_WORKFLOW_EVENT_SQS").
 		Version(1).
 		OwnerEmail("test@test.com").
 		Add(common.TestSqsEventTask)
-	err := testdata.ValidateWorkflowRegistration(workflow)
+
+	workflowDef := builder.ToWorkflowDef()
+
+	err := testdata.RegisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = testdata.ValidateWorkflowDeletion(workflow)
+	err = testdata.UnregisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(
 			"Failed to delete workflow. Reason: ", err.Error(),
@@ -184,17 +203,20 @@ func TestSqsEventTask(t *testing.T) {
 }
 
 func TestConductorEventTask(t *testing.T) {
-	workflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+	builder := workflow.NewWorkflowBuilder().
 		Name("TEST_GO_WORKFLOW_EVENT_CONDUCTOR").
 		Version(1).
 		OwnerEmail("test@test.com").
 		Add(common.TestConductorEventTask)
-	err := testdata.ValidateWorkflowRegistration(workflow)
+
+	workflowDef := builder.ToWorkflowDef()
+
+	err := testdata.RegisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = testdata.ValidateWorkflowDeletion(workflow)
+	err = testdata.UnregisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(
 			"Failed to delete workflow. Reason: ", err.Error(),
@@ -203,17 +225,20 @@ func TestConductorEventTask(t *testing.T) {
 }
 
 func TestKafkaPublishTask(t *testing.T) {
-	workflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+	builder := workflow.NewWorkflowBuilder().
 		Name("TEST_GO_WORKFLOW_KAFKA_PUBLISH").
 		Version(1).
 		OwnerEmail("test@test.com").
 		Add(common.TestKafkaPublishTask)
-	err := testdata.ValidateWorkflowRegistration(workflow)
+
+	workflowDef := builder.ToWorkflowDef()
+
+	err := testdata.RegisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = testdata.ValidateWorkflowDeletion(workflow)
+	err = testdata.UnregisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(
 			"Failed to delete workflow. Reason: ", err.Error(),
@@ -222,21 +247,23 @@ func TestKafkaPublishTask(t *testing.T) {
 }
 
 func TestDoWhileTask(t *testing.T) {
-
 }
 
 func TestTerminateTask(t *testing.T) {
-	workflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+	builder := workflow.NewWorkflowBuilder().
 		Name("TEST_GO_WORKFLOW_TERMINATE").
 		Version(1).
 		OwnerEmail("test@test.com").
 		Add(common.TestTerminateTask)
-	err := testdata.ValidateWorkflowRegistration(workflow)
+
+	workflowDef := builder.ToWorkflowDef()
+
+	err := testdata.RegisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = testdata.ValidateWorkflowDeletion(workflow)
+	err = testdata.UnregisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(
 			"Failed to delete workflow. Reason: ", err.Error(),
@@ -245,17 +272,20 @@ func TestTerminateTask(t *testing.T) {
 }
 
 func TestSwitchTask(t *testing.T) {
-	workflow := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+	builder := workflow.NewWorkflowBuilder().
 		Name("TEST_GO_WORKFLOW_SWITCH").
 		Version(1).
 		OwnerEmail("test@test.com").
 		Add(common.TestSwitchTask)
-	err := testdata.ValidateWorkflowRegistration(workflow)
+
+	workflowDef := builder.ToWorkflowDef()
+
+	err := testdata.RegisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = testdata.ValidateWorkflowDeletion(workflow)
+	err = testdata.UnregisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(
 			"Failed to delete workflow. Reason: ", err.Error(),
@@ -264,17 +294,20 @@ func TestSwitchTask(t *testing.T) {
 }
 
 func TestDynamicForkWorkflow(t *testing.T) {
-	wf := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+	builder := workflow.NewWorkflowBuilder().
 		Name("dynamic_workflow_array_sub_workflow").
 		Version(1).
 		OwnerEmail("test@test.com").
 		Add(createDynamicForkTask())
-	err := wf.Register(true)
+
+	workflowDef := builder.ToWorkflowDef()
+
+	err := testdata.RegisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal()
 	}
 
-	err = testdata.ValidateWorkflowDeletion(wf)
+	err = testdata.UnregisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(
 			"Failed to delete workflow. Reason: ", err.Error(),
@@ -303,19 +336,24 @@ func createDynamicForkTask() *workflow.DynamicForkTask {
 }
 
 func TestComplexSwitchWorkflow(t *testing.T) {
-	wf := testdata.GetWorkflowBuilderWithComplexSwitchTask()
-	err := testdata.ValidateWorkflowRegistration(wf)
+	builder := testdata.GetWorkflowBuilderWithComplexSwitchTask()
+
+	workflowDef := builder.ToWorkflowDef()
+
+	err := testdata.RegisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(err)
 	}
-	receivedWf, _, err := testdata.MetadataClient.Get(context.Background(), wf.GetName(), nil)
+
+	receivedWf, _, err := testdata.MetadataClient.Get(context.Background(), workflowDef.Name, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
+
 	counter := countMultipleSwitchInnerTasks(receivedWf.Tasks...)
 	assert.Equal(t, 7, counter)
 
-	err = testdata.ValidateWorkflowDeletion(wf)
+	err = testdata.UnregisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(
 			"Failed to delete workflow. Reason: ", err.Error(),

@@ -26,7 +26,7 @@ const (
 	WorkflowCompletionTimeout = 5 * time.Second
 	WorkflowExecutionQty      = 15
 
-	WorkerQty          = 7
+	WorkerCount        = 7
 	WorkerPollInterval = 250 * time.Millisecond
 )
 
@@ -101,7 +101,7 @@ func validateWorker(worker model.WorkerTaskFunction, expectedOutput map[string]i
 	err = WorkerHost.StartWorker(
 		TaskName,
 		worker,
-		WorkerQty,
+		WorkerCount,
 		WorkerPollInterval,
 	)
 	if err != nil {
@@ -126,7 +126,7 @@ func validateWorker(worker model.WorkerTaskFunction, expectedOutput map[string]i
 	}
 	return WorkerHost.DecreaseBatchSize(
 		TaskName,
-		WorkerQty,
+		WorkerCount,
 	)
 }
 

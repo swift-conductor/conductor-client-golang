@@ -1,7 +1,6 @@
 package integration_tests
 
 import (
-	"context"
 	"fmt"
 	"strconv"
 	"testing"
@@ -19,15 +18,18 @@ import (
 const retryLimit = 5
 
 func TestWorkflowCreation(t *testing.T) {
-	workflow := testdata.NewKitchenSinkWorkflowBuilder(testdata.WorkflowManager)
-	err := workflow.Register(true)
+	builder := testdata.NewKitchenSinkWorkflowBuilder()
+
+	workflowDef := builder.ToWorkflowDef()
+
+	err := testdata.RegisterWorkflow(workflowDef)
 	if err != nil {
-		t.Fatalf("Failed to register workflow: %s, reason: %s", workflow.GetName(), err.Error())
+		t.Fatalf("Failed to register workflow: %s, reason: %s", builder.GetName(), err.Error())
 	}
 
 	startWorkers()
 
-	run, err := executeWorkflowWithRetries(workflow, map[string]interface{}{
+	run, err := executeWorkflowWithRetries(workflowDef, map[string]interface{}{
 		"key1": "input1",
 		"key2": 101,
 	})
@@ -43,14 +45,17 @@ func TestWorkflowCreation(t *testing.T) {
 
 func TestRemoveWorkflow(t *testing.T) {
 	manager := testdata.WorkflowManager
-	wf := workflow.NewWorkflowBuilder(manager)
-	wf.Name("temp_wf_" + strconv.Itoa(time.Now().Nanosecond())).Version(1)
-	wf = wf.Add(workflow.NewSetVariableTask("set_var").Input("var_value", 42))
-	err := wf.Register(true)
 
+	builder := workflow.NewWorkflowBuilder()
+	builder.Name("temp_wf_" + strconv.Itoa(time.Now().Nanosecond())).Version(1)
+	builder = builder.Add(workflow.NewSetVariableTask("set_var").Input("var_value", 42))
+
+	workflowDef := builder.ToWorkflowDef()
+
+	err := manager.RegisterWorkflow(workflowDef)
 	assert.NoError(t, err, "Failed to register workflow")
 
-	id, err := manager.StartWorkflow(&model.StartWorkflowRequest{Name: wf.GetName()})
+	id, err := manager.StartWorkflow(&model.StartWorkflowRequest{Name: workflowDef.Name, WorkflowDef: workflowDef})
 	assert.NoError(t, err, "Failed to start workflow")
 
 	execution, err := manager.GetWorkflow(id, true)
@@ -64,38 +69,36 @@ func TestRemoveWorkflow(t *testing.T) {
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "no such workflow by Id")
 
-	_, err = testdata.MetadataClient.UnregisterWorkflowDef(
-		context.Background(),
-		wf.GetName(),
-		wf.GetVersion(),
-	)
+	err = manager.UnRegisterWorkflow(workflowDef.Name, workflowDef.Version)
 	assert.NoError(t, err, "Failed to delete workflow definition ", err)
 }
 
 func TestRunWorkflow(t *testing.T) {
 	manager := testdata.WorkflowManager
-	wf := workflow.NewWorkflowBuilder(manager).
+
+	builder := workflow.NewWorkflowBuilder().
 		Name("temp_wf_2_" + strconv.Itoa(time.Now().Nanosecond())).
 		Version(1).
 		OwnerEmail("test@test.com")
 
-	wf = wf.Add(workflow.NewSetVariableTask("set_var").Input("var_value", 42))
+	builder = builder.Add(workflow.NewSetVariableTask("set_var").Input("var_value", 42))
 
-	wf.OutputParameters(map[string]interface{}{
+	builder.OutputParameters(map[string]interface{}{
 		"param1": "Test",
 		"param2": 123,
 	})
 
-	err := wf.Register(true)
+	workflowDef := builder.ToWorkflowDef()
 
+	err := manager.RegisterWorkflow(workflowDef)
 	assert.NoError(t, err, "Failed to register workflow")
-	version := wf.GetVersion()
-	run, err := executeWorkflowWithRetriesWithStartWorkflowRequest(
-		&model.StartWorkflowRequest{
-			Name:    wf.GetName(),
-			Version: version,
-		},
-	)
+
+	startWorkflowRequest := model.StartWorkflowRequest{
+		Name:    builder.GetName(),
+		Version: builder.GetVersion(),
+	}
+
+	run, err := executeWorkflowWithRetriesWithStartWorkflowRequest(&startWorkflowRequest)
 	assert.NoError(t, err, "Failed to start workflow")
 	assert.Equal(t, string(model.CompletedWorkflow), run.Status)
 
@@ -103,43 +106,49 @@ func TestRunWorkflow(t *testing.T) {
 	assert.NoError(t, err, "Failed to get workflow execution")
 	assert.Equal(t, model.CompletedWorkflow, execution.Status, "Workflow is not in the completed state")
 
-	_, err = testdata.MetadataClient.UnregisterWorkflowDef(
-		context.Background(),
-		wf.GetName(),
-		wf.GetVersion(),
-	)
+	err = manager.UnRegisterWorkflow(workflowDef.Name, workflowDef.Version)
 	assert.NoError(t, err, "Failed to delete workflow definition ", err)
 }
 
 func TestRunWorkflowWithCorrelationIds(t *testing.T) {
 	manager := testdata.WorkflowManager
+
 	correlationId1 := "correlationId1-" + uuid.New().String()
 	correlationId2 := "correlationId2-" + uuid.New().String()
 
-	httpTaskWorkflow1 := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+	builder_1 := workflow.NewWorkflowBuilder().
 		Name("TEST_GO_WORKFLOW_HTTP" + correlationId1).
 		OwnerEmail("test@test.com").
 		Version(1).
 		Add(common.TestHttpTask)
-	httpTaskWorkflow2 := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+
+	builder_2 := workflow.NewWorkflowBuilder().
 		Name("TEST_GO_WORKFLOW_HTTP" + correlationId2).
 		OwnerEmail("test@test.com").
 		Version(1).
 		Add(common.TestHttpTask)
-	_, err := httpTaskWorkflow1.StartWorkflow(&model.StartWorkflowRequest{CorrelationId: correlationId1})
+
+	workflowDef_1 := builder_1.ToWorkflowDef()
+	workflowDef_2 := builder_2.ToWorkflowDef()
+
+	_, err := manager.StartWorkflow(&model.StartWorkflowRequest{CorrelationId: correlationId1, WorkflowDef: workflowDef_1})
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = httpTaskWorkflow2.StartWorkflow(&model.StartWorkflowRequest{CorrelationId: correlationId2})
+	_, err = manager.StartWorkflow(&model.StartWorkflowRequest{CorrelationId: correlationId2, WorkflowDef: workflowDef_2})
 	if err != nil {
 		t.Fatal(err)
 	}
+
 	time.Sleep(3 * time.Second)
+
 	workflows, err := manager.GetByCorrelationIdsAndNames(true, true,
-		[]string{correlationId1, correlationId2}, []string{httpTaskWorkflow1.GetName(), httpTaskWorkflow2.GetName()})
+		[]string{correlationId1, correlationId2}, []string{builder_1.GetName(), builder_2.GetName()})
+
 	if err != nil {
 		t.Fatal(err)
 	}
+
 	assert.Contains(t, workflows, correlationId1)
 	assert.Contains(t, workflows, correlationId2)
 	assert.NotEmpty(t, workflows[correlationId1])
@@ -151,35 +160,43 @@ func TestRunWorkflowWithCorrelationIds(t *testing.T) {
 func TestTerminateWorkflowWithFailure(t *testing.T) {
 
 	manager := testdata.WorkflowManager
-	wf := workflow.NewWorkflowBuilder(manager).
+	builder := workflow.NewWorkflowBuilder().
 		Name("TEST_GO_SET_VAR_USED_AS_FAILURE").
 		Version(1).
 		OwnerEmail("test@test.com").
 		Add(workflow.NewSetVariableTask("set_var").Input("var_value", 42))
-	err := testdata.ValidateWorkflowRegistration(wf)
+
+	workflowDef := builder.ToWorkflowDef()
+
+	err := testdata.RegisterWorkflow(workflowDef)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	workflowWait := workflow.NewWorkflowBuilder(testdata.WorkflowManager).
+	builderWait := workflow.NewWorkflowBuilder().
 		Name("TEST_GO_WORKFLOW_WAIT_CONDUCTOR").
 		Version(1).
 		OwnerEmail("test@test.com").
 		Add(workflow.NewWaitTask("termination_wait")).
-		FailureWorkflow(wf.GetName())
-	err = testdata.ValidateWorkflowRegistration(workflowWait)
+		FailureWorkflow(workflowDef.Name)
+
+	workflowDefWait := builderWait.ToWorkflowDef()
+
+	err = testdata.RegisterWorkflow(workflowDefWait)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	id, err := workflowWait.StartWorkflow(&model.StartWorkflowRequest{})
+	id, err := manager.StartWorkflow(&model.StartWorkflowRequest{})
 	if err != nil {
 		t.Fatal(err)
 	}
+
 	err = manager.TerminateWithFailure(id, "Terminated to trigger failure workflow", true)
 	if err != nil {
 		t.Fatal(err)
 	}
+
 	terminatedWfStatus, err := manager.GetWorkflow(id, false)
 	if err != nil {
 		t.Fatal(err)
@@ -189,19 +206,25 @@ func TestTerminateWorkflowWithFailure(t *testing.T) {
 
 func TestRunWorkflowSync(t *testing.T) {
 	manager := testdata.WorkflowManager
-	wf := workflow.NewWorkflowBuilder(manager).
+
+	builder := workflow.NewWorkflowBuilder().
 		Name("temp_wf_3_" + strconv.Itoa(time.Now().Nanosecond())).
 		Version(1).
 		OwnerEmail("test@test.com")
-	wf = wf.Add(workflow.NewSetVariableTask("set_var").Input("var_value", 42))
-	wf.OutputParameters(map[string]interface{}{
+
+	builder = builder.Add(workflow.NewSetVariableTask("set_var").Input("var_value", 42))
+
+	builder.OutputParameters(map[string]interface{}{
 		"param1": "Test",
 		"param2": 123,
 	})
-	err := wf.Register(true)
 
+	workflowDef := builder.ToWorkflowDef()
+
+	err := manager.RegisterWorkflow(workflowDef)
 	assert.NoError(t, err, "Failed to register workflow")
-	run, err := executeWorkflowWithRetries(wf, map[string]interface{}{
+
+	run, err := executeWorkflowWithRetries(workflowDef, map[string]interface{}{
 		"key1": "input1",
 		"key2": 101,
 	})
@@ -215,11 +238,7 @@ func TestRunWorkflowSync(t *testing.T) {
 	assert.NoError(t, err, "Failed to get workflow execution")
 	assert.Equal(t, model.CompletedWorkflow, execution.Status, "Workflow is not in the completed state")
 
-	_, err = testdata.MetadataClient.UnregisterWorkflowDef(
-		context.Background(),
-		wf.GetName(),
-		wf.GetVersion(),
-	)
+	err = manager.UnRegisterWorkflow(workflowDef.Name, workflowDef.Version)
 	assert.NoError(t, err, "Failed to delete workflow definition ", err)
 }
 
@@ -228,9 +247,12 @@ func startWorkers() {
 	testdata.WorkerHost.StartWorker("dynamic_fork_prep", testdata.DynamicForkWorker, 3, 100*time.Millisecond)
 }
 
-func executeWorkflowWithRetries(wf *workflow.WorkflowBuilder, workflowInput interface{}) (*model.WorkflowRun, error) {
+func executeWorkflowWithRetries(workflowDef *model.WorkflowDef, workflowInput interface{}) (*model.WorkflowRun, error) {
+	manager := testdata.WorkflowManager
+
 	for attempt := 0; attempt < retryLimit; attempt += 1 {
-		workflowRun, err := wf.RunWorkflowWithInput(workflowInput, "")
+
+		workflowRun, err := manager.RunWorkflowWithInput(workflowDef, "", "")
 		if err != nil {
 			time.Sleep(time.Duration(attempt+2) * time.Second)
 			fmt.Println("Failed to execute workflow, reason: " + err.Error())
@@ -242,14 +264,17 @@ func executeWorkflowWithRetries(wf *workflow.WorkflowBuilder, workflowInput inte
 }
 
 func executeWorkflowWithRetriesWithStartWorkflowRequest(startWorkflowRequest *model.StartWorkflowRequest) (*model.WorkflowRun, error) {
+	manager := testdata.WorkflowManager
 	for attempt := 1; attempt <= retryLimit; attempt += 1 {
-		workflowRun, err := testdata.WorkflowManager.RunWorkflow(startWorkflowRequest, "")
+		workflowRun, err := manager.RunWorkflow(startWorkflowRequest, "")
 		if err != nil {
 			time.Sleep(time.Duration(attempt+2) * time.Second)
 			fmt.Printf("Failed to execute workflow, reason: %s", err.Error())
 			continue
 		}
+
 		return workflowRun, nil
 	}
+
 	return nil, fmt.Errorf("exhausted retries for workflow execution")
 }
