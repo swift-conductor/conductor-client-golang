@@ -11,11 +11,9 @@ apiClient := client.NewAPIClient(httpSettings)
 builder := workflow.NewWorkflowBuilder().
     Name("my_first_workflow").
     Version(1).
-    OwnerEmail("hello@swiftsoftwaregroup.com")
-
-// add a couple of custom tasks
-builder.
-	Add(workflow.NewCustomTask("custom_task", "custom_task_1")).
+    OwnerEmail("hello@swiftsoftwaregroup.com").
+    // add a couple of custom tasks
+    Add(workflow.NewCustomTask("custom_task", "custom_task_1")).
     Add(workflow.NewCustomTask("custom_task", "custom_task_2"))
 
 // create new workflow manager

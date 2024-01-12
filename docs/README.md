@@ -1,11 +1,11 @@
-# SDK API Documentation
+# SDK Documentation
 
-### [Conductor Client](client.md)
+### [Client](api/client.md)
 
-### [Workflow Authoring and Running](workflow.md)
+### [Workflow](api/workflow.md)
 
-### [Task Worker](worker.md)
+### [Worker](api/worker.md)
 
-### [Settings](settings.md)
+### [Settings](api/settings.md)
 
 

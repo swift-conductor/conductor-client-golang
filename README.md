@@ -6,13 +6,17 @@
 go get github.com/swift-conductor/conductor-client-golang
 ```
 
-## Configuration
+## Create and start Workflows
 
-### API Client
+[Create and Execute Workflows](docs/readme/workflows.md)
 
-```go
-apiClient := client.NewAPIClient(settings.NewHttpSettings("http://localhost:8080/api",))
-```
+## Create and run task workers 
+
+[Create and run task workers](docs/readme/workers.md)
+
+## API Documentation
+
+[API Documentation](https://github.com/swift-conductor/conductor-client-golang/tree/main/docs/api)
 
 ### Setup Logging
 
@@ -25,15 +29,3 @@ func init() {
 	log.SetLevel(log.DebugLevel)
 }
 ```
-
-## Create and run task workers 
-
-[Create and run task workers](docs/readme/workers.md)
-
-## Create and Execute Workflows
-
-[Create and Execute Workflows](docs/readme/workflows.md)
-
-## API Documentation
-
-[API Documentation](https://github.com/swift-conductor/conductor-client-golang/tree/main/docs/api)
