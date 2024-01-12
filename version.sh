@@ -1,1 +1,1 @@
-export GO_PACKAGE_VERSION=v1.4.0
+export GO_PACKAGE_VERSION=v1.5.0
