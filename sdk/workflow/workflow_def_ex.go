@@ -29,7 +29,7 @@ type WorkflowBuilder struct {
 	version                       int32
 	description                   string
 	ownerEmail                    string
-	tasks                         []WorkflowTaskInterface
+	tasks                         []IWorkflowTask
 	timeoutPolicy                 TimeoutPolicy
 	timeoutSeconds                int64
 	failureWorkflow               string
@@ -138,7 +138,7 @@ func (workflow *WorkflowBuilder) GetVersion() (version int32) {
 	return workflow.version
 }
 
-func (workflow *WorkflowBuilder) Add(task WorkflowTaskInterface) *WorkflowBuilder {
+func (workflow *WorkflowBuilder) Add(task IWorkflowTask) *WorkflowBuilder {
 	workflow.tasks = append(workflow.tasks, task)
 	return workflow
 }

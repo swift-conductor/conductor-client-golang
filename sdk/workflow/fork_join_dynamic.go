@@ -15,7 +15,7 @@ import (
 
 type DynamicForkTask struct {
 	WorkflowTaskBuilder
-	preForkTask *WorkflowTaskInterface
+	preForkTask *IWorkflowTask
 	join        JoinTask
 }
 
@@ -24,7 +24,7 @@ const (
 	forkedTasksInputs = "forkedTasksInputs"
 )
 
-func NewDynamicForkTask(taskRefName string, forkPrepareTask WorkflowTaskInterface) *DynamicForkTask {
+func NewDynamicForkTask(taskRefName string, forkPrepareTask IWorkflowTask) *DynamicForkTask {
 	return &DynamicForkTask{
 		WorkflowTaskBuilder: WorkflowTaskBuilder{
 			name:              taskRefName,
@@ -52,7 +52,7 @@ func NewDynamicForkTaskWithoutPrepareTask(taskRefName string) *DynamicForkTask {
 	}
 }
 
-func NewDynamicForkWithJoinTask(taskRefName string, forkPrepareTask WorkflowTaskInterface, join JoinTask) *DynamicForkTask {
+func NewDynamicForkWithJoinTask(taskRefName string, forkPrepareTask IWorkflowTask, join JoinTask) *DynamicForkTask {
 	return &DynamicForkTask{
 		WorkflowTaskBuilder: WorkflowTaskBuilder{
 			name:              taskRefName,

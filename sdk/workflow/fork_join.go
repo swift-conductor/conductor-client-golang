@@ -15,7 +15,7 @@ import (
 
 type ForkTask struct {
 	WorkflowTaskBuilder
-	forkedTasks [][]WorkflowTaskInterface
+	forkedTasks [][]IWorkflowTask
 	join        *JoinTask
 }
 
@@ -44,7 +44,7 @@ type ForkTask struct {
  *
  *
  */
-func NewForkTask(taskRefName string, forkedTask ...[]WorkflowTaskInterface) *ForkTask {
+func NewForkTask(taskRefName string, forkedTask ...[]IWorkflowTask) *ForkTask {
 	return &ForkTask{
 		WorkflowTaskBuilder: WorkflowTaskBuilder{
 			name:              taskRefName,
@@ -58,7 +58,7 @@ func NewForkTask(taskRefName string, forkedTask ...[]WorkflowTaskInterface) *For
 	}
 }
 
-func NewForkTaskWithJoin(taskRefName string, join *JoinTask, forkedTask ...[]WorkflowTaskInterface) *ForkTask {
+func NewForkTaskWithJoin(taskRefName string, join *JoinTask, forkedTask ...[]IWorkflowTask) *ForkTask {
 	return &ForkTask{
 		WorkflowTaskBuilder: WorkflowTaskBuilder{
 			name:              taskRefName,

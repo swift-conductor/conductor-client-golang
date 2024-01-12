@@ -113,35 +113,6 @@ func (e *WorkflowManager) UnRegisterWorkflow(name string, version int32) error {
 	return nil
 }
 
-// RunWorkflow start a workflow and wait until the workflow completes or the waitUntilTask completes
-// Returns the output of the workflow
-func (manager *WorkflowManager) RunWorkflow(startWorkflowRequest *model.StartWorkflowRequest, waitUntilTask string) (run *model.WorkflowRun, err error) {
-	requestId := ""
-	workflowRun, _, error := manager.workflowClient.RunWorkflow(context.Background(), *startWorkflowRequest, requestId, startWorkflowRequest.Name, startWorkflowRequest.Version, waitUntilTask)
-	if error != nil {
-		return nil, error
-	}
-
-	return &workflowRun, err
-}
-
-// RunWorkflowWithInput Execute the workflow with specific input and wait for the workflow to complete or until the task specified as waitUntil is completed.
-// waitUntilTask Reference name of the task which MUST be completed before returning the output.  if specified as empty string, then the call waits until the
-// workflow completes or reaches the timeout (as specified on the server)
-// The input struct MUST be serializable to JSON
-// Returns the workflow output
-func (manager *WorkflowManager) RunWorkflowWithInput(workflowDef *model.WorkflowDef, input interface{}, waitUntilTask string) (workflowRun *model.WorkflowRun, err error) {
-	return manager.RunWorkflow(
-		&model.StartWorkflowRequest{
-			Name:        workflowDef.Name,
-			Version:     workflowDef.Version,
-			Input:       getInputAsMap(input),
-			WorkflowDef: workflowDef,
-		},
-		waitUntilTask,
-	)
-}
-
 // MonitorExecution monitors the workflow execution
 // Returns the channel with the execution result of the workflow
 // Note: Channels will continue to grow if the workflows do not complete and/or are not taken out
@@ -280,26 +251,6 @@ func (e *WorkflowManager) GetByCorrelationIds(workflowName string, includeClosed
 		context.Background(),
 		correlationIds,
 		workflowName,
-		&client.WorkflowResourceApiGetWorkflowsOpts{
-			IncludeClosed: optional.NewBool(includeClosed),
-			IncludeTasks:  optional.NewBool(includeTasks),
-		})
-	if err != nil {
-		return nil, err
-	}
-	return workflows, nil
-}
-
-// GetByCorrelationIdsAndNames Given the list of correlation ids and list of workflow names, find and return workflows
-// Returns a map with key as correlationId and value as a list of Workflows
-// When IncludeClosed is set to true, the return value also includes workflows that are completed otherwise only running workflows are returned
-func (e *WorkflowManager) GetByCorrelationIdsAndNames(includeClosed bool, includeTasks bool, correlationIds []string, workflowNames []string) (map[string][]model.Workflow, error) {
-	workflows, _, err := e.workflowClient.GetWorkflowsBatch(
-		context.Background(),
-		map[string][]string{
-			"workflowNames":  workflowNames,
-			"correlationIds": correlationIds,
-		},
 		&client.WorkflowResourceApiGetWorkflowsOpts{
 			IncludeClosed: optional.NewBool(includeClosed),
 			IncludeTasks:  optional.NewBool(includeTasks),

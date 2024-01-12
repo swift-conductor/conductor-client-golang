@@ -18,7 +18,8 @@ import (
 )
 
 func NewKitchenSinkWorkflowBuilder() *workflow.WorkflowBuilder {
-	task := workflow.NewCustomTask("custom_task", "custom_task_0")
+	custom_task := workflow.NewCustomTask("custom_task", "custom_task_0")
+
 	simpleWorkflow := workflow.NewWorkflowBuilder().
 		Name("inline_sub").
 		OwnerEmail("test@test.com").
@@ -53,11 +54,11 @@ func NewKitchenSinkWorkflowBuilder() *workflow.WorkflowBuilder {
 
 	fork := workflow.NewForkTask(
 		"fork",
-		[]workflow.WorkflowTaskInterface{
+		[]workflow.IWorkflowTask{
 			doWhile,
 			subWorkflowInline,
 		},
-		[]workflow.WorkflowTaskInterface{
+		[]workflow.IWorkflowTask{
 			workflow.NewCustomTask("custom_task", "custom_task_5"),
 		},
 	)
@@ -68,10 +69,10 @@ func NewKitchenSinkWorkflowBuilder() *workflow.WorkflowBuilder {
 	})
 
 	forkWithJoin := workflow.NewForkTaskWithJoin("fork_with_join_fork_ref", join,
-		[]workflow.WorkflowTaskInterface{
+		[]workflow.IWorkflowTask{
 			workflow.NewCustomTask("custom_task", "custom_task_fork_ref1"),
 			workflow.NewCustomTask("custom_task", "custom_task_fork_ref2"),
-		}, []workflow.WorkflowTaskInterface{
+		}, []workflow.IWorkflowTask{
 			workflow.NewCustomTask("custom_task", "custom_task_fork_ref3"),
 			workflow.NewCustomTask("custom_task", "custom_task_fork_ref4"),
 		})
@@ -83,7 +84,7 @@ func NewKitchenSinkWorkflowBuilder() *workflow.WorkflowBuilder {
 
 	setVariable := workflow.NewSetVariableTask("set_state").
 		Input("call_made", true).
-		Input("number", task.OutputRef("number"))
+		Input("number", custom_task.OutputRef("number"))
 
 	subWorkflow := workflow.NewSubWorkflowTask("sub_flow", "PopulationMinMax", 0)
 
@@ -96,17 +97,18 @@ func NewKitchenSinkWorkflowBuilder() *workflow.WorkflowBuilder {
 		"value2": []string{"d", "e"},
 	})
 
-	graalTask := workflow.NewInlineGraalJSTask("graaljstask", "(function () { return $.value1 + $.value2; })();")
-	graalTask.Input("value1", "value-1")
-	graalTask.Input("value2", 23.4)
+	// inlineTask := workflow.NewInlineGraalJSTask("graaljstask", "(function () { return $.value1 + $.value2; })();")
+	inlineTask := workflow.NewInlineTask("jstask", "(function () { return $.value1 + $.value2; })();")
+	inlineTask.Input("value1", "value-1")
+	inlineTask.Input("value2", 23.4)
 
 	workflowBuilder := workflow.NewWorkflowBuilder().
 		Name("sdk_kitchen_sink2").
 		Version(1).
 		OwnerEmail("test@test.com").
-		Add(task).
+		Add(custom_task).
 		Add(jqTask).
-		Add(graalTask).
+		Add(inlineTask).
 		Add(setVariable).
 		Add(subWorkflow).
 		Add(dynamicFork).
@@ -173,7 +175,7 @@ func GetWorkflowBuilderWithComplexSwitchTask() *workflow.WorkflowBuilder {
 	task := workflow.NewSwitchTask("complex_switch_task", "${workflow.input.value}")
 
 	for i := 0; i < 3; i += 1 {
-		var subtasks []workflow.WorkflowTaskInterface
+		var subtasks []workflow.IWorkflowTask
 		for j := 0; j <= i; j += 1 {
 			httpTask := workflow.NewHttpTask(
 				fmt.Sprintf("ComplexSwitchTaskGoSDK-%d-%d", i, j),

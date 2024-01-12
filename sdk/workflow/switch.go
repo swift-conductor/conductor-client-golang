@@ -15,8 +15,8 @@ import (
 
 type SwitchTask struct {
 	WorkflowTaskBuilder
-	DecisionCases map[string][]WorkflowTaskInterface
-	defaultCase   []WorkflowTaskInterface
+	DecisionCases map[string][]IWorkflowTask
+	defaultCase   []IWorkflowTask
 	expression    string
 	useJavascript bool
 	evaluatorType string
@@ -32,19 +32,19 @@ func NewSwitchTask(taskRefName string, caseExpression string) *SwitchTask {
 			optional:          false,
 			inputParameters:   map[string]interface{}{},
 		},
-		DecisionCases: make(map[string][]WorkflowTaskInterface),
-		defaultCase:   make([]WorkflowTaskInterface, 0),
+		DecisionCases: make(map[string][]IWorkflowTask),
+		defaultCase:   make([]IWorkflowTask, 0),
 		expression:    caseExpression,
 		useJavascript: false,
 		evaluatorType: "value-param",
 	}
 }
 
-func (task *SwitchTask) SwitchCase(caseName string, tasks ...WorkflowTaskInterface) *SwitchTask {
+func (task *SwitchTask) SwitchCase(caseName string, tasks ...IWorkflowTask) *SwitchTask {
 	task.DecisionCases[caseName] = tasks
 	return task
 }
-func (task *SwitchTask) DefaultCase(tasks ...WorkflowTaskInterface) *SwitchTask {
+func (task *SwitchTask) DefaultCase(tasks ...IWorkflowTask) *SwitchTask {
 	task.defaultCase = tasks
 	return task
 }

@@ -11,17 +11,17 @@ import "github.com/swift-conductor/conductor-client-golang/sdk/workflow"
 - [Constants](<#constants>)
 - [func WaitForWorkflowCompletionUntilTimeout\(runningChannel RunningWorkflowChannel, timeout time.Duration\) \(workflow \*model.Workflow, err error\)](<#WaitForWorkflowCompletionUntilTimeout>)
 - [type DoWhileTask](<#DoWhileTask>)
-  - [func NewDoWhileTask\(taskRefName string, terminationCondition string, tasks ...WorkflowTaskInterface\) \*DoWhileTask](<#NewDoWhileTask>)
-  - [func NewLoopTask\(taskRefName string, iterations int32, tasks ...WorkflowTaskInterface\) \*DoWhileTask](<#NewLoopTask>)
+  - [func NewDoWhileTask\(taskRefName string, terminationCondition string, tasks ...IWorkflowTask\) \*DoWhileTask](<#NewDoWhileTask>)
+  - [func NewLoopTask\(taskRefName string, iterations int32, tasks ...IWorkflowTask\) \*DoWhileTask](<#NewLoopTask>)
   - [func \(task \*DoWhileTask\) Description\(description string\) \*DoWhileTask](<#DoWhileTask.Description>)
   - [func \(task \*DoWhileTask\) Input\(key string, value interface\{\}\) \*DoWhileTask](<#DoWhileTask.Input>)
   - [func \(task \*DoWhileTask\) InputMap\(inputMap map\[string\]interface\{\}\) \*DoWhileTask](<#DoWhileTask.InputMap>)
   - [func \(task \*DoWhileTask\) Optional\(optional bool\) \*DoWhileTask](<#DoWhileTask.Optional>)
 - [type DynamicForkInput](<#DynamicForkInput>)
 - [type DynamicForkTask](<#DynamicForkTask>)
-  - [func NewDynamicForkTask\(taskRefName string, forkPrepareTask WorkflowTaskInterface\) \*DynamicForkTask](<#NewDynamicForkTask>)
+  - [func NewDynamicForkTask\(taskRefName string, forkPrepareTask IWorkflowTask\) \*DynamicForkTask](<#NewDynamicForkTask>)
   - [func NewDynamicForkTaskWithoutPrepareTask\(taskRefName string\) \*DynamicForkTask](<#NewDynamicForkTaskWithoutPrepareTask>)
-  - [func NewDynamicForkWithJoinTask\(taskRefName string, forkPrepareTask WorkflowTaskInterface, join JoinTask\) \*DynamicForkTask](<#NewDynamicForkWithJoinTask>)
+  - [func NewDynamicForkWithJoinTask\(taskRefName string, forkPrepareTask IWorkflowTask, join JoinTask\) \*DynamicForkTask](<#NewDynamicForkWithJoinTask>)
   - [func \(task \*DynamicForkTask\) Description\(description string\) \*DynamicForkTask](<#DynamicForkTask.Description>)
   - [func \(task \*DynamicForkTask\) Input\(key string, value interface\{\}\) \*DynamicForkTask](<#DynamicForkTask.Input>)
   - [func \(task \*DynamicForkTask\) InputMap\(inputMap map\[string\]interface\{\}\) \*DynamicForkTask](<#DynamicForkTask.InputMap>)
@@ -40,8 +40,8 @@ import "github.com/swift-conductor/conductor-client-golang/sdk/workflow"
   - [func \(task \*EventTask\) InputMap\(inputMap map\[string\]interface\{\}\) \*EventTask](<#EventTask.InputMap>)
   - [func \(task \*EventTask\) Optional\(optional bool\) \*EventTask](<#EventTask.Optional>)
 - [type ForkTask](<#ForkTask>)
-  - [func NewForkTask\(taskRefName string, forkedTask ...\[\]WorkflowTaskInterface\) \*ForkTask](<#NewForkTask>)
-  - [func NewForkTaskWithJoin\(taskRefName string, join \*JoinTask, forkedTask ...\[\]WorkflowTaskInterface\) \*ForkTask](<#NewForkTaskWithJoin>)
+  - [func NewForkTask\(taskRefName string, forkedTask ...\[\]IWorkflowTask\) \*ForkTask](<#NewForkTask>)
+  - [func NewForkTaskWithJoin\(taskRefName string, join \*JoinTask, forkedTask ...\[\]IWorkflowTask\) \*ForkTask](<#NewForkTaskWithJoin>)
   - [func \(task \*ForkTask\) Description\(description string\) \*ForkTask](<#ForkTask.Description>)
   - [func \(task \*ForkTask\) Input\(key string, value interface\{\}\) \*ForkTask](<#ForkTask.Input>)
   - [func \(task \*ForkTask\) InputMap\(inputMap map\[string\]interface\{\}\) \*ForkTask](<#ForkTask.InputMap>)
@@ -116,12 +116,12 @@ import "github.com/swift-conductor/conductor-client-golang/sdk/workflow"
   - [func \(task \*SubWorkflowTask\) TaskToDomain\(taskToDomainMap map\[string\]string\) \*SubWorkflowTask](<#SubWorkflowTask.TaskToDomain>)
 - [type SwitchTask](<#SwitchTask>)
   - [func NewSwitchTask\(taskRefName string, caseExpression string\) \*SwitchTask](<#NewSwitchTask>)
-  - [func \(task \*SwitchTask\) DefaultCase\(tasks ...WorkflowTaskInterface\) \*SwitchTask](<#SwitchTask.DefaultCase>)
+  - [func \(task \*SwitchTask\) DefaultCase\(tasks ...IWorkflowTask\) \*SwitchTask](<#SwitchTask.DefaultCase>)
   - [func \(task \*SwitchTask\) Description\(description string\) \*SwitchTask](<#SwitchTask.Description>)
   - [func \(task \*SwitchTask\) Input\(key string, value interface\{\}\) \*SwitchTask](<#SwitchTask.Input>)
   - [func \(task \*SwitchTask\) InputMap\(inputMap map\[string\]interface\{\}\) \*SwitchTask](<#SwitchTask.InputMap>)
   - [func \(task \*SwitchTask\) Optional\(optional bool\) \*SwitchTask](<#SwitchTask.Optional>)
-  - [func \(task \*SwitchTask\) SwitchCase\(caseName string, tasks ...WorkflowTaskInterface\) \*SwitchTask](<#SwitchTask.SwitchCase>)
+  - [func \(task \*SwitchTask\) SwitchCase\(caseName string, tasks ...IWorkflowTask\) \*SwitchTask](<#SwitchTask.SwitchCase>)
   - [func \(task \*SwitchTask\) UseJavascript\(use bool\) \*SwitchTask](<#SwitchTask.UseJavascript>)
 - [type TaskType](<#TaskType>)
 - [type TerminateTask](<#TerminateTask>)
@@ -140,7 +140,7 @@ import "github.com/swift-conductor/conductor-client-golang/sdk/workflow"
   - [func \(task \*WaitTask\) Optional\(optional bool\) \*WaitTask](<#WaitTask.Optional>)
 - [type WorkflowBuilder](<#WorkflowBuilder>)
   - [func NewWorkflowBuilder\(manager \*WorkflowManager\) \*WorkflowBuilder](<#NewWorkflowBuilder>)
-  - [func \(workflow \*WorkflowBuilder\) Add\(task WorkflowTaskInterface\) \*WorkflowBuilder](<#WorkflowBuilder.Add>)
+  - [func \(workflow \*WorkflowBuilder\) Add\(task IWorkflowTask\) \*WorkflowBuilder](<#WorkflowBuilder.Add>)
   - [func \(workflow \*WorkflowBuilder\) Description\(description string\) \*WorkflowBuilder](<#WorkflowBuilder.Description>)
   - [func \(workflow \*WorkflowBuilder\) FailureWorkflow\(failureWorkflow string\) \*WorkflowBuilder](<#WorkflowBuilder.FailureWorkflow>)
   - [func \(workflow \*WorkflowBuilder\) GetName\(\) \(name string\)](<#WorkflowBuilder.GetName>)
@@ -203,7 +203,7 @@ import "github.com/swift-conductor/conductor-client-golang/sdk/workflow"
   - [func \(task \*WorkflowTaskEx\) OutputRef\(path string\) string](<#WorkflowTaskEx.OutputRef>)
   - [func \(task \*WorkflowTaskEx\) ReferenceName\(\) string](<#WorkflowTaskEx.ReferenceName>)
   - [func \(task \*WorkflowTaskEx\) ToTaskDef\(\) \*model.TaskDef](<#WorkflowTaskEx.ToTaskDef>)
-- [type WorkflowTaskInterface](<#WorkflowTaskInterface>)
+- [type IWorkflowTask](<#IWorkflowTask>)
 
 
 ## Constants
@@ -241,7 +241,7 @@ type DoWhileTask struct {
 ### func [NewDoWhileTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/do_while.go#L31>)
 
 ```go
-func NewDoWhileTask(taskRefName string, terminationCondition string, tasks ...WorkflowTaskInterface) *DoWhileTask
+func NewDoWhileTask(taskRefName string, terminationCondition string, tasks ...IWorkflowTask) *DoWhileTask
 ```
 
 NewDoWhileTask DoWhileTask Crate a new DoWhile task. terminationCondition is a Javascript expression that evaluates to True or False
@@ -250,7 +250,7 @@ NewDoWhileTask DoWhileTask Crate a new DoWhile task. terminationCondition is a J
 ### func [NewLoopTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/do_while.go#L45>)
 
 ```go
-func NewLoopTask(taskRefName string, iterations int32, tasks ...WorkflowTaskInterface) *DoWhileTask
+func NewLoopTask(taskRefName string, iterations int32, tasks ...IWorkflowTask) *DoWhileTask
 ```
 
 NewLoopTask Loop over N times when N is specified as iterations
@@ -323,7 +323,7 @@ type DynamicForkTask struct {
 ### func [NewDynamicForkTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/fork_join_dynamic.go#L27>)
 
 ```go
-func NewDynamicForkTask(taskRefName string, forkPrepareTask WorkflowTaskInterface) *DynamicForkTask
+func NewDynamicForkTask(taskRefName string, forkPrepareTask IWorkflowTask) *DynamicForkTask
 ```
 
 
@@ -341,7 +341,7 @@ func NewDynamicForkTaskWithoutPrepareTask(taskRefName string) *DynamicForkTask
 ### func [NewDynamicForkWithJoinTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/fork_join_dynamic.go#L55>)
 
 ```go
-func NewDynamicForkWithJoinTask(taskRefName string, forkPrepareTask WorkflowTaskInterface, join JoinTask) *DynamicForkTask
+func NewDynamicForkWithJoinTask(taskRefName string, forkPrepareTask IWorkflowTask, join JoinTask) *DynamicForkTask
 ```
 
 
@@ -523,7 +523,7 @@ type ForkTask struct {
 ### func [NewForkTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/fork_join.go#L47>)
 
 ```go
-func NewForkTask(taskRefName string, forkedTask ...[]WorkflowTaskInterface) *ForkTask
+func NewForkTask(taskRefName string, forkedTask ...[]IWorkflowTask) *ForkTask
 ```
 
 NewForkTask creates a new fork task that executes the given tasks in parallel \*
@@ -550,7 +550,7 @@ NewForkTask creates a new fork task that executes the given tasks in parallel \*
 ### func [NewForkTaskWithJoin](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/fork_join.go#L61>)
 
 ```go
-func NewForkTaskWithJoin(taskRefName string, join *JoinTask, forkedTask ...[]WorkflowTaskInterface) *ForkTask
+func NewForkTaskWithJoin(taskRefName string, join *JoinTask, forkedTask ...[]IWorkflowTask) *ForkTask
 ```
 
 
@@ -1269,7 +1269,7 @@ func (task *SubWorkflowTask) TaskToDomain(taskToDomainMap map[string]string) *Su
 ```go
 type SwitchTask struct {
     WorkflowTaskEx
-    DecisionCases map[string][]WorkflowTaskInterface
+    DecisionCases map[string][]IWorkflowTask
     // contains filtered or unexported fields
 }
 ```
@@ -1287,7 +1287,7 @@ func NewSwitchTask(taskRefName string, caseExpression string) *SwitchTask
 ### func \(\*SwitchTask\) [DefaultCase](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/switch.go#L47>)
 
 ```go
-func (task *SwitchTask) DefaultCase(tasks ...WorkflowTaskInterface) *SwitchTask
+func (task *SwitchTask) DefaultCase(tasks ...IWorkflowTask) *SwitchTask
 ```
 
 
@@ -1332,7 +1332,7 @@ Optional if set to true, the task will not fail the workflow if the task fails
 ### func \(\*SwitchTask\) [SwitchCase](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/switch.go#L43>)
 
 ```go
-func (task *SwitchTask) SwitchCase(caseName string, tasks ...WorkflowTaskInterface) *SwitchTask
+func (task *SwitchTask) SwitchCase(caseName string, tasks ...IWorkflowTask) *SwitchTask
 ```
 
 
@@ -1543,7 +1543,7 @@ func NewWorkflowBuilder(manager *WorkflowManager) *WorkflowBuilder
 ### func \(\*WorkflowBuilder\) [Add](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow.go#L143>)
 
 ```go
-func (workflow *WorkflowBuilder) Add(task WorkflowTaskInterface) *WorkflowBuilder
+func (workflow *WorkflowBuilder) Add(task IWorkflowTask) *WorkflowBuilder
 ```
 
 
@@ -2119,13 +2119,13 @@ func (task *WorkflowTaskEx) ToTaskDef() *model.TaskDef
 
 
 
-<a name="WorkflowTaskInterface"></a>
-## type [WorkflowTaskInterface](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_task_ex.go#L41-L45>)
+<a name="IWorkflowTask"></a>
+## type [IWorkflowTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/workflow/workflow_task_ex.go#L41-L45>)
 
 
 
 ```go
-type WorkflowTaskInterface interface {
+type IWorkflowTask interface {
     ToTaskDef() *model.TaskDef
     OutputRef(path string) string
     // contains filtered or unexported methods

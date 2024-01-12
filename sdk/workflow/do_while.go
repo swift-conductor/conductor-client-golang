@@ -23,12 +23,12 @@ const (
 type DoWhileTask struct {
 	WorkflowTaskBuilder
 	loopCondition string
-	loopOver      []WorkflowTaskInterface
+	loopOver      []IWorkflowTask
 }
 
 // NewDoWhileTask DoWhileTask Crate a new DoWhile task.
 // terminationCondition is a Javascript expression that evaluates to True or False
-func NewDoWhileTask(taskRefName string, terminationCondition string, tasks ...WorkflowTaskInterface) *DoWhileTask {
+func NewDoWhileTask(taskRefName string, terminationCondition string, tasks ...IWorkflowTask) *DoWhileTask {
 	return &DoWhileTask{
 		WorkflowTaskBuilder: WorkflowTaskBuilder{
 			name:              taskRefName,
@@ -42,7 +42,7 @@ func NewDoWhileTask(taskRefName string, terminationCondition string, tasks ...Wo
 }
 
 // NewLoopTask Loop over N times when N is specified as iterations
-func NewLoopTask(taskRefName string, iterations int32, tasks ...WorkflowTaskInterface) *DoWhileTask {
+func NewLoopTask(taskRefName string, iterations int32, tasks ...IWorkflowTask) *DoWhileTask {
 	return &DoWhileTask{
 		WorkflowTaskBuilder: WorkflowTaskBuilder{
 			name:              taskRefName,

@@ -38,7 +38,7 @@ const (
 	SET_VARIABLE      TaskType = "SET_VARIABLE"
 )
 
-type WorkflowTaskInterface interface {
+type IWorkflowTask interface {
 	toWorkflowTask() []model.WorkflowTask
 	ToTaskDef() *model.TaskDef
 	OutputRef(path string) string
