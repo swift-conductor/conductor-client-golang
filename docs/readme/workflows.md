@@ -41,21 +41,6 @@ workflowId, err := manager.StartWorkflow(startWorkflowRequest)
 #### Wait for a workflow to finish
 
 ```go
-workflowTask = workflow.NewSetVariableTask("set_var").Input("var_name", 42)
-
-builder := workflow.NewWorkflowBuilder().Name("temp_wf").Version(1).OwnerEmail("test@test.com")
-builder = builder.Add(workflowTask)
-
-workflowDef := builder.ToWorkflowDef()
-err := manager.RegisterWorkflow(workflowDef)
-
-startWorkflowRequest := model.StartWorkflowRequest{
-    Name:    workflowDef.Name,
-    Version: workflowDef.Version,
-}
-
-workflowId, err := manager.StartWorkflow(startWorkflowRequest)
-
 runningChannel, err := manager.MonitorExecution(workflowId)
 
 _, err := workflow.WaitForWorkflowCompletionUntilTimeout(runningChannel, 20*time.Second)
