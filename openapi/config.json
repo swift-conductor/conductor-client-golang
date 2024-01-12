@@ -1,0 +1,7 @@
+{
+    "packageName": "swift_conductor_api",
+    "packageVersion": "3.16.0",
+    
+    "isGoSubmodule": false,
+    "withGoMod": true
+}
