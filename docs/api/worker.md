@@ -27,7 +27,7 @@ import "github.com/swift-conductor/conductor-client-golang/sdk/worker"
 
 
 <a name="WorkerHost"></a>
-## type [WorkerHost](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/worker_runner.go#L48-L64>)
+## type [WorkerHost](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/worker_host.go#L48-L64>)
 
 WorkerHost implements polling and execution logic for a Conductor worker. Every polling interval, each running task attempts to retrieve a from Conductor. Multiple tasks can be started in parallel. All Goroutines started by this worker cannot be stopped, only paused and resumed.
 
@@ -42,7 +42,7 @@ type WorkerHost struct {
 ```
 
 <a name="NewWorkerHost"></a>
-### func [NewWorkerHost](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/worker_runner.go#L67>)
+### func [NewWorkerHost](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/worker_host.go#L67>)
 
 ```go
 func NewWorkerHost(httpSettings *settings.HttpSettings) *WorkerHost
@@ -51,7 +51,7 @@ func NewWorkerHost(httpSettings *settings.HttpSettings) *WorkerHost
 NewWorkerHost returns a new WorkerHost using the provided settings.
 
 <a name="NewWorkerHostWithApiClient"></a>
-### func [NewWorkerHostWithApiClient](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/worker_runner.go#L76-L78>)
+### func [NewWorkerHostWithApiClient](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/worker_host.go#L76>)
 
 ```go
 func NewWorkerHostWithApiClient(apiClient *client.APIClient) *WorkerHost
@@ -60,7 +60,7 @@ func NewWorkerHostWithApiClient(apiClient *client.APIClient) *WorkerHost
 NewWorkerHostWithApiClient creates a new WorkerHost which uses the provided client.APIClient to communicate with Conductor.
 
 <a name="WorkerHost.DecreaseBatchSize"></a>
-### func \(\*WorkerHost\) [DecreaseBatchSize](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/worker_runner.go#L164>)
+### func \(\*WorkerHost\) [DecreaseBatchSize](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/worker_host.go#L162>)
 
 ```go
 func (c *WorkerHost) DecreaseBatchSize(taskName string, batchSize int) error
@@ -69,7 +69,7 @@ func (c *WorkerHost) DecreaseBatchSize(taskName string, batchSize int) error
 DecreaseBatchSize decreases the batch size used for all workers running the provided task.
 
 <a name="WorkerHost.GetBatchSizeForAll"></a>
-### func \(\*WorkerHost\) [GetBatchSizeForAll](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/worker_runner.go#L514>)
+### func \(\*WorkerHost\) [GetBatchSizeForAll](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/worker_host.go#L512>)
 
 ```go
 func (c *WorkerHost) GetBatchSizeForAll() (batchSizeByTaskName map[string]int)
@@ -78,7 +78,7 @@ func (c *WorkerHost) GetBatchSizeForAll() (batchSizeByTaskName map[string]int)
 GetBatchSizeForAll returns a map from taskName to batch size for all batch sizes currently registered with this WorkerHost.
 
 <a name="WorkerHost.GetBatchSizeForTask"></a>
-### func \(\*WorkerHost\) [GetBatchSizeForTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/worker_runner.go#L525>)
+### func \(\*WorkerHost\) [GetBatchSizeForTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/worker_host.go#L523>)
 
 ```go
 func (c *WorkerHost) GetBatchSizeForTask(taskName string) (batchSize int)
@@ -87,7 +87,7 @@ func (c *WorkerHost) GetBatchSizeForTask(taskName string) (batchSize int)
 GetBatchSizeForTask retrieves the current batch size for the provided task.
 
 <a name="WorkerHost.GetPollIntervalForTask"></a>
-### func \(\*WorkerHost\) [GetPollIntervalForTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/worker_runner.go#L502>)
+### func \(\*WorkerHost\) [GetPollIntervalForTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/worker_host.go#L500>)
 
 ```go
 func (c *WorkerHost) GetPollIntervalForTask(taskName string) (pollInterval time.Duration, err error)
@@ -96,7 +96,7 @@ func (c *WorkerHost) GetPollIntervalForTask(taskName string) (pollInterval time.
 GetPollIntervalForTask retrieves the poll interval for all tasks running the provided taskName. An error is returned if no pollInterval has been registered for the provided task.
 
 <a name="WorkerHost.IncreaseBatchSize"></a>
-### func \(\*WorkerHost\) [IncreaseBatchSize](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/worker_runner.go#L141>)
+### func \(\*WorkerHost\) [IncreaseBatchSize](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/worker_host.go#L139>)
 
 ```go
 func (c *WorkerHost) IncreaseBatchSize(taskName string, batchSize int) error
@@ -105,7 +105,7 @@ func (c *WorkerHost) IncreaseBatchSize(taskName string, batchSize int) error
 IncreaseBatchSize increases the batch size used for all workers running the provided task.
 
 <a name="WorkerHost.Pause"></a>
-### func \(\*WorkerHost\) [Pause](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/worker_runner.go#L190>)
+### func \(\*WorkerHost\) [Pause](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/worker_host.go#L188>)
 
 ```go
 func (c *WorkerHost) Pause(taskName string)
@@ -114,7 +114,7 @@ func (c *WorkerHost) Pause(taskName string)
 Pause pauses all workers running the provided task. When paused, workers will not poll for new tasks and no new goroutines are started. However it does not stop any goroutines running. Workers must be resumed at a later time using Resume. Failing to call \`Resume\(\)\` on a WorkerHost running one or more workers can result in a goroutine leak.
 
 <a name="WorkerHost.Resume"></a>
-### func \(\*WorkerHost\) [Resume](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/worker_runner.go#L198>)
+### func \(\*WorkerHost\) [Resume](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/worker_host.go#L196>)
 
 ```go
 func (c *WorkerHost) Resume(taskName string)
@@ -123,7 +123,7 @@ func (c *WorkerHost) Resume(taskName string)
 Resume all running workers for the provided taskName. If workers for the provided task are not paused, calling this method has no impact.
 
 <a name="WorkerHost.SetBatchSize"></a>
-### func \(\*WorkerHost\) [SetBatchSize](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/worker_runner.go#L116>)
+### func \(\*WorkerHost\) [SetBatchSize](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/worker_host.go#L114>)
 
 ```go
 func (c *WorkerHost) SetBatchSize(taskName string, batchSize int) error
@@ -132,7 +132,7 @@ func (c *WorkerHost) SetBatchSize(taskName string, batchSize int) error
 SetBatchSize can be used to set the batch size for all workers running the provided task.
 
 <a name="WorkerHost.SetPollIntervalForTask"></a>
-### func \(\*WorkerHost\) [SetPollIntervalForTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/worker_runner.go#L492>)
+### func \(\*WorkerHost\) [SetPollIntervalForTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/worker_host.go#L490>)
 
 ```go
 func (c *WorkerHost) SetPollIntervalForTask(taskName string, pollInterval time.Duration) error
@@ -141,7 +141,7 @@ func (c *WorkerHost) SetPollIntervalForTask(taskName string, pollInterval time.D
 SetPollIntervalForTask sets the pollInterval for all workers running the task with the provided taskName.
 
 <a name="WorkerHost.SetSleepOnGenericError"></a>
-### func \(\*WorkerHost\) [SetSleepOnGenericError](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/worker_runner.go#L93>)
+### func \(\*WorkerHost\) [SetSleepOnGenericError](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/worker_host.go#L91>)
 
 ```go
 func (c *WorkerHost) SetSleepOnGenericError(duration time.Duration)
@@ -150,7 +150,7 @@ func (c *WorkerHost) SetSleepOnGenericError(duration time.Duration)
 SetSleepOnGenericError Sets the time for which to wait before continuing to poll/execute when there is an error Default is 200 millis, and this function can be used to increase/decrease the duration of the wait time Useful to avoid excessive logs in the worker when there are intermittent issues
 
 <a name="WorkerHost.StartWorker"></a>
-### func \(\*WorkerHost\) [StartWorker](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/worker_runner.go#L111>)
+### func \(\*WorkerHost\) [StartWorker](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/worker_host.go#L109>)
 
 ```go
 func (c *WorkerHost) StartWorker(taskName string, executeFunction model.WorkerTaskFunction, batchSize int, pollInterval time.Duration) error
@@ -159,7 +159,7 @@ func (c *WorkerHost) StartWorker(taskName string, executeFunction model.WorkerTa
 StartWorker starts a worker on a new goroutine, which polls conductor periodically for tasks matching the provided taskName and, if any are available, uses executeFunction to run them on a separate goroutine. Each call to StartWorker starts a new goroutine which performs batch polling to retrieve as many tasks from Conductor as are available, up to the batchSize set for the task. This func additionally sets the pollInterval and increases the batch size for the task, which applies to all tasks shared by this WorkerHost with the same taskName.
 
 <a name="WorkerHost.StartWorkerWithDomain"></a>
-### func \(\*WorkerHost\) [StartWorkerWithDomain](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/worker_runner.go#L101>)
+### func \(\*WorkerHost\) [StartWorkerWithDomain](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/worker_host.go#L99>)
 
 ```go
 func (c *WorkerHost) StartWorkerWithDomain(taskName string, executeFunction model.WorkerTaskFunction, batchSize int, pollInterval time.Duration, domain string) error
@@ -172,7 +172,7 @@ StartWorkerWithDomain(taskName, executeFunction, batchSize, pollInterval, "")
 ```
 
 <a name="WorkerHost.WaitWorkers"></a>
-### func \(\*WorkerHost\) [WaitWorkers](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/worker/worker_runner.go#L212>)
+### func \(\*WorkerHost\) [WaitWorkers](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/worker/worker_host.go#L210>)
 
 ```go
 func (c *WorkerHost) WaitWorkers()

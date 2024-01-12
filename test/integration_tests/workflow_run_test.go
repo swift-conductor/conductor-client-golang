@@ -108,8 +108,8 @@ func TestRunWorkflow(t *testing.T) {
 	assert.NoError(t, err, "Failed to register workflow")
 
 	startWorkflowRequest := model.StartWorkflowRequest{
-		Name:    builder.GetName(),
-		Version: builder.GetVersion(),
+		Name:    workflowDef.Name,
+		Version: workflowDef.Version,
 	}
 
 	workflowId, err := runWorkflowWithStartWorkflowRequest(&startWorkflowRequest)

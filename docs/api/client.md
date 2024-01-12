@@ -44,7 +44,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
   - [func \(a \*MetadataResourceApiService\) GetTaskDefs\(ctx context.Context\) \(\[\]model.TaskDef, \*http.Response, error\)](<#MetadataResourceApiService.GetTaskDefs>)
   - [func \(a \*MetadataResourceApiService\) RegisterTaskDef\(ctx context.Context, body \[\]model.TaskDef\) \(\*http.Response, error\)](<#MetadataResourceApiService.RegisterTaskDef>)
   - [func \(a \*MetadataResourceApiService\) RegisterTaskDefWithTags\(ctx context.Context, body model.TaskDef\) \(\*http.Response, error\)](<#MetadataResourceApiService.RegisterTaskDefWithTags>)
-  - [func \(a \*MetadataResourceApiService\) RegisterWorkflowDef\(ctx context.Context, overwrite bool, body model.WorkflowDef\) \(\*http.Response, error\)](<#MetadataResourceApiService.RegisterWorkflowDef>)
+  - [func \(a \*MetadataResourceApiService\) RegisterWorkflowDef\(ctx context.Context, body model.WorkflowDef\) \(\*http.Response, error\)](<#MetadataResourceApiService.RegisterWorkflowDef>)
   - [func \(a \*MetadataResourceApiService\) RegisterWorkflowDefWithTags\(ctx context.Context, overwrite bool, body model.WorkflowDef\) \(\*http.Response, error\)](<#MetadataResourceApiService.RegisterWorkflowDefWithTags>)
   - [func \(a \*MetadataResourceApiService\) UnregisterTaskDef\(ctx context.Context, tasktype string\) \(\*http.Response, error\)](<#MetadataResourceApiService.UnregisterTaskDef>)
   - [func \(a \*MetadataResourceApiService\) UnregisterWorkflowDef\(ctx context.Context, name string, version int32\) \(\*http.Response, error\)](<#MetadataResourceApiService.UnregisterWorkflowDef>)
@@ -72,8 +72,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
   - [func \(a \*TaskResourceApiService\) SearchV21\(ctx context.Context, localVarOptionals \*TaskResourceApiSearchV21Opts\) \(model.SearchResultTask, \*http.Response, error\)](<#TaskResourceApiService.SearchV21>)
   - [func \(a \*TaskResourceApiService\) Size\(ctx context.Context, localVarOptionals \*TaskResourceApiSizeOpts\) \(map\[string\]int32, \*http.Response, error\)](<#TaskResourceApiService.Size>)
   - [func \(a \*TaskResourceApiService\) UpdateTask\(ctx context.Context, taskResult \*model.TaskResult\) \(string, \*http.Response, error\)](<#TaskResourceApiService.UpdateTask>)
-  - [func \(a \*TaskResourceApiService\) UpdateTaskByRefName\(ctx context.Context, body map\[string\]interface\{\}, workflowId string, taskRefName string, status string\) \(string, \*http.Response, error\)](<#TaskResourceApiService.UpdateTaskByRefName>)
-  - [func \(a \*TaskResourceApiService\) UpdateTaskByRefNameWithWorkerId\(ctx context.Context, body map\[string\]interface\{\}, workflowId string, taskRefName string, status string, workerId optional.String\) \(string, \*http.Response, error\)](<#TaskResourceApiService.UpdateTaskByRefNameWithWorkerId>)
 - [type TaskResourceApiSizeOpts](<#TaskResourceApiSizeOpts>)
 - [type WorkflowBulkResourceApiRestart1Opts](<#WorkflowBulkResourceApiRestart1Opts>)
 - [type WorkflowBulkResourceApiService](<#WorkflowBulkResourceApiService>)
@@ -97,14 +95,12 @@ Unless required by applicable law or agreed to in writing, software distributed 
 - [type WorkflowResourceApiService](<#WorkflowResourceApiService>)
   - [func \(a \*WorkflowResourceApiService\) Decide\(ctx context.Context, workflowId string\) \(\*http.Response, error\)](<#WorkflowResourceApiService.Decide>)
   - [func \(a \*WorkflowResourceApiService\) Delete\(ctx context.Context, workflowId string, localVarOptionals \*WorkflowResourceApiDeleteOpts\) \(\*http.Response, error\)](<#WorkflowResourceApiService.Delete>)
-  - [func \(a \*WorkflowResourceApiService\) RunWorkflow\(ctx context.Context, body model.StartWorkflowRequest, requestId string, name string, version int32, waitUntilTask string\) \(model.WorkflowRun, \*http.Response, error\)](<#WorkflowResourceApiService.RunWorkflow>)
   - [func \(a \*WorkflowResourceApiService\) GetExecutionStatus\(ctx context.Context, workflowId string, localVarOptionals \*WorkflowResourceApiGetExecutionStatusOpts\) \(model.Workflow, \*http.Response, error\)](<#WorkflowResourceApiService.GetExecutionStatus>)
   - [func \(a \*WorkflowResourceApiService\) GetExternalStorageLocation\(ctx context.Context, path string, operation string, payloadType string\) \(model.ExternalStorageLocation, \*http.Response, error\)](<#WorkflowResourceApiService.GetExternalStorageLocation>)
   - [func \(a \*WorkflowResourceApiService\) GetRunningWorkflow\(ctx context.Context, name string, localVarOptionals \*WorkflowResourceApiGetRunningWorkflowOpts\) \(\[\]string, \*http.Response, error\)](<#WorkflowResourceApiService.GetRunningWorkflow>)
   - [func \(a \*WorkflowResourceApiService\) GetWorkflowState\(ctx context.Context, workflowId string, includeOutput bool, includeVariables bool\) \(model.WorkflowState, \*http.Response, error\)](<#WorkflowResourceApiService.GetWorkflowState>)
   - [func \(a \*WorkflowResourceApiService\) GetWorkflows\(ctx context.Context, body \[\]string, name string, localVarOptionals \*WorkflowResourceApiGetWorkflowsOpts\) \(map\[string\]\[\]model.Workflow, \*http.Response, error\)](<#WorkflowResourceApiService.GetWorkflows>)
   - [func \(a \*WorkflowResourceApiService\) GetWorkflows1\(ctx context.Context, name string, correlationId string, localVarOptionals \*WorkflowResourceApiGetWorkflows1Opts\) \(\[\]model.Workflow, \*http.Response, error\)](<#WorkflowResourceApiService.GetWorkflows1>)
-  - [func \(a \*WorkflowResourceApiService\) GetWorkflowsBatch\(ctx context.Context, body map\[string\]\[\]string, localVarOptionals \*WorkflowResourceApiGetWorkflowsOpts\) \(map\[string\]\[\]model.Workflow, \*http.Response, error\)](<#WorkflowResourceApiService.GetWorkflowsBatch>)
   - [func \(a \*WorkflowResourceApiService\) PauseWorkflow\(ctx context.Context, workflowId string\) \(\*http.Response, error\)](<#WorkflowResourceApiService.PauseWorkflow>)
   - [func \(a \*WorkflowResourceApiService\) Rerun\(ctx context.Context, body model.RerunWorkflowRequest, workflowId string\) \(string, \*http.Response, error\)](<#WorkflowResourceApiService.Rerun>)
   - [func \(a \*WorkflowResourceApiService\) ResetWorkflow\(ctx context.Context, workflowId string\) \(\*http.Response, error\)](<#WorkflowResourceApiService.ResetWorkflow>)
@@ -124,7 +120,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 
 <a name="CacheExpires"></a>
-## func [CacheExpires](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/api_client.go#L148>)
+## func [CacheExpires](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/api_client.go#L148>)
 
 ```go
 func CacheExpires(r *http.Response) time.Time
@@ -133,7 +129,7 @@ func CacheExpires(r *http.Response) time.Time
 CacheExpires helper function to determine remaining time before repeating a request.
 
 <a name="APIClient"></a>
-## type [APIClient](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/api_client.go#L41-L43>)
+## type [APIClient](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/api_client.go#L41-L43>)
 
 
 
@@ -144,7 +140,7 @@ type APIClient struct {
 ```
 
 <a name="NewAPIClient"></a>
-### func [NewAPIClient](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/api_client.go#L45-L47>)
+### func [NewAPIClient](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/api_client.go#L45-L47>)
 
 ```go
 func NewAPIClient(httpSettings *settings.HttpSettings) *APIClient
@@ -153,7 +149,7 @@ func NewAPIClient(httpSettings *settings.HttpSettings) *APIClient
 
 
 <a name="EventResourceApiGetEventHandlersForEventOpts"></a>
-## type [EventResourceApiGetEventHandlersForEventOpts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/event_resource.go#L249-L251>)
+## type [EventResourceApiGetEventHandlersForEventOpts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/event_resource.go#L249-L251>)
 
 
 
@@ -164,7 +160,7 @@ type EventResourceApiGetEventHandlersForEventOpts struct {
 ```
 
 <a name="EventResourceApiService"></a>
-## type [EventResourceApiService](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/event_resource.go#L22-L24>)
+## type [EventResourceApiService](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/event_resource.go#L22-L24>)
 
 
 
@@ -175,7 +171,7 @@ type EventResourceApiService struct {
 ```
 
 <a name="EventResourceApiService.AddEventHandler"></a>
-### func \(\*EventResourceApiService\) [AddEventHandler](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/event_resource.go#L31>)
+### func \(\*EventResourceApiService\) [AddEventHandler](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/event_resource.go#L31>)
 
 ```go
 func (a *EventResourceApiService) AddEventHandler(ctx context.Context, body model.EventHandler) (*http.Response, error)
@@ -187,7 +183,7 @@ EventResourceApiService Add a new event handler.
 - @param body
 
 <a name="EventResourceApiService.DeleteQueueConfig"></a>
-### func \(\*EventResourceApiService\) [DeleteQueueConfig](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/event_resource.go#L97>)
+### func \(\*EventResourceApiService\) [DeleteQueueConfig](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/event_resource.go#L97>)
 
 ```go
 func (a *EventResourceApiService) DeleteQueueConfig(ctx context.Context, queueType string, queueName string) (*http.Response, error)
@@ -200,7 +196,7 @@ EventResourceApiService Delete queue config by name
 - @param queueName
 
 <a name="EventResourceApiService.GetEventHandlers"></a>
-### func \(\*EventResourceApiService\) [GetEventHandlers](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/event_resource.go#L163>)
+### func \(\*EventResourceApiService\) [GetEventHandlers](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/event_resource.go#L163>)
 
 ```go
 func (a *EventResourceApiService) GetEventHandlers(ctx context.Context) ([]model.EventHandler, *http.Response, error)
@@ -213,7 +209,7 @@ EventResourceApiService Get all the event handlers
 @return \[\]model.EventHandler
 
 <a name="EventResourceApiService.GetEventHandlersForEvent"></a>
-### func \(\*EventResourceApiService\) [GetEventHandlersForEvent](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/event_resource.go#L253>)
+### func \(\*EventResourceApiService\) [GetEventHandlersForEvent](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/event_resource.go#L253>)
 
 ```go
 func (a *EventResourceApiService) GetEventHandlersForEvent(ctx context.Context, event string, localVarOptionals *EventResourceApiGetEventHandlersForEventOpts) ([]model.EventHandler, *http.Response, error)
@@ -222,7 +218,7 @@ func (a *EventResourceApiService) GetEventHandlersForEvent(ctx context.Context, 
 
 
 <a name="EventResourceApiService.GetQueueConfig"></a>
-### func \(\*EventResourceApiService\) [GetQueueConfig](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/event_resource.go#L342>)
+### func \(\*EventResourceApiService\) [GetQueueConfig](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/event_resource.go#L342>)
 
 ```go
 func (a *EventResourceApiService) GetQueueConfig(ctx context.Context, queueType string, queueName string) (map[string]interface{}, *http.Response, error)
@@ -237,7 +233,7 @@ EventResourceApiService Get queue config by name
 @return map\[string\]interface\{\}
 
 <a name="EventResourceApiService.GetQueueNames"></a>
-### func \(\*EventResourceApiService\) [GetQueueNames](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/event_resource.go#L427>)
+### func \(\*EventResourceApiService\) [GetQueueNames](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/event_resource.go#L427>)
 
 ```go
 func (a *EventResourceApiService) GetQueueNames(ctx context.Context) (map[string]string, *http.Response, error)
@@ -250,7 +246,7 @@ EventResourceApiService Get all queue configs
 @return map\[string\]string
 
 <a name="EventResourceApiService.PutQueueConfig"></a>
-### func \(\*EventResourceApiService\) [PutQueueConfig](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/event_resource.go#L511>)
+### func \(\*EventResourceApiService\) [PutQueueConfig](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/event_resource.go#L511>)
 
 ```go
 func (a *EventResourceApiService) PutQueueConfig(ctx context.Context, body string, queueType string, queueName string) (*http.Response, error)
@@ -264,7 +260,7 @@ EventResourceApiService Create or update queue config by name
 - @param queueName
 
 <a name="EventResourceApiService.RemoveEventHandlerStatus"></a>
-### func \(\*EventResourceApiService\) [RemoveEventHandlerStatus](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/event_resource.go#L578>)
+### func \(\*EventResourceApiService\) [RemoveEventHandlerStatus](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/event_resource.go#L578>)
 
 ```go
 func (a *EventResourceApiService) RemoveEventHandlerStatus(ctx context.Context, name string) (*http.Response, error)
@@ -276,7 +272,7 @@ EventResourceApiService Remove an event handler
 - @param name
 
 <a name="EventResourceApiService.UpdateEventHandler"></a>
-### func \(\*EventResourceApiService\) [UpdateEventHandler](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/event_resource.go#L642>)
+### func \(\*EventResourceApiService\) [UpdateEventHandler](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/event_resource.go#L642>)
 
 ```go
 func (a *EventResourceApiService) UpdateEventHandler(ctx context.Context, body model.EventHandler) (*http.Response, error)
@@ -288,7 +284,7 @@ EventResourceApiService Update an existing event handler.
 - @param body
 
 <a name="GenericSwaggerError"></a>
-## type [GenericSwaggerError](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/generic_swagger_error.go#L15-L19>)
+## type [GenericSwaggerError](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/generic_swagger_error.go#L15-L19>)
 
 GenericSwaggerError Provides access to the body, error and model on returned errors.
 
@@ -299,7 +295,7 @@ type GenericSwaggerError struct {
 ```
 
 <a name="GenericSwaggerError.Body"></a>
-### func \(GenericSwaggerError\) [Body](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/generic_swagger_error.go#L27>)
+### func \(GenericSwaggerError\) [Body](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/generic_swagger_error.go#L27>)
 
 ```go
 func (e GenericSwaggerError) Body() []byte
@@ -308,7 +304,7 @@ func (e GenericSwaggerError) Body() []byte
 Body returns the raw bytes of the response
 
 <a name="GenericSwaggerError.Error"></a>
-### func \(GenericSwaggerError\) [Error](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/generic_swagger_error.go#L22>)
+### func \(GenericSwaggerError\) [Error](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/generic_swagger_error.go#L22>)
 
 ```go
 func (e GenericSwaggerError) Error() string
@@ -317,7 +313,7 @@ func (e GenericSwaggerError) Error() string
 Error returns non\-empty string if there was an error.
 
 <a name="GenericSwaggerError.Model"></a>
-### func \(GenericSwaggerError\) [Model](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/generic_swagger_error.go#L32>)
+### func \(GenericSwaggerError\) [Model](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/generic_swagger_error.go#L32>)
 
 ```go
 func (e GenericSwaggerError) Model() interface{}
@@ -326,7 +322,7 @@ func (e GenericSwaggerError) Model() interface{}
 Model returns the unpacked model of the error
 
 <a name="HealthCheckResourceApiService"></a>
-## type [HealthCheckResourceApiService](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/health_check_resource.go#L26-L28>)
+## type [HealthCheckResourceApiService](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/health_check_resource.go#L26-L28>)
 
 
 
@@ -337,7 +333,7 @@ type HealthCheckResourceApiService struct {
 ```
 
 <a name="HealthCheckResourceApiService.DoCheck"></a>
-### func \(\*HealthCheckResourceApiService\) [DoCheck](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/health_check_resource.go#L36>)
+### func \(\*HealthCheckResourceApiService\) [DoCheck](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/health_check_resource.go#L36>)
 
 ```go
 func (a *HealthCheckResourceApiService) DoCheck(ctx context.Context) (model.HealthCheckStatus, *http.Response, error)
@@ -350,7 +346,7 @@ HealthCheckResourceApiService
 @return http\_model.HealthCheckStatus
 
 <a name="HttpRequester"></a>
-## type [HttpRequester](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/http_requester.go#L26-L29>)
+## type [HttpRequester](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/http_requester.go#L26-L29>)
 
 
 
@@ -361,7 +357,7 @@ type HttpRequester struct {
 ```
 
 <a name="NewHttpRequester"></a>
-### func [NewHttpRequester](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/http_requester.go#L31>)
+### func [NewHttpRequester](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/http_requester.go#L31>)
 
 ```go
 func NewHttpRequester(httpSettings *settings.HttpSettings, httpClient *http.Client) *HttpRequester
@@ -370,7 +366,7 @@ func NewHttpRequester(httpSettings *settings.HttpSettings, httpClient *http.Clie
 
 
 <a name="MetadataResourceApiGetOpts"></a>
-## type [MetadataResourceApiGetOpts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L180-L182>)
+## type [MetadataResourceApiGetOpts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L178-L180>)
 
 
 
@@ -381,7 +377,7 @@ type MetadataResourceApiGetOpts struct {
 ```
 
 <a name="MetadataResourceApiService"></a>
-## type [MetadataResourceApiService](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L29-L31>)
+## type [MetadataResourceApiService](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L29-L31>)
 
 
 
@@ -392,7 +388,7 @@ type MetadataResourceApiService struct {
 ```
 
 <a name="MetadataResourceApiService.Get"></a>
-### func \(\*MetadataResourceApiService\) [Get](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L184>)
+### func \(\*MetadataResourceApiService\) [Get](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L182>)
 
 ```go
 func (a *MetadataResourceApiService) Get(ctx context.Context, name string, localVarOptionals *MetadataResourceApiGetOpts) (model.WorkflowDef, *http.Response, error)
@@ -401,7 +397,7 @@ func (a *MetadataResourceApiService) Get(ctx context.Context, name string, local
 
 
 <a name="MetadataResourceApiService.GetAll"></a>
-### func \(\*MetadataResourceApiService\) [GetAll](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L272>)
+### func \(\*MetadataResourceApiService\) [GetAll](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L270>)
 
 ```go
 func (a *MetadataResourceApiService) GetAll(ctx context.Context) ([]model.WorkflowDef, *http.Response, error)
@@ -414,7 +410,7 @@ MetadataResourceApiService Retrieves all workflow definition along with blueprin
 @return \[\]http\_model.WorkflowDef
 
 <a name="MetadataResourceApiService.GetTaskDef"></a>
-### func \(\*MetadataResourceApiService\) [GetTaskDef](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L357>)
+### func \(\*MetadataResourceApiService\) [GetTaskDef](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L355>)
 
 ```go
 func (a *MetadataResourceApiService) GetTaskDef(ctx context.Context, tasktype string) (model.TaskDef, *http.Response, error)
@@ -428,7 +424,7 @@ MetadataResourceApiService Gets the task definition
 @return http\_model.TaskDef
 
 <a name="MetadataResourceApiService.GetTaskDefs"></a>
-### func \(\*MetadataResourceApiService\) [GetTaskDefs](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L442>)
+### func \(\*MetadataResourceApiService\) [GetTaskDefs](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L440>)
 
 ```go
 func (a *MetadataResourceApiService) GetTaskDefs(ctx context.Context) ([]model.TaskDef, *http.Response, error)
@@ -441,7 +437,7 @@ MetadataResourceApiService Gets all task definition
 @return \[\]http\_model.TaskDef
 
 <a name="MetadataResourceApiService.RegisterTaskDef"></a>
-### func \(\*MetadataResourceApiService\) [RegisterTaskDef](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L659>)
+### func \(\*MetadataResourceApiService\) [RegisterTaskDef](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L657>)
 
 ```go
 func (a *MetadataResourceApiService) RegisterTaskDef(ctx context.Context, body []model.TaskDef) (*http.Response, error)
@@ -453,7 +449,7 @@ MetadataResourceApiService Create new task definition\(s\)
 - @param body
 
 <a name="MetadataResourceApiService.RegisterTaskDefWithTags"></a>
-### func \(\*MetadataResourceApiService\) [RegisterTaskDefWithTags](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L726>)
+### func \(\*MetadataResourceApiService\) [RegisterTaskDefWithTags](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L724>)
 
 ```go
 func (a *MetadataResourceApiService) RegisterTaskDefWithTags(ctx context.Context, body model.TaskDef) (*http.Response, error)
@@ -466,10 +462,10 @@ MetadataResourceApiService Create new task definition with tags
 - @param tags \[\]model.MetadataTag
 
 <a name="MetadataResourceApiService.RegisterWorkflowDef"></a>
-### func \(\*MetadataResourceApiService\) [RegisterWorkflowDef](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L38>)
+### func \(\*MetadataResourceApiService\) [RegisterWorkflowDef](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L38>)
 
 ```go
-func (a *MetadataResourceApiService) RegisterWorkflowDef(ctx context.Context, overwrite bool, body model.WorkflowDef) (*http.Response, error)
+func (a *MetadataResourceApiService) RegisterWorkflowDef(ctx context.Context, body model.WorkflowDef) (*http.Response, error)
 ```
 
 MetadataResourceApiService Create a new workflow definition
@@ -478,7 +474,7 @@ MetadataResourceApiService Create a new workflow definition
 - @param body
 
 <a name="MetadataResourceApiService.RegisterWorkflowDefWithTags"></a>
-### func \(\*MetadataResourceApiService\) [RegisterWorkflowDefWithTags](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L106>)
+### func \(\*MetadataResourceApiService\) [RegisterWorkflowDefWithTags](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L104>)
 
 ```go
 func (a *MetadataResourceApiService) RegisterWorkflowDefWithTags(ctx context.Context, overwrite bool, body model.WorkflowDef) (*http.Response, error)
@@ -490,7 +486,7 @@ MetadataResourceApiService Create a new workflow definition with tags
 - @param body
 
 <a name="MetadataResourceApiService.UnregisterTaskDef"></a>
-### func \(\*MetadataResourceApiService\) [UnregisterTaskDef](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L794>)
+### func \(\*MetadataResourceApiService\) [UnregisterTaskDef](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L792>)
 
 ```go
 func (a *MetadataResourceApiService) UnregisterTaskDef(ctx context.Context, tasktype string) (*http.Response, error)
@@ -502,7 +498,7 @@ MetadataResourceApiService Remove a task definition
 - @param tasktype
 
 <a name="MetadataResourceApiService.UnregisterWorkflowDef"></a>
-### func \(\*MetadataResourceApiService\) [UnregisterWorkflowDef](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L860>)
+### func \(\*MetadataResourceApiService\) [UnregisterWorkflowDef](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L858>)
 
 ```go
 func (a *MetadataResourceApiService) UnregisterWorkflowDef(ctx context.Context, name string, version int32) (*http.Response, error)
@@ -515,7 +511,7 @@ MetadataResourceApiService Removes workflow definition. It does not remove workf
 - @param version
 
 <a name="MetadataResourceApiService.Update"></a>
-### func \(\*MetadataResourceApiService\) [Update](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L926>)
+### func \(\*MetadataResourceApiService\) [Update](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L924>)
 
 ```go
 func (a *MetadataResourceApiService) Update(ctx context.Context, body []model.WorkflowDef) (*http.Response, error)
@@ -527,7 +523,7 @@ MetadataResourceApiService Create or update workflow definition
 - @param body
 
 <a name="MetadataResourceApiService.UpdateTaskDef"></a>
-### func \(\*MetadataResourceApiService\) [UpdateTaskDef](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L525>)
+### func \(\*MetadataResourceApiService\) [UpdateTaskDef](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L523>)
 
 ```go
 func (a *MetadataResourceApiService) UpdateTaskDef(ctx context.Context, body model.TaskDef) (*http.Response, error)
@@ -539,7 +535,7 @@ MetadataResourceApiService Update an existing task
 - @param body
 
 <a name="MetadataResourceApiService.UpdateTaskDefWithTags"></a>
-### func \(\*MetadataResourceApiService\) [UpdateTaskDefWithTags](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L591>)
+### func \(\*MetadataResourceApiService\) [UpdateTaskDefWithTags](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L589>)
 
 ```go
 func (a *MetadataResourceApiService) UpdateTaskDefWithTags(ctx context.Context, body model.TaskDef) (*http.Response, error)
@@ -551,7 +547,7 @@ MetadataResourceApiService Update an existing task along with tags
 - @param body
 
 <a name="MetadataResourceApiService.UpdateWorkflowDefWithTags"></a>
-### func \(\*MetadataResourceApiService\) [UpdateWorkflowDefWithTags](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L992>)
+### func \(\*MetadataResourceApiService\) [UpdateWorkflowDefWithTags](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/metadata_resource.go#L990>)
 
 ```go
 func (a *MetadataResourceApiService) UpdateWorkflowDefWithTags(ctx context.Context, body model.WorkflowDef) (*http.Response, error)
@@ -563,7 +559,7 @@ MetadataResourceApiService Create or update workflow definition along with tags
 - @param body
 
 <a name="TaskResourceApiBatchPollOpts"></a>
-## type [TaskResourceApiBatchPollOpts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L217-L222>)
+## type [TaskResourceApiBatchPollOpts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L217-L222>)
 
 
 
@@ -577,7 +573,7 @@ type TaskResourceApiBatchPollOpts struct {
 ```
 
 <a name="TaskResourceApiPollOpts"></a>
-## type [TaskResourceApiPollOpts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L825-L828>)
+## type [TaskResourceApiPollOpts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L825-L828>)
 
 
 
@@ -589,7 +585,7 @@ type TaskResourceApiPollOpts struct {
 ```
 
 <a name="TaskResourceApiSearch1Opts"></a>
-## type [TaskResourceApiSearch1Opts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L1014-L1020>)
+## type [TaskResourceApiSearch1Opts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L1014-L1020>)
 
 
 
@@ -604,7 +600,7 @@ type TaskResourceApiSearch1Opts struct {
 ```
 
 <a name="TaskResourceApiSearchV21Opts"></a>
-## type [TaskResourceApiSearchV21Opts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L1128-L1134>)
+## type [TaskResourceApiSearchV21Opts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L1128-L1134>)
 
 
 
@@ -619,7 +615,7 @@ type TaskResourceApiSearchV21Opts struct {
 ```
 
 <a name="TaskResourceApiService"></a>
-## type [TaskResourceApiService](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L33-L35>)
+## type [TaskResourceApiService](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L33-L35>)
 
 
 
@@ -630,7 +626,7 @@ type TaskResourceApiService struct {
 ```
 
 <a name="TaskResourceApiService.All"></a>
-### func \(\*TaskResourceApiService\) [All](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L43>)
+### func \(\*TaskResourceApiService\) [All](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L43>)
 
 ```go
 func (a *TaskResourceApiService) All(ctx context.Context) (map[string]int64, *http.Response, error)
@@ -643,7 +639,7 @@ TaskResourceApiService Get the details about each queue
 @return map\[string\]int64
 
 <a name="TaskResourceApiService.AllVerbose"></a>
-### func \(\*TaskResourceApiService\) [AllVerbose](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L127>)
+### func \(\*TaskResourceApiService\) [AllVerbose](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L127>)
 
 ```go
 func (a *TaskResourceApiService) AllVerbose(ctx context.Context) (map[string]map[string]map[string]int64, *http.Response, error)
@@ -656,7 +652,7 @@ TaskResourceApiService Get the details about each queue
 @return map\[string\]map\[string\]map\[string\]int64
 
 <a name="TaskResourceApiService.BatchPoll"></a>
-### func \(\*TaskResourceApiService\) [BatchPoll](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L224>)
+### func \(\*TaskResourceApiService\) [BatchPoll](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L224>)
 
 ```go
 func (a *TaskResourceApiService) BatchPoll(ctx context.Context, tasktype string, localVarOptionals *TaskResourceApiBatchPollOpts) ([]model.WorkerTask, *http.Response, error)
@@ -665,7 +661,7 @@ func (a *TaskResourceApiService) BatchPoll(ctx context.Context, tasktype string,
 
 
 <a name="TaskResourceApiService.GetAllPollData"></a>
-### func \(\*TaskResourceApiService\) [GetAllPollData](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L321>)
+### func \(\*TaskResourceApiService\) [GetAllPollData](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L321>)
 
 ```go
 func (a *TaskResourceApiService) GetAllPollData(ctx context.Context) ([]model.PollData, *http.Response, error)
@@ -678,7 +674,7 @@ TaskResourceApiService Get the last poll data for all task types
 @return \[\]PollData
 
 <a name="TaskResourceApiService.GetExternalStorageLocation1"></a>
-### func \(\*TaskResourceApiService\) [GetExternalStorageLocation1](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L408>)
+### func \(\*TaskResourceApiService\) [GetExternalStorageLocation1](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L408>)
 
 ```go
 func (a *TaskResourceApiService) GetExternalStorageLocation1(ctx context.Context, path string, operation string, payloadType string) (model.ExternalStorageLocation, *http.Response, error)
@@ -694,7 +690,7 @@ TaskResourceApiService Get the external uri where the task payload is to be stor
 @return ExternalStorageLocation
 
 <a name="TaskResourceApiService.GetPollData"></a>
-### func \(\*TaskResourceApiService\) [GetPollData](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L496>)
+### func \(\*TaskResourceApiService\) [GetPollData](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L496>)
 
 ```go
 func (a *TaskResourceApiService) GetPollData(ctx context.Context, taskType string) ([]model.PollData, *http.Response, error)
@@ -708,7 +704,7 @@ TaskResourceApiService Get the last poll data for a given task type
 @return \[\]PollData
 
 <a name="TaskResourceApiService.GetTask"></a>
-### func \(\*TaskResourceApiService\) [GetTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L582>)
+### func \(\*TaskResourceApiService\) [GetTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L582>)
 
 ```go
 func (a *TaskResourceApiService) GetTask(ctx context.Context, taskId string) (model.WorkerTask, *http.Response, error)
@@ -722,7 +718,7 @@ TaskResourceApiService Get task by Id
 @return Task
 
 <a name="TaskResourceApiService.GetTaskLogs"></a>
-### func \(\*TaskResourceApiService\) [GetTaskLogs](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L668>)
+### func \(\*TaskResourceApiService\) [GetTaskLogs](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L668>)
 
 ```go
 func (a *TaskResourceApiService) GetTaskLogs(ctx context.Context, taskId string) ([]model.TaskExecLog, *http.Response, error)
@@ -736,7 +732,7 @@ TaskResourceApiService Get Task Execution Logs
 @return \[\]TaskExecLog
 
 <a name="TaskResourceApiService.Log"></a>
-### func \(\*TaskResourceApiService\) [Log](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L753>)
+### func \(\*TaskResourceApiService\) [Log](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L753>)
 
 ```go
 func (a *TaskResourceApiService) Log(ctx context.Context, body string, taskId string) (*http.Response, error)
@@ -749,7 +745,7 @@ TaskResourceApiService Log Task Execution Details
 - @param taskId
 
 <a name="TaskResourceApiService.Poll"></a>
-### func \(\*TaskResourceApiService\) [Poll](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L830>)
+### func \(\*TaskResourceApiService\) [Poll](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L830>)
 
 ```go
 func (a *TaskResourceApiService) Poll(ctx context.Context, tasktype string, localVarOptionals *TaskResourceApiPollOpts) (model.WorkerTask, *http.Response, error)
@@ -758,7 +754,7 @@ func (a *TaskResourceApiService) Poll(ctx context.Context, tasktype string, loca
 
 
 <a name="TaskResourceApiService.RequeuePendingTask"></a>
-### func \(\*TaskResourceApiService\) [RequeuePendingTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L922>)
+### func \(\*TaskResourceApiService\) [RequeuePendingTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L922>)
 
 ```go
 func (a *TaskResourceApiService) RequeuePendingTask(ctx context.Context, taskType string) (string, *http.Response, error)
@@ -772,7 +768,7 @@ TaskResourceApiService Requeue pending tasks
 @return string
 
 <a name="TaskResourceApiService.Search1"></a>
-### func \(\*TaskResourceApiService\) [Search1](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L1022>)
+### func \(\*TaskResourceApiService\) [Search1](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L1022>)
 
 ```go
 func (a *TaskResourceApiService) Search1(ctx context.Context, localVarOptionals *TaskResourceApiSearch1Opts) (model.SearchResultTaskSummary, *http.Response, error)
@@ -781,7 +777,7 @@ func (a *TaskResourceApiService) Search1(ctx context.Context, localVarOptionals 
 
 
 <a name="TaskResourceApiService.SearchV21"></a>
-### func \(\*TaskResourceApiService\) [SearchV21](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L1136>)
+### func \(\*TaskResourceApiService\) [SearchV21](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L1136>)
 
 ```go
 func (a *TaskResourceApiService) SearchV21(ctx context.Context, localVarOptionals *TaskResourceApiSearchV21Opts) (model.SearchResultTask, *http.Response, error)
@@ -790,7 +786,7 @@ func (a *TaskResourceApiService) SearchV21(ctx context.Context, localVarOptional
 
 
 <a name="TaskResourceApiService.Size"></a>
-### func \(\*TaskResourceApiService\) [Size](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L1241>)
+### func \(\*TaskResourceApiService\) [Size](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L1241>)
 
 ```go
 func (a *TaskResourceApiService) Size(ctx context.Context, localVarOptionals *TaskResourceApiSizeOpts) (map[string]int32, *http.Response, error)
@@ -799,7 +795,7 @@ func (a *TaskResourceApiService) Size(ctx context.Context, localVarOptionals *Ta
 
 
 <a name="TaskResourceApiService.UpdateTask"></a>
-### func \(\*TaskResourceApiService\) [UpdateTask](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L1329>)
+### func \(\*TaskResourceApiService\) [UpdateTask](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L1329>)
 
 ```go
 func (a *TaskResourceApiService) UpdateTask(ctx context.Context, taskResult *model.TaskResult) (string, *http.Response, error)
@@ -812,43 +808,8 @@ TaskResourceApiService Update a task
 
 @return string
 
-<a name="TaskResourceApiService.UpdateTaskByRefName"></a>
-### func \(\*TaskResourceApiService\) [UpdateTaskByRefName](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L1420>)
-
-```go
-func (a *TaskResourceApiService) UpdateTaskByRefName(ctx context.Context, body map[string]interface{}, workflowId string, taskRefName string, status string) (string, *http.Response, error)
-```
-
-TaskResourceApiService Update a task By Ref Name
-
-- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
-- @param body
-- @param workflowId
-- @param taskRefName
-- @param status
-
-@return string
-
-<a name="TaskResourceApiService.UpdateTaskByRefNameWithWorkerId"></a>
-### func \(\*TaskResourceApiService\) [UpdateTaskByRefNameWithWorkerId](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L1435>)
-
-```go
-func (a *TaskResourceApiService) UpdateTaskByRefNameWithWorkerId(ctx context.Context, body map[string]interface{}, workflowId string, taskRefName string, status string, workerId optional.String) (string, *http.Response, error)
-```
-
-TaskResourceApiService Update a task By Ref Name
-
-- @param ctx context.Context \- for logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background\(\).
-- @param body
-- @param workflowId
-- @param taskRefName
-- @param status
-- @param workerId
-
-@return string
-
 <a name="TaskResourceApiSizeOpts"></a>
-## type [TaskResourceApiSizeOpts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/task_resource.go#L1237-L1239>)
+## type [TaskResourceApiSizeOpts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/task_resource.go#L1237-L1239>)
 
 
 
@@ -859,7 +820,7 @@ type TaskResourceApiSizeOpts struct {
 ```
 
 <a name="WorkflowBulkResourceApiRestart1Opts"></a>
-## type [WorkflowBulkResourceApiRestart1Opts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_bulk_resource.go#L127-L129>)
+## type [WorkflowBulkResourceApiRestart1Opts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_bulk_resource.go#L127-L129>)
 
 
 
@@ -870,7 +831,7 @@ type WorkflowBulkResourceApiRestart1Opts struct {
 ```
 
 <a name="WorkflowBulkResourceApiService"></a>
-## type [WorkflowBulkResourceApiService](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_bulk_resource.go#L27-L29>)
+## type [WorkflowBulkResourceApiService](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_bulk_resource.go#L27-L29>)
 
 
 
@@ -881,7 +842,7 @@ type WorkflowBulkResourceApiService struct {
 ```
 
 <a name="WorkflowBulkResourceApiService.PauseWorkflow1"></a>
-### func \(\*WorkflowBulkResourceApiService\) [PauseWorkflow1](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_bulk_resource.go#L38>)
+### func \(\*WorkflowBulkResourceApiService\) [PauseWorkflow1](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_bulk_resource.go#L38>)
 
 ```go
 func (a *WorkflowBulkResourceApiService) PauseWorkflow1(ctx context.Context, body []string) (model.BulkResponse, *http.Response, error)
@@ -895,7 +856,7 @@ WorkflowBulkResourceApiService Pause the list of workflows
 @return http\_model.BulkResponse
 
 <a name="WorkflowBulkResourceApiService.Restart1"></a>
-### func \(\*WorkflowBulkResourceApiService\) [Restart1](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_bulk_resource.go#L131>)
+### func \(\*WorkflowBulkResourceApiService\) [Restart1](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_bulk_resource.go#L131>)
 
 ```go
 func (a *WorkflowBulkResourceApiService) Restart1(ctx context.Context, body []string, localVarOptionals *WorkflowBulkResourceApiRestart1Opts) (model.BulkResponse, *http.Response, error)
@@ -904,7 +865,7 @@ func (a *WorkflowBulkResourceApiService) Restart1(ctx context.Context, body []st
 
 
 <a name="WorkflowBulkResourceApiService.ResumeWorkflow1"></a>
-### func \(\*WorkflowBulkResourceApiService\) [ResumeWorkflow1](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_bulk_resource.go#L221>)
+### func \(\*WorkflowBulkResourceApiService\) [ResumeWorkflow1](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_bulk_resource.go#L221>)
 
 ```go
 func (a *WorkflowBulkResourceApiService) ResumeWorkflow1(ctx context.Context, body []string) (model.BulkResponse, *http.Response, error)
@@ -918,7 +879,7 @@ WorkflowBulkResourceApiService Resume the list of workflows
 @return http\_model.BulkResponse
 
 <a name="WorkflowBulkResourceApiService.Retry1"></a>
-### func \(\*WorkflowBulkResourceApiService\) [Retry1](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_bulk_resource.go#L308>)
+### func \(\*WorkflowBulkResourceApiService\) [Retry1](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_bulk_resource.go#L308>)
 
 ```go
 func (a *WorkflowBulkResourceApiService) Retry1(ctx context.Context, body []string) (model.BulkResponse, *http.Response, error)
@@ -932,7 +893,7 @@ WorkflowBulkResourceApiService Retry the last failed task for each workflow from
 @return http\_model.BulkResponse
 
 <a name="WorkflowBulkResourceApiService.Terminate"></a>
-### func \(\*WorkflowBulkResourceApiService\) [Terminate](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_bulk_resource.go#L402>)
+### func \(\*WorkflowBulkResourceApiService\) [Terminate](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_bulk_resource.go#L402>)
 
 ```go
 func (a *WorkflowBulkResourceApiService) Terminate(ctx context.Context, body []string, localVarOptionals *WorkflowBulkResourceApiTerminateOpts) (model.BulkResponse, *http.Response, error)
@@ -941,7 +902,7 @@ func (a *WorkflowBulkResourceApiService) Terminate(ctx context.Context, body []s
 
 
 <a name="WorkflowBulkResourceApiTerminateOpts"></a>
-## type [WorkflowBulkResourceApiTerminateOpts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_bulk_resource.go#L397-L400>)
+## type [WorkflowBulkResourceApiTerminateOpts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_bulk_resource.go#L397-L400>)
 
 
 
@@ -953,7 +914,7 @@ type WorkflowBulkResourceApiTerminateOpts struct {
 ```
 
 <a name="WorkflowResourceApiDeleteOpts"></a>
-## type [WorkflowResourceApiDeleteOpts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L106-L108>)
+## type [WorkflowResourceApiDeleteOpts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L106-L108>)
 
 
 
@@ -964,7 +925,7 @@ type WorkflowResourceApiDeleteOpts struct {
 ```
 
 <a name="WorkflowResourceApiGetExecutionStatusOpts"></a>
-## type [WorkflowResourceApiGetExecutionStatusOpts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L182-L184>)
+## type [WorkflowResourceApiGetExecutionStatusOpts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L182-L184>)
 
 
 
@@ -975,7 +936,7 @@ type WorkflowResourceApiGetExecutionStatusOpts struct {
 ```
 
 <a name="WorkflowResourceApiGetRunningWorkflowOpts"></a>
-## type [WorkflowResourceApiGetRunningWorkflowOpts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L450-L454>)
+## type [WorkflowResourceApiGetRunningWorkflowOpts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L450-L454>)
 
 
 
@@ -988,7 +949,7 @@ type WorkflowResourceApiGetRunningWorkflowOpts struct {
 ```
 
 <a name="WorkflowResourceApiGetWorkflows1Opts"></a>
-## type [WorkflowResourceApiGetWorkflows1Opts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L743-L746>)
+## type [WorkflowResourceApiGetWorkflows1Opts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L658-L661>)
 
 
 
@@ -1000,7 +961,7 @@ type WorkflowResourceApiGetWorkflows1Opts struct {
 ```
 
 <a name="WorkflowResourceApiGetWorkflowsOpts"></a>
-## type [WorkflowResourceApiGetWorkflowsOpts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L555-L558>)
+## type [WorkflowResourceApiGetWorkflowsOpts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L555-L558>)
 
 
 
@@ -1012,7 +973,7 @@ type WorkflowResourceApiGetWorkflowsOpts struct {
 ```
 
 <a name="WorkflowResourceApiRestartOpts"></a>
-## type [WorkflowResourceApiRestartOpts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1062-L1064>)
+## type [WorkflowResourceApiRestartOpts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L977-L979>)
 
 
 
@@ -1023,7 +984,7 @@ type WorkflowResourceApiRestartOpts struct {
 ```
 
 <a name="WorkflowResourceApiRetryOpts"></a>
-## type [WorkflowResourceApiRetryOpts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1203-L1205>)
+## type [WorkflowResourceApiRetryOpts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1118-L1120>)
 
 
 
@@ -1034,7 +995,7 @@ type WorkflowResourceApiRetryOpts struct {
 ```
 
 <a name="WorkflowResourceApiSearchOpts"></a>
-## type [WorkflowResourceApiSearchOpts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1283-L1289>)
+## type [WorkflowResourceApiSearchOpts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1198-L1204>)
 
 
 
@@ -1049,7 +1010,7 @@ type WorkflowResourceApiSearchOpts struct {
 ```
 
 <a name="WorkflowResourceApiSearchV2Opts"></a>
-## type [WorkflowResourceApiSearchV2Opts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1397-L1403>)
+## type [WorkflowResourceApiSearchV2Opts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1312-L1318>)
 
 
 
@@ -1064,7 +1025,7 @@ type WorkflowResourceApiSearchV2Opts struct {
 ```
 
 <a name="WorkflowResourceApiSearchWorkflowsByTasksOpts"></a>
-## type [WorkflowResourceApiSearchWorkflowsByTasksOpts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1511-L1517>)
+## type [WorkflowResourceApiSearchWorkflowsByTasksOpts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1426-L1432>)
 
 
 
@@ -1079,7 +1040,7 @@ type WorkflowResourceApiSearchWorkflowsByTasksOpts struct {
 ```
 
 <a name="WorkflowResourceApiSearchWorkflowsByTasksV2Opts"></a>
-## type [WorkflowResourceApiSearchWorkflowsByTasksV2Opts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1625-L1631>)
+## type [WorkflowResourceApiSearchWorkflowsByTasksV2Opts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1540-L1546>)
 
 
 
@@ -1094,7 +1055,7 @@ type WorkflowResourceApiSearchWorkflowsByTasksV2Opts struct {
 ```
 
 <a name="WorkflowResourceApiService"></a>
-## type [WorkflowResourceApiService](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L28-L30>)
+## type [WorkflowResourceApiService](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L28-L30>)
 
 
 
@@ -1105,7 +1066,7 @@ type WorkflowResourceApiService struct {
 ```
 
 <a name="WorkflowResourceApiService.Decide"></a>
-### func \(\*WorkflowResourceApiService\) [Decide](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L37>)
+### func \(\*WorkflowResourceApiService\) [Decide](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L37>)
 
 ```go
 func (a *WorkflowResourceApiService) Decide(ctx context.Context, workflowId string) (*http.Response, error)
@@ -1117,7 +1078,7 @@ WorkflowResourceApiService Starts the decision task for a workflow
 - @param workflowId
 
 <a name="WorkflowResourceApiService.Delete"></a>
-### func \(\*WorkflowResourceApiService\) [Delete](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L110>)
+### func \(\*WorkflowResourceApiService\) [Delete](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L110>)
 
 ```go
 func (a *WorkflowResourceApiService) Delete(ctx context.Context, workflowId string, localVarOptionals *WorkflowResourceApiDeleteOpts) (*http.Response, error)
@@ -1125,17 +1086,8 @@ func (a *WorkflowResourceApiService) Delete(ctx context.Context, workflowId stri
 
 
 
-<a name="WorkflowResourceApiService.RunWorkflow"></a>
-### func \(\*WorkflowResourceApiService\) [RunWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1903>)
-
-```go
-func (a *WorkflowResourceApiService) RunWorkflow(ctx context.Context, body model.StartWorkflowRequest, requestId string, name string, version int32, waitUntilTask string) (model.WorkflowRun, *http.Response, error)
-```
-
-
-
 <a name="WorkflowResourceApiService.GetExecutionStatus"></a>
-### func \(\*WorkflowResourceApiService\) [GetExecutionStatus](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L186>)
+### func \(\*WorkflowResourceApiService\) [GetExecutionStatus](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L186>)
 
 ```go
 func (a *WorkflowResourceApiService) GetExecutionStatus(ctx context.Context, workflowId string, localVarOptionals *WorkflowResourceApiGetExecutionStatusOpts) (model.Workflow, *http.Response, error)
@@ -1144,7 +1096,7 @@ func (a *WorkflowResourceApiService) GetExecutionStatus(ctx context.Context, wor
 
 
 <a name="WorkflowResourceApiService.GetExternalStorageLocation"></a>
-### func \(\*WorkflowResourceApiService\) [GetExternalStorageLocation](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L358>)
+### func \(\*WorkflowResourceApiService\) [GetExternalStorageLocation](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L358>)
 
 ```go
 func (a *WorkflowResourceApiService) GetExternalStorageLocation(ctx context.Context, path string, operation string, payloadType string) (model.ExternalStorageLocation, *http.Response, error)
@@ -1160,7 +1112,7 @@ WorkflowResourceApiService Get the uri and path of the external storage where th
 @return http\_model.ExternalStorageLocation
 
 <a name="WorkflowResourceApiService.GetRunningWorkflow"></a>
-### func \(\*WorkflowResourceApiService\) [GetRunningWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L456>)
+### func \(\*WorkflowResourceApiService\) [GetRunningWorkflow](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L456>)
 
 ```go
 func (a *WorkflowResourceApiService) GetRunningWorkflow(ctx context.Context, name string, localVarOptionals *WorkflowResourceApiGetRunningWorkflowOpts) ([]string, *http.Response, error)
@@ -1169,7 +1121,7 @@ func (a *WorkflowResourceApiService) GetRunningWorkflow(ctx context.Context, nam
 
 
 <a name="WorkflowResourceApiService.GetWorkflowState"></a>
-### func \(\*WorkflowResourceApiService\) [GetWorkflowState](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L268>)
+### func \(\*WorkflowResourceApiService\) [GetWorkflowState](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L268>)
 
 ```go
 func (a *WorkflowResourceApiService) GetWorkflowState(ctx context.Context, workflowId string, includeOutput bool, includeVariables bool) (model.WorkflowState, *http.Response, error)
@@ -1178,7 +1130,7 @@ func (a *WorkflowResourceApiService) GetWorkflowState(ctx context.Context, workf
 
 
 <a name="WorkflowResourceApiService.GetWorkflows"></a>
-### func \(\*WorkflowResourceApiService\) [GetWorkflows](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L560>)
+### func \(\*WorkflowResourceApiService\) [GetWorkflows](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L560>)
 
 ```go
 func (a *WorkflowResourceApiService) GetWorkflows(ctx context.Context, body []string, name string, localVarOptionals *WorkflowResourceApiGetWorkflowsOpts) (map[string][]model.Workflow, *http.Response, error)
@@ -1187,7 +1139,7 @@ func (a *WorkflowResourceApiService) GetWorkflows(ctx context.Context, body []st
 
 
 <a name="WorkflowResourceApiService.GetWorkflows1"></a>
-### func \(\*WorkflowResourceApiService\) [GetWorkflows1](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L748>)
+### func \(\*WorkflowResourceApiService\) [GetWorkflows1](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L663>)
 
 ```go
 func (a *WorkflowResourceApiService) GetWorkflows1(ctx context.Context, name string, correlationId string, localVarOptionals *WorkflowResourceApiGetWorkflows1Opts) ([]model.Workflow, *http.Response, error)
@@ -1195,17 +1147,8 @@ func (a *WorkflowResourceApiService) GetWorkflows1(ctx context.Context, name str
 
 
 
-<a name="WorkflowResourceApiService.GetWorkflowsBatch"></a>
-### func \(\*WorkflowResourceApiService\) [GetWorkflowsBatch](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L647>)
-
-```go
-func (a *WorkflowResourceApiService) GetWorkflowsBatch(ctx context.Context, body map[string][]string, localVarOptionals *WorkflowResourceApiGetWorkflowsOpts) (map[string][]model.Workflow, *http.Response, error)
-```
-
-
-
 <a name="WorkflowResourceApiService.PauseWorkflow"></a>
-### func \(\*WorkflowResourceApiService\) [PauseWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L839>)
+### func \(\*WorkflowResourceApiService\) [PauseWorkflow](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L754>)
 
 ```go
 func (a *WorkflowResourceApiService) PauseWorkflow(ctx context.Context, workflowId string) (*http.Response, error)
@@ -1217,7 +1160,7 @@ WorkflowResourceApiService Pauses the workflow
 - @param workflowId
 
 <a name="WorkflowResourceApiService.Rerun"></a>
-### func \(\*WorkflowResourceApiService\) [Rerun](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L907>)
+### func \(\*WorkflowResourceApiService\) [Rerun](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L822>)
 
 ```go
 func (a *WorkflowResourceApiService) Rerun(ctx context.Context, body model.RerunWorkflowRequest, workflowId string) (string, *http.Response, error)
@@ -1232,7 +1175,7 @@ WorkflowResourceApiService Reruns the workflow from a specific task
 @return string
 
 <a name="WorkflowResourceApiService.ResetWorkflow"></a>
-### func \(\*WorkflowResourceApiService\) [ResetWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L993>)
+### func \(\*WorkflowResourceApiService\) [ResetWorkflow](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L908>)
 
 ```go
 func (a *WorkflowResourceApiService) ResetWorkflow(ctx context.Context, workflowId string) (*http.Response, error)
@@ -1244,7 +1187,7 @@ WorkflowResourceApiService Resets callback times of all non\-terminal CUSTOM tas
 - @param workflowId
 
 <a name="WorkflowResourceApiService.Restart"></a>
-### func \(\*WorkflowResourceApiService\) [Restart](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1066>)
+### func \(\*WorkflowResourceApiService\) [Restart](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L981>)
 
 ```go
 func (a *WorkflowResourceApiService) Restart(ctx context.Context, workflowId string, localVarOptionals *WorkflowResourceApiRestartOpts) (*http.Response, error)
@@ -1253,7 +1196,7 @@ func (a *WorkflowResourceApiService) Restart(ctx context.Context, workflowId str
 
 
 <a name="WorkflowResourceApiService.ResumeWorkflow"></a>
-### func \(\*WorkflowResourceApiService\) [ResumeWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1134>)
+### func \(\*WorkflowResourceApiService\) [ResumeWorkflow](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1049>)
 
 ```go
 func (a *WorkflowResourceApiService) ResumeWorkflow(ctx context.Context, workflowId string) (*http.Response, error)
@@ -1265,7 +1208,7 @@ WorkflowResourceApiService Resumes the workflow
 - @param workflowId
 
 <a name="WorkflowResourceApiService.Retry"></a>
-### func \(\*WorkflowResourceApiService\) [Retry](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1207>)
+### func \(\*WorkflowResourceApiService\) [Retry](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1122>)
 
 ```go
 func (a *WorkflowResourceApiService) Retry(ctx context.Context, workflowId string, localVarOptionals *WorkflowResourceApiRetryOpts) (*http.Response, error)
@@ -1274,7 +1217,7 @@ func (a *WorkflowResourceApiService) Retry(ctx context.Context, workflowId strin
 
 
 <a name="WorkflowResourceApiService.Search"></a>
-### func \(\*WorkflowResourceApiService\) [Search](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1291>)
+### func \(\*WorkflowResourceApiService\) [Search](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1206>)
 
 ```go
 func (a *WorkflowResourceApiService) Search(ctx context.Context, localVarOptionals *WorkflowResourceApiSearchOpts) (model.SearchResultWorkflowSummary, *http.Response, error)
@@ -1283,7 +1226,7 @@ func (a *WorkflowResourceApiService) Search(ctx context.Context, localVarOptiona
 
 
 <a name="WorkflowResourceApiService.SearchV2"></a>
-### func \(\*WorkflowResourceApiService\) [SearchV2](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1405>)
+### func \(\*WorkflowResourceApiService\) [SearchV2](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1320>)
 
 ```go
 func (a *WorkflowResourceApiService) SearchV2(ctx context.Context, localVarOptionals *WorkflowResourceApiSearchV2Opts) (model.SearchResultWorkflow, *http.Response, error)
@@ -1292,7 +1235,7 @@ func (a *WorkflowResourceApiService) SearchV2(ctx context.Context, localVarOptio
 
 
 <a name="WorkflowResourceApiService.SearchWorkflowsByTasks"></a>
-### func \(\*WorkflowResourceApiService\) [SearchWorkflowsByTasks](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1519>)
+### func \(\*WorkflowResourceApiService\) [SearchWorkflowsByTasks](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1434>)
 
 ```go
 func (a *WorkflowResourceApiService) SearchWorkflowsByTasks(ctx context.Context, localVarOptionals *WorkflowResourceApiSearchWorkflowsByTasksOpts) (model.SearchResultWorkflowSummary, *http.Response, error)
@@ -1301,7 +1244,7 @@ func (a *WorkflowResourceApiService) SearchWorkflowsByTasks(ctx context.Context,
 
 
 <a name="WorkflowResourceApiService.SearchWorkflowsByTasksV2"></a>
-### func \(\*WorkflowResourceApiService\) [SearchWorkflowsByTasksV2](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1633>)
+### func \(\*WorkflowResourceApiService\) [SearchWorkflowsByTasksV2](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1548>)
 
 ```go
 func (a *WorkflowResourceApiService) SearchWorkflowsByTasksV2(ctx context.Context, localVarOptionals *WorkflowResourceApiSearchWorkflowsByTasksV2Opts) (model.SearchResultWorkflow, *http.Response, error)
@@ -1310,7 +1253,7 @@ func (a *WorkflowResourceApiService) SearchWorkflowsByTasksV2(ctx context.Contex
 
 
 <a name="WorkflowResourceApiService.SkipTaskFromWorkflow"></a>
-### func \(\*WorkflowResourceApiService\) [SkipTaskFromWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1733>)
+### func \(\*WorkflowResourceApiService\) [SkipTaskFromWorkflow](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1648>)
 
 ```go
 func (a *WorkflowResourceApiService) SkipTaskFromWorkflow(ctx context.Context, workflowId string, taskReferenceName string, skipTaskRequest model.SkipTaskRequest) (*http.Response, error)
@@ -1324,7 +1267,7 @@ WorkflowResourceApiService Skips a given task from a current running workflow
 - @param skipTaskRequest
 
 <a name="WorkflowResourceApiService.StartWorkflow"></a>
-### func \(\*WorkflowResourceApiService\) [StartWorkflow](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1813>)
+### func \(\*WorkflowResourceApiService\) [StartWorkflow](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1728>)
 
 ```go
 func (a *WorkflowResourceApiService) StartWorkflow(ctx context.Context, body map[string]interface{}, name string, localVarOptionals *WorkflowResourceApiStartWorkflowOpts) (string, *http.Response, error)
@@ -1333,7 +1276,7 @@ func (a *WorkflowResourceApiService) StartWorkflow(ctx context.Context, body map
 
 
 <a name="WorkflowResourceApiService.StartWorkflowWithRequest"></a>
-### func \(\*WorkflowResourceApiService\) [StartWorkflowWithRequest](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1997>)
+### func \(\*WorkflowResourceApiService\) [StartWorkflowWithRequest](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1825>)
 
 ```go
 func (a *WorkflowResourceApiService) StartWorkflowWithRequest(ctx context.Context, body model.StartWorkflowRequest) (string, *http.Response, error)
@@ -1347,7 +1290,7 @@ WorkflowResourceApiService Start a new workflow with http\_model.StartWorkflowRe
 @return string
 
 <a name="WorkflowResourceApiService.Terminate"></a>
-### func \(\*WorkflowResourceApiService\) [Terminate](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L2091>)
+### func \(\*WorkflowResourceApiService\) [Terminate](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1919>)
 
 ```go
 func (a *WorkflowResourceApiService) Terminate(ctx context.Context, workflowId string, localVarOptionals *WorkflowResourceApiTerminateOpts) (*http.Response, error)
@@ -1356,7 +1299,7 @@ func (a *WorkflowResourceApiService) Terminate(ctx context.Context, workflowId s
 
 
 <a name="WorkflowResourceApiStartWorkflowOpts"></a>
-## type [WorkflowResourceApiStartWorkflowOpts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1807-L1811>)
+## type [WorkflowResourceApiStartWorkflowOpts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1722-L1726>)
 
 
 
@@ -1369,7 +1312,7 @@ type WorkflowResourceApiStartWorkflowOpts struct {
 ```
 
 <a name="WorkflowResourceApiTerminateOpts"></a>
-## type [WorkflowResourceApiTerminateOpts](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L2086-L2089>)
+## type [WorkflowResourceApiTerminateOpts](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/client/workflow_resource.go#L1914-L1917>)
 
 
 

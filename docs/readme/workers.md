@@ -37,12 +37,15 @@ type TaskOutput struct {
 // CustomWorker function accepts Task as input and returns TaskOutput as result
 //If there is a failure, error can be returned and the task will be marked as FAILED
 func CustomWorker(t *model.WorkerTask) (interface{}, error) {
-    taskResult := &TaskOutput{
-        Keys:    []string{"Key1", "Key2"},
-        Message: "Hello World",
-        Value:   rand.ExpFloat64(),
-    }
-    return taskResult, nil
+	taskResult := model.NewTaskResultFromTask(t)
+	taskResult.OutputData = map[string]interface{}{
+		"key":  "value",
+		"key1": "value1",
+		"key2": 42,
+	}
+
+	taskResult.Status = model.CompletedTask
+	return taskResult, nil
 }
 ```
 
@@ -62,6 +65,7 @@ func LongRunningTaskWorker(t *model.WorkerTask) (interface{}, error) {
 
 	// Time after which the task should be sent back to worker
 	taskResult.CallbackAfterSeconds = 60
+
 	return taskResult, nil
 }
 ```
@@ -71,16 +75,14 @@ func LongRunningTaskWorker(t *model.WorkerTask) (interface{}, error) {
 `WorkerHost` interface is used to start the workers, which takes care of polling server for the work, executing worker code and updating the results back to the server.
 
 ```go
-apiClient := client.NewAPIClient(
-    settings.NewHttpSettings(
-    "http://localhost:8080/api",
-))
+httpSettings := settings.NewHttpSettings("http://localhost:8080/api")
+apiClient := client.NewAPIClient(httpSettings)
 
 workerHost := worker.NewWorkerHostWithApiClient(apiClient)
 
 // Start polling for a task by name "custom_task", with a batch size of 1 and 1 second interval
 // Between polls if there are no tasks available to execute
-workerHost.StartWorker("custom_task", examples.CustomWorker, 1, time.Second*1)
+workerHost.StartWorker("custom_task", examples.CustomWorker, 1, 1*time.Second)
 
 // Add more StartWorker calls as needed
 
@@ -108,18 +110,6 @@ output :=  &TaskOutput{
 }
 
 manager.UpdateTask(taskId, workflowInstanceId, task_result_status.COMPLETED, output)
-```
-
-#### Update task by Reference Name
-
-```go
-output :=  &TaskOutput{
-Keys:    []string{"Key1", "Key2"},
-Message: "Hello World",
-Value:   rand.ExpFloat64(),
-}
-
-manager.UpdateTaskByRefName("task_ref_name", workflowInstanceId, task_result_status.COMPLETED, ouptut)
 ```
 
 ### Worker Metrics

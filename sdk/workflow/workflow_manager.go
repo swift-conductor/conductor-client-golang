@@ -412,22 +412,6 @@ func (e *WorkflowManager) UpdateTask(taskId string, workflowInstanceId string, s
 	return nil
 }
 
-// UpdateTaskByRefName Update the execution status and output of the task and status
-func (e *WorkflowManager) UpdateTaskByRefName(taskRefName string, workflowInstanceId string, status model.TaskResultStatus, output interface{}) error {
-	outputData, err := model.ConvertToMap(output)
-	if err != nil {
-		return err
-	}
-	_, response, err := e.taskClient.UpdateTaskByRefName(context.Background(), outputData, workflowInstanceId, taskRefName, string(status))
-	if err != nil {
-		return err
-	}
-	if response.StatusCode == 404 {
-		return fmt.Errorf(response.Status)
-	}
-	return nil
-}
-
 // GetTask by task Id returns nil if no such task is found by the id
 func (e *WorkflowManager) GetTask(taskId string) (task *model.WorkerTask, err error) {
 	t, response, err := e.taskClient.GetTask(context.Background(), taskId)

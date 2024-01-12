@@ -19,7 +19,7 @@ import "github.com/swift-conductor/conductor-client-golang/sdk/settings"
 
 
 <a name="ExternalStorageSettings"></a>
-## type [ExternalStorageSettings](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/settings/external_storage_settings.go#L16-L20>)
+## type [ExternalStorageSettings](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/settings/external_storage_settings.go#L16-L20>)
 
 
 
@@ -32,7 +32,7 @@ type ExternalStorageSettings struct {
 ```
 
 <a name="NewExternalStorageSettings"></a>
-### func [NewExternalStorageSettings](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/settings/external_storage_settings.go#L22-L26>)
+### func [NewExternalStorageSettings](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/settings/external_storage_settings.go#L22-L26>)
 
 ```go
 func NewExternalStorageSettings(taskOutputPayloadThresholdKB int64, taskOutputMaxPayloadThresholdKB int64, externalStorageHandler model.ExternalStorageHandler) *ExternalStorageSettings
@@ -41,7 +41,7 @@ func NewExternalStorageSettings(taskOutputPayloadThresholdKB int64, taskOutputMa
 
 
 <a name="HttpSettings"></a>
-## type [HttpSettings](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/settings/http_settings.go#L12-L15>)
+## type [HttpSettings](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/settings/http_settings.go#L12-L15>)
 
 
 
@@ -53,7 +53,7 @@ type HttpSettings struct {
 ```
 
 <a name="NewHttpDefaultSettings"></a>
-### func [NewHttpDefaultSettings](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/settings/http_settings.go#L17>)
+### func [NewHttpDefaultSettings](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/settings/http_settings.go#L17>)
 
 ```go
 func NewHttpDefaultSettings() *HttpSettings
@@ -62,7 +62,7 @@ func NewHttpDefaultSettings() *HttpSettings
 
 
 <a name="NewHttpSettings"></a>
-### func [NewHttpSettings](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/settings/http_settings.go#L23>)
+### func [NewHttpSettings](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/settings/http_settings.go#L23>)
 
 ```go
 func NewHttpSettings(baseUrl string) *HttpSettings
@@ -71,7 +71,7 @@ func NewHttpSettings(baseUrl string) *HttpSettings
 
 
 <a name="MetricsSettings"></a>
-## type [MetricsSettings](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/settings/metrics_settings.go#L13-L16>)
+## type [MetricsSettings](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/settings/metrics_settings.go#L13-L16>)
 
 MetricsSettings configures the prometheus metrics for worker SDK
 
@@ -83,7 +83,7 @@ type MetricsSettings struct {
 ```
 
 <a name="NewDefaultMetricsSettings"></a>
-### func [NewDefaultMetricsSettings](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/settings/metrics_settings.go#L19>)
+### func [NewDefaultMetricsSettings](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/settings/metrics_settings.go#L19>)
 
 ```go
 func NewDefaultMetricsSettings() *MetricsSettings
@@ -92,7 +92,7 @@ func NewDefaultMetricsSettings() *MetricsSettings
 NewDefaultMetricsSettings creates an endpoint at /metrics on port 2112
 
 <a name="NewMetricsSettings"></a>
-### func [NewMetricsSettings](<https://github.com/vkantchev/conductor-client-golang/blob/main/sdk/settings/metrics_settings.go#L27>)
+### func [NewMetricsSettings](<https://github.com/swift-conductor/conductor-client-golang/blob/main/sdk/settings/metrics_settings.go#L27>)
 
 ```go
 func NewMetricsSettings(apiEndpoint string, port int) *MetricsSettings
