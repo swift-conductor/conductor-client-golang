@@ -365,7 +365,7 @@ func (a *WorkflowResourceApiService) GetExternalStorageLocation(ctx context.Cont
 	)
 
 	// create path and map variables
-	localVarPath := "/workflow/externalstoragelocation"
+	localVarPath := "/workflow/external-storage-location"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1654,7 +1654,7 @@ func (a *WorkflowResourceApiService) SkipTaskFromWorkflow(ctx context.Context, w
 	)
 
 	// create path and map variables
-	localVarPath := "/workflow/{workflowId}/skiptask/{taskReferenceName}"
+	localVarPath := "/workflow/{workflowId}/skip-task/{taskReferenceName}"
 	localVarPath = strings.Replace(localVarPath, "{"+"workflowId"+"}", fmt.Sprintf("%v", workflowId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"taskReferenceName"+"}", fmt.Sprintf("%v", taskReferenceName), -1)
 
